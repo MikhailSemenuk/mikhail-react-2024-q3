@@ -1,4 +1,4 @@
-import { Component, useEffect } from 'react';
+import { Component } from 'react';
 import './App.css';
 
 class SearchGroup extends Component {
@@ -20,18 +20,19 @@ class SearchGroup extends Component {
   }
 }
 
-function App() {
-
-  useEffect(() => {
+class App extends Component {
+  componentDidMount() {
     document.body.setAttribute('data-bs-theme', 'dark');
-  }, []);
+  }
 
-  return (
-    <>
-      <h1>Vite + React</h1>
-      <SearchGroup/>
-    </>
-  );
+  render() {
+    return (
+      <>
+        <h1>Vite + React</h1>
+        <SearchGroup />
+      </>
+    );
+  }
 }
 
 export default App;
