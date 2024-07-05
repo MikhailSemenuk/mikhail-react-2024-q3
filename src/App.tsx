@@ -1,23 +1,35 @@
-// import { useState } from 'react';
-// import reactLogo from './assets/react.svg';
-// import viteLogo from '/vite.svg';
+import { Component, useEffect } from 'react';
 import './App.css';
 
-const DangerButton = () => {
-  return (
-    <button type="button" className="btn btn-danger">
-      Danger
-    </button>
-  );
-};
+class SearchGroup extends Component {
+  render() {
+    return (
+      <div className="input-group mb-3">
+        <input
+          type="text"
+          className="form-control"
+          placeholder="Search"
+          aria-label="Search"
+          aria-describedby="button-search"
+        />
+        <button className="btn btn-outline-primary" type="button" id="button-search">
+          Search
+        </button>
+      </div>
+    );
+  }
+}
 
 function App() {
-  // const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    document.body.setAttribute('data-bs-theme', 'dark');
+  }, []);
 
   return (
     <>
       <h1>Vite + React</h1>
-      <DangerButton />
+      <SearchGroup/>
     </>
   );
 }
