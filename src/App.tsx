@@ -3,6 +3,7 @@ import SearchGroup from './SearchGroup';
 import './App.css';
 import { Character } from './types';
 import CharacterCardList from './CharacterCardList';
+import BtnThrowError from './BtnThrowError';
 
 interface AppState {
   characters: Character[];
@@ -28,8 +29,9 @@ class App extends Component<object, AppState> {
     return (
       <>
         <h1 className='text-center mt-2'>Characters from 'Rick and Morty'</h1>
-        <SearchGroup updateCharacters={this.updateCharacters} />
+        <SearchGroup updateCharacters={this.updateCharacters}/>
         <CharacterCardList characters={this.state.characters}/>
+        <BtnThrowError/>
       </>
     );
   }
