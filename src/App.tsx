@@ -27,7 +27,7 @@ class App extends Component<object, AppState> {
   render() {
     return (
       <>
-        <h1>Vite + React</h1>
+        <h1 className='text-center mt-2'>Characters from 'Rick and Morty'</h1>
         <SearchGroup updateCharacters={this.updateCharacters} />
         <CharacterCardList characters={this.state.characters}/>
       </>
