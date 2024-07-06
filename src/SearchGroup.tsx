@@ -27,14 +27,19 @@ export default class SearchGroup extends Component<SearchGroupProps, SearchGroup
     }
   }
 
-  handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+  handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const inputValue = e.target.value;
     this.setState({ inputValue });
     localStorage.setItem(this.localStorageName, inputValue);
   };
 
+  handleInputKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      this.handleClick();
+    }
+  };
+
   handleClick = () => {
-    console.log(`search ${this.state.inputValue}`);
     fetchCharacters(this.state.inputValue.trim()).then((data) => this.props.updateCharacters(data));
   };
 
@@ -48,7 +53,8 @@ export default class SearchGroup extends Component<SearchGroupProps, SearchGroup
           aria-label="Search"
           aria-describedby="button-search"
           value={this.state.inputValue}
-          onChange={this.handleChange}
+          onChange={this.handleInputChange}
+          onKeyDown={this.handleInputKeyPress}
         />
         <button onClick={this.handleClick} className="btn btn-outline-primary" type="button" id="button-search">
           Search
