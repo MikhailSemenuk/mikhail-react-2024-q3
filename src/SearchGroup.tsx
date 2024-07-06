@@ -1,4 +1,5 @@
 import { ChangeEvent, Component } from 'react';
+import { Character } from './types';
 
 interface SearchGroupState {
   inputValue: string;
@@ -6,6 +7,7 @@ interface SearchGroupState {
 
 export default class SearchGroup extends Component<unknown, SearchGroupState> {
   localStorageName = 'searchInputValue';
+
   constructor(props: unknown) {
     super(props);
     this.state = {
@@ -26,6 +28,11 @@ export default class SearchGroup extends Component<unknown, SearchGroupState> {
     localStorage.setItem(this.localStorageName, inputValue);
   };
 
+  handleClick = () => {
+    console.log(`search ${this.state.inputValue}`);
+    fetchData(this.state.inputValue.trim()).then((data) => console.log(data));
+  };
+
   render() {
     return (
       <div className="input-group mb-3">
@@ -38,10 +45,25 @@ export default class SearchGroup extends Component<unknown, SearchGroupState> {
           value={this.state.inputValue}
           onChange={this.handleChange}
         />
-        <button className="btn btn-outline-primary" type="button" id="button-search">
+        <button onClick={this.handleClick} className="btn btn-outline-primary" type="button" id="button-search">
           Search
         </button>
       </div>
     );
   }
+}
+
+
+
+async function fetchData(characterName: string, page = 1): Promise<Character[]> {
+  const response = await fetch(
+    `https://rickandmortyapi.com/api/character/?page=${page}&name=${encodeURIComponent(characterName)}`,
+  );
+  if (!response.ok && response.status === 404) {
+    return [];
+  } else if (!response.ok) {
+    throw new Error(`Network response was not ok (status ${response.status})`);
+  }
+  const data = await response.json();
+  return data.results;
 }
