@@ -1,21 +1,8 @@
 import { Component } from 'react';
 import SearchGroup from './SearchGroup';
 import './App.css';
-import CharacterCard from './CharacterCard';
 import { Character } from './types';
-
-const rickSanchez: Character = {
-  id: 1,
-  name: 'Rick Sanchez',
-  status: 'Alive',
-  species: 'Human',
-  gender: 'Male',
-  image: 'https://rickandmortyapi.com/api/character/avatar/1.jpeg',
-  location: {
-    name: 'Earth (C-137)',
-    url: '',
-  },
-};
+import CharacterCardList from './CharacterCardList';
 
 interface AppState {
   characters: Character[];
@@ -26,10 +13,14 @@ class App extends Component<object, AppState> {
     document.body.setAttribute('data-bs-theme', 'dark'); // TODO: setAttribute forbiden - rewrite it
   }
 
+  updateCharacters = (data: Character[]) => {
+    this.setState({ characters: data });
+  };
+
   constructor(props: object) {
     super(props);
     this.state = {
-      characters: [rickSanchez],
+      characters: [],
     };
   }
 
@@ -37,21 +28,13 @@ class App extends Component<object, AppState> {
     return (
       <>
         <h1>Vite + React</h1>
-        <SearchGroup />
+        <SearchGroup updateCharacters={this.updateCharacters} />
         <CharacterCardList characters={this.state.characters}/>
       </>
     );
   }
 }
 
-const CharacterCardList = ({ characters }: { characters: Character[] }) => {
-  return (
-    <div>
-      {characters.map((character) => (
-        <CharacterCard key={character.id} character={character} />
-      ))}
-    </div>
-  );
-};
+
 
 export default App;

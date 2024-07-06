@@ -5,7 +5,7 @@ export interface Character {
   species: string;
   gender: 'Female' | 'Male' | 'Genderless' | 'unknown';
   image: string;
-  location: {
+  origin: {
     name: string;
     url: string;
   };
