@@ -17,9 +17,20 @@ const rickSanchez: Character = {
   },
 };
 
-class App extends Component {
+interface AppState {
+  characters: Character[];
+}
+
+class App extends Component<object, AppState> {
   componentDidMount() {
     document.body.setAttribute('data-bs-theme', 'dark'); // TODO: setAttribute forbiden - rewrite it
+  }
+
+  constructor(props: object) {
+    super(props);
+    this.state = {
+      characters: [rickSanchez],
+    };
   }
 
   render() {
@@ -27,10 +38,20 @@ class App extends Component {
       <>
         <h1>Vite + React</h1>
         <SearchGroup />
-        <CharacterCard character={rickSanchez} />
+        <CharacterCardList characters={this.state.characters}/>
       </>
     );
   }
 }
+
+const CharacterCardList = ({ characters }: { characters: Character[] }) => {
+  return (
+    <div>
+      {characters.map((character) => (
+        <CharacterCard key={character.id} character={character} />
+      ))}
+    </div>
+  );
+};
 
 export default App;
