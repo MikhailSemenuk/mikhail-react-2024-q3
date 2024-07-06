@@ -2,13 +2,13 @@ import { Character } from './types';
 
 const CharacterCardList = ({ characters }: { characters: Character[] }) => {
   return (
-    <div>
+    <div className='d-flex flex-wrap justify-content-around'>
       {characters.length > 0 ? (
         characters.map((character) => (
           <CharacterCard key={character.id} character={character} />
         ))
       ) : (
-        <p>Try search something else ('Butter Robot', 'Abradolf Lincler', 'Rick', 'Morthy') </p>
+        <p>Try search something else ('Butter Robot', 'Abradolf Lincler', 'Rick', 'Morty') </p>
       )}
     </div>
   );
