@@ -1,13 +1,28 @@
 import { Component } from 'react';
 
-export default class BtnThrowError extends Component {
+interface BtnThrowErrorState {
+  isRenderError: boolean;
+}
+
+export default class BtnThrowError extends Component<object, BtnThrowErrorState> {
   textBtn = 'Throw error';
 
+  constructor(props: object) {
+    super(props);
+    this.state = {
+      isRenderError: false,
+    };
+  }
+
   handleClick = () => {
-    throw new Error(`Error by click button '${this.textBtn}'`);
+    this.setState({ isRenderError: true });
   };
 
   render() {
+    if (this.state.isRenderError) {
+      throw new Error(this.textBtn);
+    }
+
     return (
       <div className="text-center my-3">
         <button onClick={this.handleClick} className="btn btn-danger" type="button">
