@@ -24,7 +24,7 @@ class CharacterCardList extends Component<CharacterCardListProps> {
           {characters.length > 0 || isLoading ? (
             characters.map((character) => <CharacterCard key={character.id} character={character} />)
           ) : (
-            <p>Try search something else ('Butter Robot', 'Abradolf Lincler', 'Rick', 'Morty') </p>
+            <p>Try search something else (Butter Robot, Abradolf Lincler, Rick, Morty) </p>
           )}
         </div>
       </>
