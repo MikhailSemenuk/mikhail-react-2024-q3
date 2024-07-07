@@ -9,7 +9,7 @@
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives",
     "format:fix": "prettier --write .",
     "preview": "vite preview",
-    "prepare": "husky install && cp .husky/pre-commit .husky/_/pre-commit"
+    "prepare": "husky install"
   },
   "lint-staged": {
     "**/*.{ts,tsx}": [
