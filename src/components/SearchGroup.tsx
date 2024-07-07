@@ -1,6 +1,6 @@
 import { ChangeEvent, Component } from 'react';
-import { Character } from './types';
-import fetchCharacters from './fetchCharacters';
+import { Character } from '../types';
+import fetchCharacters from '../fetchCharacters';
 
 interface SearchGroupState {
   inputValue: string;
