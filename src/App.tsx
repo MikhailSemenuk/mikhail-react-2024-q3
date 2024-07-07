@@ -7,6 +7,7 @@ import BtnThrowError from './BtnThrowError';
 
 interface AppState {
   characters: Character[];
+  isLoading: boolean;
 }
 
 class App extends Component<object, AppState> {
@@ -14,14 +15,16 @@ class App extends Component<object, AppState> {
     document.body.setAttribute('data-bs-theme', 'dark'); // TODO: setAttribute forbiden - rewrite it
   }
 
-  updateCharacters = (data: Character[]) => {
+  updateCharacters = (data: Character[], isLoading = false) => {
     this.setState({ characters: data });
+    this.setState({ isLoading: isLoading });
   };
 
   constructor(props: object) {
     super(props);
     this.state = {
       characters: [],
+      isLoading: false,
     };
   }
 
@@ -30,7 +33,7 @@ class App extends Component<object, AppState> {
       <>
         <h1 className='text-center mt-2'>Characters from 'Rick and Morty'</h1>
         <SearchGroup updateCharacters={this.updateCharacters}/>
-        <CharacterCardList characters={this.state.characters}/>
+        <CharacterCardList characters={this.state.characters} isLoading={this.state.isLoading}/>
         <BtnThrowError/>
       </>
     );

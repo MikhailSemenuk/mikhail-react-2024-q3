@@ -4,11 +4,10 @@ import fetchCharacters from './fetchCharacters';
 
 interface SearchGroupState {
   inputValue: string;
-  isLoading: boolean;
 }
 
 interface SearchGroupProps {
-  updateCharacters: (data: Character[]) => void;
+  updateCharacters: (data: Character[], isLoading?:boolean) => void;
 }
 
 export default class SearchGroup extends Component<SearchGroupProps, SearchGroupState> {
@@ -18,7 +17,6 @@ export default class SearchGroup extends Component<SearchGroupProps, SearchGroup
     super(props);
     this.state = {
       inputValue: '',
-      isLoading: false,
     };
   }
 
@@ -42,10 +40,9 @@ export default class SearchGroup extends Component<SearchGroupProps, SearchGroup
   };
 
   handleClick = () => {
-    this.setState({ isLoading: true });
+    this.props.updateCharacters([], true);
     fetchCharacters(this.state.inputValue.trim())
-      .then((data) => this.props.updateCharacters(data))
-      .finally(() => this.setState({ isLoading: false }));
+      .then((data) => this.props.updateCharacters(data));
   };
 
   render() {
@@ -61,8 +58,7 @@ export default class SearchGroup extends Component<SearchGroupProps, SearchGroup
           onChange={this.handleInputChange}
           onKeyDown={this.handleInputKeyPress}
         />
-        <button onClick={this.handleClick} className="btn btn-outline-primary " type="button" id="button-search">
-          {this.state.isLoading ? <span className="spinner-grow spinner-grow-sm mx-1" aria-hidden="true"></span> : null}
+        <button onClick={this.handleClick} className="btn btn-outline-primary" type="button" id="button-search">
           <span role="status">Search</span>
         </button>
       </div>
