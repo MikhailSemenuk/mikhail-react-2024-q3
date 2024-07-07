@@ -9,8 +9,6 @@ interface CharacterCardListProps {
 class CharacterCardList extends Component<CharacterCardListProps> {
   render(): ReactNode {
     const { characters, isLoading } = this.props;
-
-    console.log('render list isLoading = ' + isLoading);
     return (
       <>
         {isLoading ? (
