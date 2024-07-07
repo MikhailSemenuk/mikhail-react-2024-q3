@@ -15,6 +15,7 @@ module.exports = {
     'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
     '@typescript-eslint/no-explicit-any': ['error'],
     'react-compiler/react-compiler': 'error',
+    "quotes": ["error", "single"]
   },
   settings: {
     react: {
