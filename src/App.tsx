@@ -11,10 +11,6 @@ interface AppState {
 }
 
 class App extends Component<object, AppState> {
-  componentDidMount() {
-    document.body.setAttribute('data-bs-theme', 'dark'); // TODO: setAttribute forbiden - rewrite it
-  }
-
   updateCharacters = (data: Character[], isLoading = false) => {
     this.setState({ characters: data });
     this.setState({ isLoading: isLoading });
