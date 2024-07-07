@@ -31,15 +31,13 @@ class App extends Component<object, AppState> {
   render() {
     return (
       <>
-        <h1 className='text-center mt-2'>Characters from 'Rick and Morty'</h1>
-        <SearchGroup updateCharacters={this.updateCharacters}/>
-        <CharacterCardList characters={this.state.characters} isLoading={this.state.isLoading}/>
-        <BtnThrowError/>
+        <h1 className="text-center mt-2">Characters from 'Rick and Morty'</h1>
+        <SearchGroup updateCharacters={this.updateCharacters} />
+        <CharacterCardList characters={this.state.characters} isLoading={this.state.isLoading} />
+        <BtnThrowError />
       </>
     );
   }
 }
-
-
 
 export default App;

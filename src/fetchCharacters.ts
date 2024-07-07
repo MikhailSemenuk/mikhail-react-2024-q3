@@ -1,4 +1,4 @@
-import { Character } from "./types";
+import { Character } from './types';
 
 export default async function fetchCharacters(characterName: string, page = 1): Promise<Character[]> {
   const response = await fetch(

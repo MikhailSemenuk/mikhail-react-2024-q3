@@ -7,7 +7,7 @@ interface SearchGroupState {
 }
 
 interface SearchGroupProps {
-  updateCharacters: (data: Character[], isLoading?:boolean) => void;
+  updateCharacters: (data: Character[], isLoading?: boolean) => void;
 }
 
 export default class SearchGroup extends Component<SearchGroupProps, SearchGroupState> {
@@ -41,8 +41,7 @@ export default class SearchGroup extends Component<SearchGroupProps, SearchGroup
 
   handleClick = () => {
     this.props.updateCharacters([], true);
-    fetchCharacters(this.state.inputValue.trim())
-      .then((data) => this.props.updateCharacters(data));
+    fetchCharacters(this.state.inputValue.trim()).then((data) => this.props.updateCharacters(data));
   };
 
   render() {
