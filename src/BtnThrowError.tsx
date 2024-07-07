@@ -1,6 +1,6 @@
 import { Component } from 'react';
 
-export default class SearchGroup extends Component {
+export default class BtnThrowError extends Component {
   textBtn = 'Throw error';
 
   handleClick = () => {
