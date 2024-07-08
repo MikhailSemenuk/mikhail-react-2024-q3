@@ -25,6 +25,7 @@ export default class SearchGroup extends Component<SearchGroupProps, SearchGroup
     if (savedInputValue) {
       this.setState({ inputValue: savedInputValue });
     }
+    this.handleClick(); // search in first time
   }
 
   handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -46,7 +47,7 @@ export default class SearchGroup extends Component<SearchGroupProps, SearchGroup
 
   render() {
     return (
-      <div className="input-group p-3">
+      <section className="input-group p-3">
         <input
           type="text"
           className="form-control"
@@ -60,7 +61,7 @@ export default class SearchGroup extends Component<SearchGroupProps, SearchGroup
         <button onClick={this.handleClick} className="btn btn-outline-primary" type="button" id="button-search">
           <span role="status">Search</span>
         </button>
-      </div>
+      </section>
     );
   }
 }
