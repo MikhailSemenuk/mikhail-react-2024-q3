@@ -23,9 +23,12 @@ export default class SearchGroup extends Component<SearchGroupProps, SearchGroup
   componentDidMount() {
     const savedInputValue = localStorage.getItem(this.localStorageName);
     if (savedInputValue) {
-      this.setState({ inputValue: savedInputValue });
+      this.setState({ inputValue: savedInputValue }, () => {
+        this.handleClick();
+      });
+    } else {
+      this.handleClick();
     }
-    this.handleClick(); // search in first time
   }
 
   handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
