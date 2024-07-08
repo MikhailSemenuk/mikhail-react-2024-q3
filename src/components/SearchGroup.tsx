@@ -34,7 +34,6 @@ export default class SearchGroup extends Component<SearchGroupProps, SearchGroup
   handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const inputValue = e.target.value;
     this.setState({ inputValue });
-    localStorage.setItem(this.localStorageName, inputValue);
   };
 
   handleInputKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -44,6 +43,7 @@ export default class SearchGroup extends Component<SearchGroupProps, SearchGroup
   };
 
   handleClick = () => {
+    localStorage.setItem(this.localStorageName, this.state.inputValue);
     this.props.updateCharacters([], true);
     fetchCharacters(this.state.inputValue.trim()).then((data) => this.props.updateCharacters(data));
   };
