@@ -1,70 +1,52 @@
-import { ChangeEvent, Component } from 'react';
+import { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import { Character } from '../types';
 import fetchCharacters from '../fetchCharacters';
-
-interface SearchGroupState {
-  inputValue: string;
-}
 
 interface SearchGroupProps {
   updateCharacters: (data: Character[], isLoading?: boolean) => void;
 }
 
-export default class SearchGroup extends Component<SearchGroupProps, SearchGroupState> {
-  localStorageName = 'searchInputValue';
+export default function SearchGroup({ updateCharacters }: SearchGroupProps) {
+  const localStorageName = 'searchInputValue';
+  const getInputLS = () => localStorage.getItem(localStorageName) ?? '';
 
-  constructor(props: SearchGroupProps) {
-    super(props);
-    this.state = {
-      inputValue: '',
-    };
-  }
+  const [inputValue, setInputValue] = useState(getInputLS);
 
-  componentDidMount() {
-    const savedInputValue = localStorage.getItem(this.localStorageName);
-    if (savedInputValue) {
-      this.setState({ inputValue: savedInputValue }, () => {
-        this.handleClick();
-      });
-    } else {
-      this.handleClick();
-    }
-  }
+  const handleClick = useCallback(() => {
+    const setInputLS = (value: string) => localStorage.setItem(localStorageName, value);
 
-  handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const inputValue = e.target.value;
-    this.setState({ inputValue });
-  };
+    setInputLS(inputValue);
+    updateCharacters([], true);
+    fetchCharacters(inputValue.trim()).then((data) => updateCharacters(data));
+  }, [inputValue, updateCharacters]);
 
-  handleInputKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  useEffect(() => {
+    handleClick();
+  }, [handleClick]);
+
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => setInputValue(e.target.value);
+
+  const handleInputKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
-      this.handleClick();
+      handleClick();
     }
   };
 
-  handleClick = () => {
-    localStorage.setItem(this.localStorageName, this.state.inputValue);
-    this.props.updateCharacters([], true);
-    fetchCharacters(this.state.inputValue.trim()).then((data) => this.props.updateCharacters(data));
-  };
-
-  render() {
-    return (
-      <section className="input-group p-3">
-        <input
-          type="text"
-          className="form-control"
-          placeholder="Search"
-          aria-label="Search"
-          aria-describedby="button-search"
-          value={this.state.inputValue}
-          onChange={this.handleInputChange}
-          onKeyDown={this.handleInputKeyPress}
-        />
-        <button onClick={this.handleClick} className="btn btn-outline-primary" type="button" id="button-search">
-          <span role="status">Search</span>
-        </button>
-      </section>
-    );
-  }
+  return (
+    <section className="input-group p-3">
+      <input
+        type="text"
+        className="form-control"
+        placeholder="Search"
+        aria-label="Search"
+        aria-describedby="button-search"
+        value={inputValue}
+        onChange={handleInputChange}
+        onKeyDown={handleInputKeyPress}
+      />
+      <button onClick={handleClick} className="btn btn-outline-primary" type="button" id="button-search">
+        <span role="status">Search</span>
+      </button>
+    </section>
+  );
 }
