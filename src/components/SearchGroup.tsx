@@ -1,30 +1,20 @@
-import { ChangeEvent, useCallback, useEffect, useState } from 'react';
-import { Character } from '../types';
-import fetchCharacters from '../fetchCharacters';
+import react from 'react';
+import { setUserSearchLS } from './userSearchLS';
 
 interface SearchGroupProps {
-  updateCharacters: (data: Character[], isLoading?: boolean) => void;
+  userSearch: string;
+  setUserSearch: (value: string) => void;
 }
 
-export default function SearchGroup({ updateCharacters }: SearchGroupProps) {
-  const localStorageName = 'searchInputValue';
-  const getInputLS = () => localStorage.getItem(localStorageName) ?? '';
+export default function SearchGroup({ userSearch, setUserSearch }: SearchGroupProps) {
+  const [inputValue, setInputValue] = react.useState(userSearch);
 
-  const [inputValue, setInputValue] = useState(getInputLS);
+  const handleClick = () => {
+    setUserSearchLS(inputValue.trim()); // TODO: Think this place
+    setUserSearch(inputValue.trim());
+  };
 
-  const handleClick = useCallback(() => {
-    const setInputLS = (value: string) => localStorage.setItem(localStorageName, value);
-
-    setInputLS(inputValue);
-    updateCharacters([], true);
-    fetchCharacters(inputValue.trim()).then((data) => updateCharacters(data));
-  }, [inputValue, updateCharacters]);
-
-  useEffect(() => {
-    handleClick();
-  }, [handleClick]);
-
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => setInputValue(e.target.value);
+  const handleInputChange = (e: react.ChangeEvent<HTMLInputElement>) => setInputValue(e.target.value);
 
   const handleInputKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {

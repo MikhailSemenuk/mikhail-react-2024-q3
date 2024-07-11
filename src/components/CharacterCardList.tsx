@@ -2,21 +2,13 @@ import { Character } from '../types';
 
 interface CharacterCardListProps {
   characters: Character[];
-  isLoading: boolean;
 }
 
-function CharacterCardList({ characters, isLoading }: CharacterCardListProps) {
+function CharacterCardList({ characters }: CharacterCardListProps) {
   return (
     <>
-      {isLoading ? (
-        <div className="d-flex align-items-center justify-content-around my-3">
-          <strong>Loading...</strong>
-          <div className="spinner-border ml-auto" role="status" aria-hidden="true"></div>
-        </div>
-      ) : null}
-
       <section className="d-flex flex-wrap justify-content-around">
-        {characters.length > 0 || isLoading ? (
+        {characters.length > 0 ? (
           characters.map((character) => <CharacterCard key={character.id} character={character} />)
         ) : (
           <p>Try search something else (Butter Robot, Abradolf Lincler, Rick, Morty) </p>
