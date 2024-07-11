@@ -3,7 +3,6 @@ import SearchGroup from './components/SearchGroup';
 import './App.css';
 import { Character } from './types';
 import CharacterCardList from './components/CharacterCardList';
-import BtnThrowError from './components/BtnThrowError';
 import ErrorBoundary from './components/ErrorBoundary';
 
 interface AppState {
@@ -33,7 +32,6 @@ class App extends Component<object, AppState> {
             <h1 className="text-center mt-2">Characters from Rick and Morty</h1>
             <SearchGroup updateCharacters={this.updateCharacters} />
             <CharacterCardList characters={this.state.characters} isLoading={this.state.isLoading} />
-            <BtnThrowError />
           </ErrorBoundary>
         </div>
       </>
