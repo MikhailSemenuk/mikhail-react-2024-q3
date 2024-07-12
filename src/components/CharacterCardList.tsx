@@ -1,4 +1,5 @@
-import { Character } from '../types';
+import { useLoaderData } from 'react-router-dom';
+import { Character, CharacterPages } from '../types';
 
 interface CharacterCardListProps {
   characters: Character[];
@@ -14,6 +15,15 @@ function CharacterCardList({ characters }: CharacterCardListProps) {
           <p>Try search something else (Butter Robot, Abradolf Lincler, Rick, Morty) </p>
         )}
       </section>
+    </>
+  );
+}
+
+export function CharacterCardListPath() {
+  const characters = (useLoaderData() as CharacterPages).characters;
+  return (
+    <>
+      <CharacterCardList characters={characters}></CharacterCardList>
     </>
   );
 }
