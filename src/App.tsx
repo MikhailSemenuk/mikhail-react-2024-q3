@@ -8,8 +8,19 @@ import { useEffect, useState } from 'react';
 import { getUserSearchLS, setUserSearchLS } from './libs/userSearchLS';
 import Pagination from './components/Pagination';
 import fetchCharacters from './libs/fetchCharacters';
+import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router-dom';
+import Page404 from './components/Page404';
 
-function App() {
+const router = createBrowserRouter(
+  createRoutesFromElements(
+    <Route path="/">
+      <Route index element={<AppInside />} />
+      <Route path="*" element={<Page404 />} />
+    </Route>,
+  ),
+);
+
+function AppInside() {
   const [userSearch, setUserSearch] = useState(getUserSearchLS());
   const [isLoading, setIsLoading] = useState(false);
   const [characters, setCharacters] = useState<Character[]>([]);
@@ -18,7 +29,7 @@ function App() {
   useEffect(() => {
     setIsLoading(true);
     setCharacters([]);
-    // Вызов fetchCharacters с новым значением userSearch
+    // TODO: Double fetch
     fetchCharacters(userSearch).then((newData) => {
       setUserSearchLS(userSearch);
       setIsLoading(false);
@@ -40,6 +51,10 @@ function App() {
       </div>
     </>
   );
+}
+
+function App() {
+  return <RouterProvider router={router} />;
 }
 
 export default App;

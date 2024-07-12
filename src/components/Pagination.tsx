@@ -30,7 +30,6 @@ function generateArray(n: number) {
 }
 
 export default function Pagination({ currentPage, pages }: PaginationProps) {
-  console.log(currentPage, pages); // TODO: delete
   return (
     <>
       <nav aria-label="Page navigation">
