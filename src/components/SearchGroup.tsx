@@ -1,5 +1,4 @@
 import react from 'react';
-import { setUserSearchLS } from './userSearchLS';
 
 interface SearchGroupProps {
   userSearch: string;
@@ -10,7 +9,6 @@ export default function SearchGroup({ userSearch, setUserSearch }: SearchGroupPr
   const [inputValue, setInputValue] = react.useState(userSearch);
 
   const handleClick = () => {
-    setUserSearchLS(inputValue.trim()); // TODO: Think this place
     setUserSearch(inputValue.trim());
   };
 

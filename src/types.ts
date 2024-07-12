@@ -11,3 +11,8 @@ export interface Character {
   };
   //...
 }
+
+export interface CharacterPages {
+  characters: Character[];
+  pages: number;
+}
