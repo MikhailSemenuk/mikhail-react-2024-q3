@@ -1,3 +1,5 @@
+// TODO: Problem if too big pagination
+
 interface PaginationProps {
   currentPage: number;
   pages: number;
@@ -32,7 +34,7 @@ function generateArray(n: number) {
 export default function Pagination({ currentPage, pages }: PaginationProps) {
   return (
     <>
-      <nav aria-label="Page navigation">
+      <nav className="my-3" aria-label="Page navigation">
         <ul className="pagination">
           <PageLink value="Previous" isDisabled={currentPage === 1}></PageLink>
           {generateArray(pages).map((pageNumber) => (
