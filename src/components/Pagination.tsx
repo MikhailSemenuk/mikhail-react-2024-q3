@@ -51,6 +51,7 @@ export default function Pagination({ currentPage, pages, setCurrentPage }: Pagin
     }
   };
 
+  console.log('рендер пагинации');
   return (
     <nav className="my-3" aria-label="Page navigation">
       <ul className="pagination">
