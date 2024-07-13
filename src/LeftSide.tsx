@@ -45,7 +45,7 @@ export default function LeftSide() {
           <div className="d-flex flex-column align-items-center">
             <SearchGroup userSearch={userSearch} setUserSearch={setUserSearch}></SearchGroup>
             <CharacterCardList characters={characters} />
-            <Pagination currentPage={1} pages={pages} setCurrentPage={setCurrentPage}></Pagination>
+            <Pagination currentPage={currentPage} pages={pages} setCurrentPage={setCurrentPage}></Pagination>
           </div>
         </div>
       </ErrorBoundary>

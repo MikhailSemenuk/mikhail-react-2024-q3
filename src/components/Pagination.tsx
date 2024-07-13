@@ -44,6 +44,10 @@ interface PaginationProps {
 }
 
 export default function Pagination({ currentPage, pages, setCurrentPage }: PaginationProps) {
+  if (!pages) {
+    return <></>;
+  }
+
   const handlePageClick = (page: number) => {
     console.log('handlePageClick');
     if (page > 0 && page <= pages) {
@@ -51,7 +55,7 @@ export default function Pagination({ currentPage, pages, setCurrentPage }: Pagin
     }
   };
 
-  console.log('рендер пагинации');
+  console.log(`рендер пагинации currentPage=${currentPage} + pages=${pages}`);
   return (
     <nav className="my-3" aria-label="Page navigation">
       <ul className="pagination">
