@@ -26,7 +26,7 @@ export default class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBo
     if (this.state.hasError) {
       return (
         <>
-          <div className="m-3">
+          <div className="m-3 page">
             <h1>Dimensional glitch detected: Please reboot your reality</h1>
             <p>
               <strong>Rick:</strong> Morty, listen up! We’ve got a glitch in the matrix, Morty! The app’s gone all

@@ -1,27 +1,27 @@
-// TODO: Simplefy it temporarly
 import { useEffect, useState } from 'react';
-// import { CharacterCardListPath } from './components/CharacterCardList';
-import SearchGroup from './components/SearchGroup';
-import ErrorBoundary from './components/ErrorBoundary';
+import SearchGroup from './SearchGroup';
+import ErrorBoundary from './ErrorBoundary';
 import { useLoaderData, useNavigate, useParams } from 'react-router-dom';
-import { CharacterPages } from './types';
-import CharacterCardList from './components/CharacterCardList';
-import Pagination from './components/Pagination';
-import fetchCharacters from './libs/fetchCharacters';
-import { getUserSearchLS, setUserSearchLS } from './libs/userSearchLS';
+import { CharacterPages } from '../types';
+import CharacterCardList from './CharacterCardList';
+import Pagination from './Pagination';
+import fetchCharacters from '../libs/fetchCharacters';
+import { getUserSearchLS, setUserSearchLS } from '../libs/userSearchLS';
 
 export default function LeftSide() {
-  const obj = useLoaderData() as CharacterPages;
-  const { page } = useParams<{ page: string }>();
-  if (page === undefined || isNaN(Number(page))) {
-    console.error('redirect 404');
-  }
   const navigate = useNavigate();
 
+  const loaderData = useLoaderData() as CharacterPages;
+  const { page } = useParams<{ page: string }>();
+  const pageNumber = Number(page);
+  if (!pageNumber) {
+    navigate('/404');
+  }
+
   const [userSearch, setUserSearch] = useState(getUserSearchLS());
-  const [pages, setPages] = useState(obj.pages);
-  const [characters, setCharacters] = useState(obj.characters);
-  const [currentPage, setCurrentPage] = useState(Number(page));
+  const [pages, setPages] = useState(loaderData.pages);
+  const [characters, setCharacters] = useState(loaderData.characters);
+  const [currentPage, setCurrentPage] = useState(pageNumber);
 
   useEffect(() => {
     console.log('characters + currentPage изменился:', characters, currentPage);
@@ -45,7 +45,7 @@ export default function LeftSide() {
   return (
     <>
       <ErrorBoundary>
-        <div className="app">
+        <div className="page">
           <h1 className="text-center mt-2">Characters from Rick and Morty</h1>
           <div className="d-flex flex-column align-items-center">
             <SearchGroup userSearch={userSearch} setUserSearch={handleSearch}></SearchGroup>

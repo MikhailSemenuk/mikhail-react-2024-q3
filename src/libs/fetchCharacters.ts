@@ -1,7 +1,7 @@
 import { LoaderFunctionArgs } from 'react-router-dom';
 import { CharacterPages } from './../types';
 
-export default async function fetchCharacters(search: string, page: string = '1'): Promise<CharacterPages> {
+export default async function fetchCharacters(search: string = '', page: string = '1'): Promise<CharacterPages> {
   const response = await fetch(
     `https://rickandmortyapi.com/api/character/?page=${page}&name=${encodeURIComponent(search)}`,
   );
@@ -20,11 +20,5 @@ export default async function fetchCharacters(search: string, page: string = '1'
 
 export async function fetchCharactersParams({ params }: LoaderFunctionArgs): Promise<CharacterPages> {
   const page = params.page ?? '1';
-  const search = params.search ?? 'Rick'; // TODO: del
-
-  console.log(JSON.stringify(params));
-
-  console.log(`fetchCharactersParams search=${search} page=${page}`);
-
-  return fetchCharacters(search, page);
+  return fetchCharacters('', params.page ?? page);
 }

@@ -1,8 +1,7 @@
 import './App.css';
 import { createBrowserRouter, createRoutesFromElements, Navigate, Route, RouterProvider } from 'react-router-dom';
 import Page404 from './components/Page404';
-import LeftSide from './LeftSide';
-// import { CharacterCardListPath } from './components/CharacterCardList';
+import LeftSide from './components/LeftSide';
 import { fetchCharactersParams } from './libs/fetchCharacters';
 
 const router = createBrowserRouter(
@@ -12,7 +11,8 @@ const router = createBrowserRouter(
       <Route path="list" element={<LeftSide />} loader={fetchCharactersParams}>
         <Route path=":page" element={<LeftSide />}></Route>
       </Route>
-      <Route path="*" element={<Page404 />} />
+      <Route path="404" element={<Page404 />} />
+      <Route path="*" element={<Navigate to="/404" replace />} />
     </Route>,
   ),
 );
