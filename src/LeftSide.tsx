@@ -37,13 +37,18 @@ export default function LeftSide() {
     navigate(`/list/${currentPage}`);
   }, [currentPage, navigate]);
 
+  const handleSearch = (searchValue: string) => {
+    setUserSearch(searchValue);
+    setCurrentPage(1);
+  };
+
   return (
     <>
       <ErrorBoundary>
         <div className="app">
           <h1 className="text-center mt-2">Characters from Rick and Morty</h1>
           <div className="d-flex flex-column align-items-center">
-            <SearchGroup userSearch={userSearch} setUserSearch={setUserSearch}></SearchGroup>
+            <SearchGroup userSearch={userSearch} setUserSearch={handleSearch}></SearchGroup>
             <CharacterCardList characters={characters} />
             <Pagination currentPage={currentPage} pages={pages} setCurrentPage={setCurrentPage}></Pagination>
           </div>
