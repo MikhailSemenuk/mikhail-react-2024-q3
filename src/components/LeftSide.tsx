@@ -12,25 +12,28 @@ export default function LeftSide() {
   const navigate = useNavigate();
 
   const loaderData = useLoaderData() as CharacterPages;
+  console.log('loaderData ', loaderData);
   const { page } = useParams<{ page: string }>();
-  const pageNumber = Number(page);
-  if (!pageNumber) {
-    navigate('/404');
-  }
+  const isPageNumber = !isNaN(Number(page));
 
   const [userSearch, setUserSearch] = useState(getUserSearchLS());
   const [pages, setPages] = useState(loaderData.pages);
   const [characters, setCharacters] = useState(loaderData.characters);
-  const [currentPage, setCurrentPage] = useState(pageNumber);
+  const [currentPage, setCurrentPage] = useState(Number(page));
+
+  if (!isPageNumber) {
+    console.log('should redirect 404');
+  }
 
   useEffect(() => {
-    console.log('characters + currentPage изменился:', characters, currentPage);
-    fetchCharacters(userSearch, `${currentPage}`).then((data) => {
+    const fetchData = async () => {
+      const data = await fetchCharacters(userSearch, `${currentPage}`);
       setPages(data.pages);
       setCharacters(data.characters);
 
       setUserSearchLS(userSearch); // TODO: Replace later
-    });
+    };
+    fetchData();
   }, [userSearch, currentPage]);
 
   useEffect(() => {
