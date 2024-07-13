@@ -1,29 +1,45 @@
-import { useEffect, useState } from 'react';
-import { setUserSearchLS } from './libs/userSearchLS';
-import { Character } from './types';
-import fetchCharacters from './libs/fetchCharacters';
-
 // TODO: Simplefy it temporarly
+import { useEffect, useState } from 'react';
+// import { CharacterCardListPath } from './components/CharacterCardList';
+import SearchGroup from './components/SearchGroup';
+import ErrorBoundary from './components/ErrorBoundary';
+import { useLoaderData } from 'react-router-dom';
+import { CharacterPages } from './types';
 import CharacterCardList from './components/CharacterCardList';
+import Pagination from './components/Pagination';
+import fetchCharacters from './libs/fetchCharacters';
+import { getUserSearchLS, setUserSearchLS } from './libs/userSearchLS';
 
 export default function LeftSide() {
-  const userSearch = 'Rick';
-  const [characters, setCharacters] = useState<Character[]>([]);
+  const obj = useLoaderData() as CharacterPages;
+
+  const [userSearch, setUserSearch] = useState(getUserSearchLS());
+  const [pages, setPages] = useState(obj.pages);
+  const [characters, setCharacters] = useState(obj.characters);
+  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
-    setCharacters([]);
-    // TODO: Double fetch
-    fetchCharacters(userSearch).then((newData) => {
-      setUserSearchLS(userSearch);
-      setCharacters(newData.characters);
+    console.log('characters + currentPage изменился:', characters, currentPage);
+    fetchCharacters(userSearch, `${currentPage}`).then((data) => {
+      setPages(data.pages);
+      setCharacters(data.characters);
+
+      setUserSearchLS(userSearch); // TODO: Replace later
     });
-  }, [userSearch]);
+  }, [userSearch, currentPage]);
 
   return (
     <>
-      <div className="d-flex flex-column align-items-center">
-        <CharacterCardList characters={characters} />
-      </div>
+      <ErrorBoundary>
+        <div className="app">
+          <h1 className="text-center mt-2">Characters from Rick and Morty</h1>
+          <div className="d-flex flex-column align-items-center">
+            <SearchGroup userSearch={userSearch} setUserSearch={setUserSearch}></SearchGroup>
+            <CharacterCardList characters={characters} />
+            <Pagination currentPage={1} pages={pages} setCurrentPage={setCurrentPage}></Pagination>
+          </div>
+        </div>
+      </ErrorBoundary>
     </>
   );
 }

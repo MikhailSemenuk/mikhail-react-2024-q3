@@ -20,7 +20,7 @@ export default async function fetchCharacters(search: string, page: string = '1'
 
 export async function fetchCharactersParams({ params }: LoaderFunctionArgs): Promise<CharacterPages> {
   const page = params.page ?? '1';
-  const search = params.search ?? '';
+  const search = params.search ?? 'Rick'; // TODO: del
 
   console.log(JSON.stringify(params));
 
