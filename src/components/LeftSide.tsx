@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import SearchGroup from './SearchGroup';
-import ErrorBoundary from './ErrorBoundary';
 import { useNavigate, useParams } from 'react-router-dom';
 import CharacterCardList from './CharacterCardList';
 import Pagination from './Pagination';
@@ -45,16 +44,14 @@ export default function LeftSide() {
 
   return (
     <>
-      <ErrorBoundary>
-        <div className="page">
-          <h1 className="text-center mt-2">Characters from Rick and Morty</h1>
-          <div className="d-flex flex-column align-items-center">
-            <SearchGroup userSearch={userSearch} setUserSearch={handleSearch}></SearchGroup>
-            <CharacterCardList characters={characters} />
-            <Pagination currentPage={currentPage} pages={pages} setCurrentPage={setCurrentPage}></Pagination>
-          </div>
+      <div className="page">
+        <h1 className="text-center mt-2">Characters from Rick and Morty</h1>
+        <div className="d-flex flex-column align-items-center">
+          <SearchGroup userSearch={userSearch} setUserSearch={handleSearch}></SearchGroup>
+          <CharacterCardList characters={characters} />
+          <Pagination currentPage={currentPage} pages={pages} setCurrentPage={setCurrentPage}></Pagination>
         </div>
-      </ErrorBoundary>
+      </div>
     </>
   );
 }

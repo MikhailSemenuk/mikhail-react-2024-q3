@@ -2,6 +2,7 @@ import './App.css';
 import { createBrowserRouter, createRoutesFromElements, Navigate, Route, RouterProvider } from 'react-router-dom';
 import Page404 from './components/Page404';
 import LeftSide from './components/LeftSide';
+import ErrorBoundary from './components/ErrorBoundary';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -17,7 +18,11 @@ const router = createBrowserRouter(
 );
 
 function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <ErrorBoundary>
+      <RouterProvider router={router} />
+    </ErrorBoundary>
+  );
 }
 
 export default App;
