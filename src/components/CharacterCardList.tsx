@@ -20,7 +20,7 @@ function CharacterCardList({ characters }: CharacterCardListProps) {
 
 function CharacterCard({ character }: { character: Character }) {
   return (
-    <div className="card m-2" style={{ width: '18rem' }}>
+    <div className="card m-2 cursor-pointer" style={{ width: '18rem' }}>
       <img src={character.image} className="card-img-top" alt={character.name} />
       <div className="card-body">
         <h5 className="card-title">{character.name}</h5>

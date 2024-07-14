@@ -1,8 +1,6 @@
 import { Character } from '../types';
 
 export function DetailCharacterCard({ character, onClose }: { character: Character | undefined; onClose: () => void }) {
-  console.log('DetailCharacterCard');
-
   if (!character) {
     return <></>;
   }

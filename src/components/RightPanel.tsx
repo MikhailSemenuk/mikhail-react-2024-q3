@@ -13,7 +13,7 @@ export default function RightPanel() {
   console.log('url details = ' + detailsURL);
 
   const [detailCharacter, setDetailCharacter] = useState<Character | undefined>(undefined);
-  const [isVisible, setIsVisible] = useState(true);
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
     if (detailsURL) {
@@ -44,7 +44,7 @@ export default function RightPanel() {
   }
 
   return (
-    <div style={{ minWidth: '22rem' }}>
+    <div className="mt-4" style={{ minWidth: '22rem' }}>
       <DetailCharacterCard character={detailCharacter} onClose={handleClose} />
     </div>
   );

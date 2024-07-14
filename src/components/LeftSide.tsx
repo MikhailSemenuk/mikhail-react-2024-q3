@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import SearchGroup from './SearchGroup';
-import { Outlet, useParams } from 'react-router-dom';
+import { Outlet, useNavigate, useParams } from 'react-router-dom';
 import CharacterCardList from './CharacterCardList';
 import Pagination from './Pagination';
 import fetchCharacters from '../libs/fetchCharacters';
@@ -9,7 +9,7 @@ import useUserSearch from '../libs/useUserSearch';
 import RightPanel from './RightPanel';
 
 export default function LeftSide() {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   let { page } = useParams<{ page: string }>();
   const isPageNumber = !isNaN(Number(page));
@@ -33,10 +33,11 @@ export default function LeftSide() {
     fetchData();
   }, [userSearch, currentPage]);
 
-  // useEffect(() => {
-  //   console.log('сработал naigate');
-  //   navigate(`/list/${currentPage}`);
-  // }, [currentPage, navigate]);
+  useEffect(() => {
+    console.log('сработал naigate');
+    const newPath = `/list/${currentPage}` + location.search;
+    navigate(newPath);
+  }, [currentPage, navigate]);
 
   const handleSearch = (searchValue: string) => {
     setUserSearch(searchValue);
@@ -46,12 +47,14 @@ export default function LeftSide() {
   return (
     <>
       <div className="page">
-        <h1 className="text-center mt-2">Characters from Rick and Morty</h1>
         <div className="d-flex">
-          <div className="d-flex flex-column align-items-center">
-            <SearchGroup userSearch={userSearch} setUserSearch={handleSearch}></SearchGroup>
-            <CharacterCardList characters={characters} />
-            <Pagination currentPage={currentPage} pages={pages} setCurrentPage={setCurrentPage}></Pagination>
+          <div>
+            <h1 className="text-center mt-2">Characters from Rick and Morty</h1>
+            <div className="d-flex flex-column align-items-center">
+              <SearchGroup userSearch={userSearch} setUserSearch={handleSearch}></SearchGroup>
+              <CharacterCardList characters={characters} />
+              <Pagination currentPage={currentPage} pages={pages} setCurrentPage={setCurrentPage}></Pagination>
+            </div>
           </div>
           <RightPanel></RightPanel>
           <Outlet></Outlet>
