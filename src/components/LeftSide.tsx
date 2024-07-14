@@ -18,13 +18,12 @@ export default function LeftSide() {
   if (detailsURL === 0) {
     detailsURL = undefined;
   }
-  const isDetailsNumber = Number.isNaN(detailsURL);
+  const isDetailsNumber = !Number.isNaN(detailsURL);
 
   let { page } = useParams<{ page: string }>();
   const isPageNumber = !isNaN(Number(page));
 
-  if (!isPageNumber || isDetailsNumber) {
-    console.error('should redirect 404'); // TODO: add
+  if (!isPageNumber || !isDetailsNumber) {
     page = '1'; // TODO: temp
   }
 
@@ -54,6 +53,12 @@ export default function LeftSide() {
     const newPath = `/list/${currentPage}` + location.search;
     navigate(newPath);
   }, [currentPage, navigate]);
+
+  useEffect(() => {
+    if (!isPageNumber || !isDetailsNumber) {
+      navigate('/404', { replace: true });
+    }
+  }, [isPageNumber, isDetailsNumber, navigate]);
 
   const handleSearch = (searchValue: string) => {
     setUserSearch(searchValue);
