@@ -1,34 +1,42 @@
 import { useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams, useLocation } from 'react-router-dom';
 import fetchCharacter from '../libs/fetchCharacter';
 import { DetailCharacterCard } from './DetailCharacterCard';
 import { Character } from '../types';
 
 export default function RightPanel() {
+  const navigate = useNavigate();
   const [searchParams] = useSearchParams();
+  const location = useLocation();
   const detailsURL: string | undefined = searchParams.get('details') ?? undefined;
 
   console.log('url details = ' + detailsURL);
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [detail, setDetail] = useState(detailsURL);
   const [detailCharacter, setDetailCharacter] = useState<Character | undefined>(undefined);
   const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
+    if (detailsURL) {
+      setIsVisible(true);
+    }
+
     const fetchData = async () => {
-      if (!detail) {
+      if (!detailsURL) {
         return;
       }
 
-      const data = await fetchCharacter(detail);
+      const data = await fetchCharacter(detailsURL);
       setDetailCharacter(data);
     };
     fetchData();
-  }, [detail]);
+  }, [detailsURL]);
 
   const handleClose = () => {
     setIsVisible(false);
+    const newSearchParams = new URLSearchParams(searchParams);
+    newSearchParams.delete('details');
+    console.log(`новый путь ${location.pathname}?${newSearchParams.toString()}`);
+    navigate(`${location.pathname}?${newSearchParams.toString()}`);
   };
 
   if (!isVisible) {
