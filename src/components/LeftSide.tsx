@@ -1,28 +1,26 @@
 import { useEffect, useState } from 'react';
 import SearchGroup from './SearchGroup';
 import ErrorBoundary from './ErrorBoundary';
-import { useLoaderData, useNavigate, useParams } from 'react-router-dom';
-import { CharacterPages } from '../types';
+import { useNavigate, useParams } from 'react-router-dom';
 import CharacterCardList from './CharacterCardList';
 import Pagination from './Pagination';
 import fetchCharacters from '../libs/fetchCharacters';
 import { getUserSearchLS, setUserSearchLS } from '../libs/userSearchLS';
+import { Character } from '../types';
 
 export default function LeftSide() {
   const navigate = useNavigate();
 
-  const loaderData = useLoaderData() as CharacterPages;
-  console.log('loaderData ', loaderData);
   const { page } = useParams<{ page: string }>();
   const isPageNumber = !isNaN(Number(page));
 
   const [userSearch, setUserSearch] = useState(getUserSearchLS());
-  const [pages, setPages] = useState(loaderData.pages);
-  const [characters, setCharacters] = useState(loaderData.characters);
+  const [pages, setPages] = useState(0);
+  const [characters, setCharacters] = useState<Character[]>([]);
   const [currentPage, setCurrentPage] = useState(Number(page));
 
   if (!isPageNumber) {
-    console.log('should redirect 404');
+    console.error('should redirect 404'); // TODO: add
   }
 
   useEffect(() => {
