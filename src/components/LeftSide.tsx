@@ -8,6 +8,7 @@ import { Character } from '../types';
 import useUserSearch from '../libs/useUserSearch';
 import RightPanel from './RightPanel';
 import updateURL from '../libs/updateURL';
+import SpinerLoading from './SpinerLoading';
 
 export default function LeftSide() {
   const navigate = useNavigate();
@@ -17,12 +18,13 @@ export default function LeftSide() {
   if (detailsURL === 0) {
     detailsURL = undefined;
   }
+  const isDetailsNumber = Number.isNaN(detailsURL);
 
   let { page } = useParams<{ page: string }>();
   const isPageNumber = !isNaN(Number(page));
 
-  if (!isPageNumber) {
-    // console.error('should redirect 404'); // TODO: add
+  if (!isPageNumber || isDetailsNumber) {
+    console.error('should redirect 404'); // TODO: add
     page = '1'; // TODO: temp
   }
 
@@ -31,14 +33,18 @@ export default function LeftSide() {
   const [characters, setCharacters] = useState<Character[]>([]);
   const [currentPage, setCurrentPage] = useState(Number(page));
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const [selectedId, setSelectedId] = useState<number | undefined>(detailsURL);
   const [isShowRightPanel, setShowRightPanel] = useState(detailsURL !== undefined);
 
   useEffect(() => {
     const fetchData = async () => {
+      setIsLoading(true);
       const data = await fetchCharacters(userSearch, `${currentPage}`);
       setPages(data.pages);
       setCharacters(data.characters);
+      setIsLoading(false);
     };
     fetchData();
   }, [userSearch, currentPage]);
@@ -55,8 +61,6 @@ export default function LeftSide() {
   };
 
   const closeRightPanel = () => {
-    console.log('Clicked left side');
-
     if (isShowRightPanel) {
       setShowRightPanel(false);
       setSelectedId(undefined);
@@ -66,8 +70,6 @@ export default function LeftSide() {
   };
 
   const openRightPanel = (id: number) => {
-    console.log(`Clicked card id: ${id}`);
-
     if (!isShowRightPanel) {
       setShowRightPanel(true);
       setSelectedId(id);
@@ -83,8 +85,13 @@ export default function LeftSide() {
             <h1 className="text-center mt-2">Characters from Rick and Morty</h1>
             <div className="d-flex flex-column align-items-center">
               <SearchGroup userSearch={userSearch} setUserSearch={handleSearch}></SearchGroup>
-              <CharacterCardList characters={characters} onCardClick={openRightPanel} />
-              <Pagination currentPage={currentPage} pages={pages} setCurrentPage={setCurrentPage}></Pagination>
+              <SpinerLoading isLoading={isLoading}></SpinerLoading>
+              {!isLoading && (
+                <>
+                  <CharacterCardList characters={characters} onCardClick={openRightPanel} />
+                  <Pagination currentPage={currentPage} pages={pages} setCurrentPage={setCurrentPage}></Pagination>
+                </>
+              )}
             </div>
           </div>
           <RightPanel
