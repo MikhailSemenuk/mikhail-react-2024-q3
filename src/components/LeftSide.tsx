@@ -53,13 +53,15 @@ export default function LeftSide() {
   const closeRightPanel = () => {
     console.log('Clicked left side');
 
-    // setShowRightPanel(!isShowRightPanel);
-    // setSelectedId(undefined);
-
     if (isShowRightPanel) {
       console.log('панель открыта, скроем ее и обнулим id right');
       setShowRightPanel(false);
       setSelectedId(undefined);
+
+      // update url
+      const newSearchParams = new URLSearchParams(searchParams);
+      newSearchParams.delete('details');
+      navigate(`${location.pathname}?${newSearchParams.toString()}`);
     } else {
       console.log('панель закрыта - заглушка - ничего не делаем');
     }
@@ -72,6 +74,11 @@ export default function LeftSide() {
       console.log('панель закрыта, откроем новое значение');
       setShowRightPanel(true);
       setSelectedId(id);
+
+      // update url
+      const newSearchParams = new URLSearchParams(searchParams);
+      newSearchParams.set('details', id.toString());
+      navigate(`${location.pathname}?${newSearchParams.toString()}`);
     }
   };
 
