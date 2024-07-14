@@ -7,7 +7,7 @@ interface PaginationProps {
 }
 
 export default function Pagination({ currentPage, pages, setCurrentPage }: PaginationProps) {
-  const LimitPagesWithNormalWidth = 10;
+  const LimitPagesWithNormalWidth = 20;
   const isMinWidth = pages > LimitPagesWithNormalWidth;
 
   if (!pages) {
