@@ -1,9 +1,6 @@
 import { Character } from '../types';
 
-export function DetailCharacterCard({ character }: { character: Character | undefined }) {
-  // const [searchParams] = useSearchParams();
-  // const details = searchParams.get('details');
-
+export function DetailCharacterCard({ character, onClose }: { character: Character | undefined; onClose: () => void }) {
   console.log('DetailCharacterCard');
 
   if (!character) {
@@ -11,7 +8,10 @@ export function DetailCharacterCard({ character }: { character: Character | unde
   }
 
   return (
-    <div className="card m-2 text-bg-secondary">
+    <div className="card m-1 text-bg-secondary">
+      <div className="d-flex flex-row-reverse">
+        <button type="button" className="btn-close" aria-label="Close" onClick={onClose}></button>
+      </div>
       <img src={character.image} className="card-img-top" alt={character.name} />
       <div className="card-body">
         <h5 className="card-title">{character.name}</h5>
