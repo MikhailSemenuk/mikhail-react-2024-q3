@@ -1,7 +1,6 @@
 import { NavLink } from 'react-router-dom';
 
 export default function Page404() {
-  // TODO: Make 404 page beautiful
   return (
     <>
       <div className="page mt-2">

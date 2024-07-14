@@ -1,15 +1,6 @@
-import { LoaderFunctionArgs } from 'react-router-dom';
 import { CharacterPages } from './../types';
-import { getUserSearchLS } from './userSearchLS';
 
-// TODO: delete isCallFromParams
-export default async function fetchCharacters(
-  search: string = '',
-  page: string = '1',
-  isCallFromParams: boolean = false,
-): Promise<CharacterPages> {
-  console.log(`${isCallFromParams ? 'params' : 'fetch'}   fetchCharacters search=${search} page=${page}`);
-
+export default async function fetchCharacters(search: string = '', page: string = '1'): Promise<CharacterPages> {
   const response = await fetch(
     `https://rickandmortyapi.com/api/character/?page=${page}&name=${encodeURIComponent(search)}`,
   );
@@ -24,10 +15,4 @@ export default async function fetchCharacters(
     characters: data.results,
     pages: data.info.pages,
   };
-}
-
-export async function fetchCharactersParams({ params }: LoaderFunctionArgs): Promise<CharacterPages> {
-  const page = params.page ?? '1';
-  const search = getUserSearchLS(); // TODO: Delete this later
-  return await fetchCharacters(search, params.page ?? page, true);
 }

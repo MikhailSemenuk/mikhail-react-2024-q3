@@ -10,7 +10,7 @@ import RightPanel from './RightPanel';
 import updateURL from '../libs/updateURL';
 import SpinerLoading from './SpinerLoading';
 
-export default function LeftSide() {
+export default function Main() {
   const navigate = useNavigate();
 
   const [searchParams] = useSearchParams();
@@ -20,12 +20,8 @@ export default function LeftSide() {
   }
   const isDetailsNumber = !Number.isNaN(detailsURL);
 
-  let { page } = useParams<{ page: string }>();
+  const { page } = useParams<{ page: string }>();
   const isPageNumber = !isNaN(Number(page));
-
-  if (!isPageNumber || !isDetailsNumber) {
-    page = '1'; // TODO: temp
-  }
 
   const [userSearch, setUserSearch] = useUserSearch();
   const [pages, setPages] = useState(0);
@@ -49,7 +45,6 @@ export default function LeftSide() {
   }, [userSearch, currentPage]);
 
   useEffect(() => {
-    console.log('сработал naigate');
     const newPath = `/list/${currentPage}` + location.search;
     navigate(newPath);
   }, [currentPage, navigate]);
@@ -86,7 +81,7 @@ export default function LeftSide() {
     <>
       <div className="page">
         <div className="d-flex">
-          <div onClick={closeRightPanel}>
+          <div className="flex-grow-1" onClick={closeRightPanel}>
             <h1 className="text-center mt-2">Characters from Rick and Morty</h1>
             <div className="d-flex flex-column align-items-center">
               <SearchGroup userSearch={userSearch} setUserSearch={handleSearch}></SearchGroup>
