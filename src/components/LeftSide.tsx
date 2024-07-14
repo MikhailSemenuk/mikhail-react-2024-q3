@@ -4,8 +4,8 @@ import { useNavigate, useParams } from 'react-router-dom';
 import CharacterCardList from './CharacterCardList';
 import Pagination from './Pagination';
 import fetchCharacters from '../libs/fetchCharacters';
-import { getUserSearchLS, setUserSearchLS } from '../libs/userSearchLS';
 import { Character } from '../types';
+import useUserSearch from '../libs/useUserSearch';
 
 export default function LeftSide() {
   const navigate = useNavigate();
@@ -13,7 +13,7 @@ export default function LeftSide() {
   const { page } = useParams<{ page: string }>();
   const isPageNumber = !isNaN(Number(page));
 
-  const [userSearch, setUserSearch] = useState(getUserSearchLS());
+  const [userSearch, setUserSearch] = useUserSearch();
   const [pages, setPages] = useState(0);
   const [characters, setCharacters] = useState<Character[]>([]);
   const [currentPage, setCurrentPage] = useState(Number(page));
@@ -27,8 +27,6 @@ export default function LeftSide() {
       const data = await fetchCharacters(userSearch, `${currentPage}`);
       setPages(data.pages);
       setCharacters(data.characters);
-
-      setUserSearchLS(userSearch); // TODO: Replace later
     };
     fetchData();
   }, [userSearch, currentPage]);
