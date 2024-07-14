@@ -7,12 +7,16 @@ import fetchCharacters from '../libs/fetchCharacters';
 import { Character } from '../types';
 import useUserSearch from '../libs/useUserSearch';
 import RightPanel from './RightPanel';
+import updateURL from '../libs/updateURL';
 
 export default function LeftSide() {
   const navigate = useNavigate();
 
   const [searchParams] = useSearchParams();
-  const detailsURL: number | undefined = Number(searchParams.get('details')) ?? undefined;
+  let detailsURL: number | undefined = Number(searchParams.get('details')) ?? undefined;
+  if (detailsURL === 0) {
+    detailsURL = undefined;
+  }
 
   let { page } = useParams<{ page: string }>();
   const isPageNumber = !isNaN(Number(page));
@@ -54,31 +58,20 @@ export default function LeftSide() {
     console.log('Clicked left side');
 
     if (isShowRightPanel) {
-      console.log('панель открыта, скроем ее и обнулим id right');
       setShowRightPanel(false);
       setSelectedId(undefined);
 
-      // update url
-      const newSearchParams = new URLSearchParams(searchParams);
-      newSearchParams.delete('details');
-      navigate(`${location.pathname}?${newSearchParams.toString()}`);
-    } else {
-      console.log('панель закрыта - заглушка - ничего не делаем');
+      updateURL(searchParams, navigate, undefined);
     }
   };
 
-  const handleCardClick = (id: number) => {
+  const openRightPanel = (id: number) => {
     console.log(`Clicked card id: ${id}`);
 
     if (!isShowRightPanel) {
-      console.log('панель закрыта, откроем новое значение');
       setShowRightPanel(true);
       setSelectedId(id);
-
-      // update url
-      const newSearchParams = new URLSearchParams(searchParams);
-      newSearchParams.set('details', id.toString());
-      navigate(`${location.pathname}?${newSearchParams.toString()}`);
+      updateURL(searchParams, navigate, id);
     }
   };
 
@@ -90,7 +83,7 @@ export default function LeftSide() {
             <h1 className="text-center mt-2">Characters from Rick and Morty</h1>
             <div className="d-flex flex-column align-items-center">
               <SearchGroup userSearch={userSearch} setUserSearch={handleSearch}></SearchGroup>
-              <CharacterCardList characters={characters} onCardClick={handleCardClick} />
+              <CharacterCardList characters={characters} onCardClick={openRightPanel} />
               <Pagination currentPage={currentPage} pages={pages} setCurrentPage={setCurrentPage}></Pagination>
             </div>
           </div>

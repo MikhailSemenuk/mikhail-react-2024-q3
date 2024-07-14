@@ -10,37 +10,9 @@ interface RightPanelProps {
 }
 
 export default function RightPanel({ selectedId, isShowRightPanel, handleClose }: RightPanelProps) {
-  // const navigate = useNavigate();
-  // const [searchParams] = useSearchParams();
-  // const location = useLocation();
-  // const detailsURL: string | undefined = searchParams.get('details') ?? undefined;
-
-  // console.log('url details = ' + detailsURL);
-
   const [detailCharacter, setDetailCharacter] = useState<Character | undefined>(undefined);
-  // const [isVisible, setIsVisible] = useState(false);
-
-  // useEffect(() => {
-  //   if (detailsURL) {
-  //     setIsVisible(true);
-  //   }
-
-  //   const fetchData = async () => {
-  //     if (!detailsURL) {
-  //       return;
-  //     }
-
-  //     const data = await fetchCharacter(detailsURL);
-  //     setDetailCharacter(data);
-  //   };
-  //   fetchData();
-  // }, [detailsURL]);
 
   useEffect(() => {
-    console.log('сработал useEffect RightPanel ' + selectedId);
-
-    // setIsVisible(!isVisible); /
-
     const fetchData = async () => {
       if (!selectedId) {
         return;
@@ -51,16 +23,6 @@ export default function RightPanel({ selectedId, isShowRightPanel, handleClose }
     };
     fetchData();
   }, [selectedId, isShowRightPanel]);
-
-  // const handleClose = () => {
-  //   // setIsVisible(false); // TODO: fix later
-  //   console.log('нажали на кнопку закрыть');
-
-  //   // const newSearchParams = new URLSearchParams(searchParams);
-  //   // newSearchParams.delete('details');
-  //   // console.log(`новый путь ${location.pathname}?${newSearchParams.toString()}`);
-  //   // navigate(`${location.pathname}?${newSearchParams.toString()}`);
-  // };
 
   if (!isShowRightPanel) {
     return <></>;
