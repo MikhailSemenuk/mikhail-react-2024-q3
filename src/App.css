@@ -1,7 +1,11 @@
 @import '/node_modules/bootstrap/dist/css/bootstrap.min.css';
 
-.app {
+.page {
   max-width: 1200px;
   margin-left: auto;
   margin-right: auto;
+}
+
+.cursor-pointer {
+  cursor: pointer;
 }

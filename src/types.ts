@@ -9,5 +9,14 @@ export interface Character {
     name: string;
     url: string;
   };
+  location: {
+    name: string;
+    url: string;
+  };
   //...
+}
+
+export interface CharacterPages {
+  characters: Character[];
+  pages: number;
 }

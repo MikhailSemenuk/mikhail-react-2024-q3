@@ -1,44 +1,26 @@
-import { Component } from 'react';
-import SearchGroup from './components/SearchGroup';
 import './App.css';
-import { Character } from './types';
-import CharacterCardList from './components/CharacterCardList';
-import BtnThrowError from './components/BtnThrowError';
+import { createBrowserRouter, createRoutesFromElements, Navigate, Route, RouterProvider } from 'react-router-dom';
+import Page404 from './components/Page404';
+import Main from './components/Main';
 import ErrorBoundary from './components/ErrorBoundary';
 
-interface AppState {
-  characters: Character[];
-  isLoading: boolean;
-}
+const router = createBrowserRouter(
+  createRoutesFromElements(
+    <Route path="/">
+      <Route index element={<Navigate to="/list/1" replace />} />
+      <Route path="list/:page" element={<Main />}></Route>
+      <Route path="404" element={<Page404 />} />
+      <Route path="*" element={<Navigate to="/404" replace />} />
+    </Route>,
+  ),
+);
 
-class App extends Component<object, AppState> {
-  updateCharacters = (data: Character[], isLoading = false) => {
-    this.setState({ characters: data });
-    this.setState({ isLoading: isLoading });
-  };
-
-  constructor(props: object) {
-    super(props);
-    this.state = {
-      characters: [],
-      isLoading: false,
-    };
-  }
-
-  render() {
-    return (
-      <>
-        <div className="app">
-          <ErrorBoundary>
-            <h1 className="text-center mt-2">Characters from Rick and Morty</h1>
-            <SearchGroup updateCharacters={this.updateCharacters} />
-            <CharacterCardList characters={this.state.characters} isLoading={this.state.isLoading} />
-            <BtnThrowError />
-          </ErrorBoundary>
-        </div>
-      </>
-    );
-  }
+function App() {
+  return (
+    <ErrorBoundary>
+      <RouterProvider router={router} />
+    </ErrorBoundary>
+  );
 }
 
 export default App;
