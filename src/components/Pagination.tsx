@@ -11,7 +11,7 @@ export default function Pagination({ currentPage, pages, setCurrentPage }: Pagin
   const isMinWidth = pages > LimitPagesWithNormalWidth;
 
   if (!pages) {
-    return <></>;
+    return null;
   }
 
   const handlePageClick = (page: number) => {

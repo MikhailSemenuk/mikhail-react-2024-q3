@@ -6,6 +6,11 @@ interface CharacterCardProps {
 }
 
 export default function CharacterCard({ character, onCardClick }: CharacterCardProps) {
+  const detailList = [];
+  detailList.push(`Status: ${character.status}`);
+  detailList.push(`Gender: ${character.gender}`);
+  detailList.push(`Species: ${character.species}`);
+
   return (
     <div className="card m-2 cursor-pointer" style={{ width: '18rem' }} onClick={() => onCardClick(character.id)}>
       <img src={character.image} className="card-img-top" alt={character.name} />
@@ -13,9 +18,11 @@ export default function CharacterCard({ character, onCardClick }: CharacterCardP
         <h5 className="card-title">{character.name}</h5>
       </div>
       <ul className="list-group list-group-flush">
-        <li className="list-group-item">Status: {character.status}</li>
-        <li className="list-group-item">Gender: {character.gender}</li>
-        <li className="list-group-item">Species: {character.species}</li>
+        {detailList.map((value, index) => (
+          <li key={index} className="list-group-item">
+            {value}
+          </li>
+        ))}
       </ul>
     </div>
   );

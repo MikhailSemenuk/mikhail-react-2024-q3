@@ -28,7 +28,7 @@ export default function RightPanel({ selectedId, isShowRightPanel, handleClose }
   }, [selectedId, isShowRightPanel]);
 
   if (!isShowRightPanel) {
-    return <></>;
+    return null;
   }
 
   return (

@@ -2,8 +2,15 @@ import { Character } from '../types';
 
 export function DetailCharacterCard({ character, onClose }: { character: Character | undefined; onClose: () => void }) {
   if (!character) {
-    return <></>;
+    return null;
   }
+
+  const detailList = [];
+  detailList.push(`Status: ${character.status}`);
+  detailList.push(`Gender: ${character.gender}`);
+  detailList.push(`Species: ${character.species}`);
+  detailList.push(`Location: ${character.location.name}`);
+  detailList.push(`Origin: ${character.origin.name}`);
 
   return (
     <div className="card m-1 text-bg-secondary">
@@ -15,11 +22,11 @@ export function DetailCharacterCard({ character, onClose }: { character: Charact
         <h5 className="card-title">{character.name}</h5>
       </div>
       <ul className="list-group list-group-flush">
-        <li className="list-group-item">Status: {character.status}</li>
-        <li className="list-group-item">Gender: {character.gender}</li>
-        <li className="list-group-item">Species: {character.species}</li>
-        <li className="list-group-item">Location: {character.location.name}</li>
-        <li className="list-group-item">Origin: {character.origin.name}</li>
+        {detailList.map((value, index) => (
+          <li key={index} className="list-group-item">
+            {value}
+          </li>
+        ))}
       </ul>
     </div>
   );
