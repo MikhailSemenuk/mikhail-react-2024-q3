@@ -1,4 +1,5 @@
 import generateArray from '../libs/generateArray';
+import classNames from 'classnames';
 
 interface PaginationProps {
   currentPage: number;
@@ -22,7 +23,7 @@ export default function Pagination({ currentPage, pages, setCurrentPage }: Pagin
 
   return (
     <nav className="my-3" aria-label="Page navigation">
-      <ul className={'pagination flex-wrap ' + (isMinWidth ? 'pagination-sm' : '')}>
+      <ul className={classNames('pagination', 'flex-wrap', { 'pagination-sm': isMinWidth })}>
         <PageLink value="Previous" isDisabled={currentPage === 1} onClick={() => handlePageClick(currentPage - 1)} />
         {generateArray(pages).map((pageNumber) => (
           <PageLink
@@ -63,8 +64,13 @@ function PageLink({ value, isActive = false, isDisabled = false, isMinWidth = fa
     return value;
   };
 
+  const pageLinkClass = classNames({
+    active: isActive,
+    disabled: isDisabled,
+  });
+
   return (
-    <li className={`page-item ${isActive ? 'active' : ''} ${isDisabled ? 'disabled' : ''}`}>
+    <li className={classNames('page-item', pageLinkClass)}>
       <a
         className={'page-link ' + (isMinWidth ? 'px-1' : '')}
         href="#"
