@@ -2,7 +2,7 @@ import { Character } from '../types';
 
 interface CharacterCardProps {
   character: Character;
-  onCardClick: (value: number) => void;
+  onCardClick: (value: number, event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
 }
 
 export default function CharacterCard({ character, onCardClick }: CharacterCardProps) {
@@ -12,7 +12,14 @@ export default function CharacterCard({ character, onCardClick }: CharacterCardP
   detailList.push(`Species: ${character.species}`);
 
   return (
-    <div className="card m-2 cursor-pointer" style={{ width: '18rem' }} onClick={() => onCardClick(character.id)}>
+    <div
+      className="card m-2 cursor-pointer"
+      style={{ width: '18rem' }}
+      onClick={(event) => {
+        event.stopPropagation();
+        onCardClick(character.id, event);
+      }}
+    >
       <img src={character.image} className="card-img-top" alt={character.name} />
       <div className="card-body">
         <h5 className="card-title">{character.name}</h5>

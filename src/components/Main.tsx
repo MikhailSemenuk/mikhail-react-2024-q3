@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import SearchGroup from './SearchGroup';
-import { Outlet, useNavigate, useParams, useSearchParams } from 'react-router-dom';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import CharacterCardList from './CharacterCardList';
 import Pagination from './Pagination';
 import fetchCharacters from '../libs/fetchCharacters';
@@ -64,7 +64,6 @@ export default function Main() {
     if (isShowRightPanel) {
       setShowRightPanel(false);
       setSelectedId(undefined);
-
       updateURL(searchParams, navigate, undefined);
     }
   };
@@ -72,6 +71,10 @@ export default function Main() {
   const openRightPanel = (id: number) => {
     if (!isShowRightPanel) {
       setShowRightPanel(true);
+      setSelectedId(id);
+      updateURL(searchParams, navigate, id);
+    } else {
+      console.log('уже открыта карточка');
       setSelectedId(id);
       updateURL(searchParams, navigate, id);
     }
@@ -98,7 +101,6 @@ export default function Main() {
           isShowRightPanel={isShowRightPanel}
           handleClose={closeRightPanel}
         ></RightPanel>
-        <Outlet></Outlet>
       </div>
     </div>
   );
