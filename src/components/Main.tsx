@@ -81,11 +81,11 @@ export default function Main() {
   };
 
   return (
-    <div className="page">
-      <div className="d-flex">
-        <div className="flex-grow-1" onClick={closeRightPanel}>
-          <h1 className="text-center mt-2">Characters from Rick and Morty</h1>
-          <div className="d-flex flex-column align-items-center">
+    <div className='page'>
+      <div className='d-flex'>
+        <div className='flex-grow-1' onClick={closeRightPanel}>
+          <h1 className='text-center mt-2'>Characters from Rick and Morty</h1>
+          <div className='d-flex flex-column align-items-center'>
             <SearchGroup userSearch={userSearch} setUserSearch={handleSearch}></SearchGroup>
             <SpinerLoading isLoading={isLoading}></SpinerLoading>
             {!isLoading && (

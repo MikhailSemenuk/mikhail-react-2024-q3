@@ -24,19 +24,19 @@ export default function SearchGroup({ userSearch, setUserSearch }: SearchGroupPr
   return (
     <ThemeContext.Consumer>
       {(theme) => (
-        <section className="input-group p-3">
+        <section className='input-group p-3'>
           <input
-            type="text"
-            className="form-control"
-            placeholder="Search"
-            aria-label="Search"
-            aria-describedby="button-search"
+            type='text'
+            className='form-control'
+            placeholder='Search'
+            aria-label='Search'
+            aria-describedby='button-search'
             value={inputValue}
             onChange={handleInputChange}
             onKeyDown={handleInputKeyPress}
           />
-          <button onClick={handleClick} className="btn btn-outline-primary" type="button" id="button-search">
-            <span role="status">{`Search ${theme.darkTheme ? '🌙' : '☀️'}`}</span>
+          <button onClick={handleClick} className='btn btn-outline-primary' type='button' id='button-search'>
+            <span role='status'>{`Search ${theme.darkTheme ? '🌙' : '☀️'}`}</span>
           </button>
         </section>
       )}

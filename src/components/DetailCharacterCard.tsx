@@ -13,17 +13,17 @@ export function DetailCharacterCard({ character, onClose }: { character: Charact
   detailList.push(`Origin: ${character.origin.name}`);
 
   return (
-    <div className="card m-1 text-bg-secondary">
-      <div className="d-flex flex-row-reverse">
-        <button type="button" className="btn-close" aria-label="Close" onClick={onClose}></button>
+    <div className='card m-1 text-bg-secondary'>
+      <div className='d-flex flex-row-reverse'>
+        <button type='button' className='btn-close' aria-label='Close' onClick={onClose}></button>
       </div>
-      <img src={character.image} className="card-img-top" alt={character.name} />
-      <div className="card-body">
-        <h5 className="card-title">{character.name}</h5>
+      <img src={character.image} className='card-img-top' alt={character.name} />
+      <div className='card-body'>
+        <h5 className='card-title'>{character.name}</h5>
       </div>
-      <ul className="list-group list-group-flush">
+      <ul className='list-group list-group-flush'>
         {detailList.map((value, index) => (
-          <li key={index} className="list-group-item">
+          <li key={index} className='list-group-item'>
             {value}
           </li>
         ))}

@@ -32,7 +32,7 @@ export default function RightPanel({ selectedId, isShowRightPanel, handleClose }
   }
 
   return (
-    <div className="mt-4 ps-3 border-start border-white" style={{ minWidth: '22rem' }}>
+    <div className='mt-4 ps-3 border-start border-white' style={{ minWidth: '22rem' }}>
       <SpinerLoading isLoading={isLoading}></SpinerLoading>
       {!isLoading && <DetailCharacterCard character={detailCharacter} onClose={handleClose} />}
     </div>

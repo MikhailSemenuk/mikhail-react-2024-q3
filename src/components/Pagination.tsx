@@ -22,9 +22,9 @@ export default function Pagination({ currentPage, pages, setCurrentPage }: Pagin
   };
 
   return (
-    <nav className="my-3" aria-label="Page navigation">
+    <nav className='my-3' aria-label='Page navigation'>
       <ul className={classNames('pagination', 'flex-wrap', { 'pagination-sm': isMinWidth })}>
-        <PageLink value="Previous" isDisabled={currentPage === 1} onClick={() => handlePageClick(currentPage - 1)} />
+        <PageLink value='Previous' isDisabled={currentPage === 1} onClick={() => handlePageClick(currentPage - 1)} />
         {generateArray(pages).map((pageNumber) => (
           <PageLink
             key={pageNumber}
@@ -34,7 +34,7 @@ export default function Pagination({ currentPage, pages, setCurrentPage }: Pagin
             onClick={() => handlePageClick(pageNumber)}
           />
         ))}
-        <PageLink value="Next" isDisabled={currentPage === pages} onClick={() => handlePageClick(currentPage + 1)} />
+        <PageLink value='Next' isDisabled={currentPage === pages} onClick={() => handlePageClick(currentPage + 1)} />
       </ul>
     </nav>
   );
@@ -57,9 +57,9 @@ function PageLink({ value, isActive = false, isDisabled = false, isMinWidth = fa
 
   const getContent = (value: number | 'Previous' | 'Next') => {
     if (value === 'Previous') {
-      return <span aria-hidden="true">&laquo;</span>;
+      return <span aria-hidden='true'>&laquo;</span>;
     } else if (value === 'Next') {
-      return <span aria-hidden="true">&raquo;</span>;
+      return <span aria-hidden='true'>&raquo;</span>;
     }
     return value;
   };
@@ -73,7 +73,7 @@ function PageLink({ value, isActive = false, isDisabled = false, isMinWidth = fa
     <li className={classNames('page-item', pageLinkClass)}>
       <a
         className={'page-link ' + (isMinWidth ? 'px-1' : '')}
-        href="#"
+        href='#'
         onClick={(e) => {
           e.preventDefault();
           onClick();

@@ -13,20 +13,20 @@ export default function CharacterCard({ character, onCardClick }: CharacterCardP
 
   return (
     <div
-      className="card m-2 cursor-pointer"
+      className='card m-2 cursor-pointer'
       style={{ width: '18rem' }}
       onClick={(event) => {
         event.stopPropagation();
         onCardClick(character.id, event);
       }}
     >
-      <img src={character.image} className="card-img-top" alt={character.name} />
-      <div className="card-body">
-        <h5 className="card-title">{character.name}</h5>
+      <img src={character.image} className='card-img-top' alt={character.name} />
+      <div className='card-body'>
+        <h5 className='card-title'>{character.name}</h5>
       </div>
-      <ul className="list-group list-group-flush">
+      <ul className='list-group list-group-flush'>
         {detailList.map((value, index) => (
-          <li key={index} className="list-group-item">
+          <li key={index} className='list-group-item'>
             {value}
           </li>
         ))}

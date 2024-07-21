@@ -6,16 +6,16 @@ export function ToggleSwitch() {
   const { darkTheme, toggleTheme } = useTheme();
 
   return (
-    <div className="form-check form-switch">
+    <div className='form-check form-switch'>
       <input
-        className="form-check-input"
-        type="checkbox"
-        role="switch"
+        className='form-check-input'
+        type='checkbox'
+        role='switch'
         id={toggleId}
         checked={darkTheme}
         onChange={toggleTheme}
       />
-      <label className="form-check-label" htmlFor={toggleId}>
+      <label className='form-check-label' htmlFor={toggleId}>
         Dark theme
       </label>
     </div>

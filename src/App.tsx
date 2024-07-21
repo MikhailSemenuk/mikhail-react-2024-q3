@@ -8,11 +8,11 @@ import { ThemeSwitchHeder } from './components/ThemeSwitch/ThemeSwitchHeder';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route path="/">
-      <Route index element={<Navigate to="/list/1" replace />} />
-      <Route path="list/:page" element={<Main />}></Route>
-      <Route path="404" element={<Page404 />} />
-      <Route path="*" element={<Navigate to="/404" replace />} />
+    <Route path='/'>
+      <Route index element={<Navigate to='/list/1' replace />} />
+      <Route path='list/:page' element={<Main />}></Route>
+      <Route path='404' element={<Page404 />} />
+      <Route path='*' element={<Navigate to='/404' replace />} />
     </Route>,
   ),
 );
