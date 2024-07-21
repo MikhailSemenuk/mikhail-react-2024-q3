@@ -5,7 +5,7 @@ import CharacterCardList from './CharacterCardList';
 import Pagination from './Pagination';
 import fetchCharacters from '../libs/fetchCharacters';
 import { Character } from '../types';
-import useUserSearch from '../libs/useUserSearch';
+import useUserSearch from '../hooks/useUserSearch';
 import RightPanel from './RightPanel';
 import updateURL from '../libs/updateURL';
 import SpinerLoading from './SpinerLoading';
