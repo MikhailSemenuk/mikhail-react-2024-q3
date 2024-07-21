@@ -3,11 +3,8 @@ import { createBrowserRouter, createRoutesFromElements, Navigate, Route, RouterP
 import Page404 from './components/Page404';
 import Main from './components/Main';
 import ErrorBoundary from './components/ErrorBoundary';
-import { createContext, useEffect, useState } from 'react';
-import { getThemeIsDark, saveThemeIsDark } from './libs/appLocalStorage';
-import { ToggleSwitch } from './components/ToggleSwitch';
-
-export const ThemeContext = createContext(false);
+import { ThemeProvider } from './components/ThemeSwitch/ThemeProvider';
+import { ThemeSwitchHeder } from './components/ThemeSwitch/ThemeSwitchHeder';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -21,29 +18,12 @@ const router = createBrowserRouter(
 );
 
 function App() {
-  const [darkTheme, setDarkTheme] = useState(getThemeIsDark());
-  useEffect(() => {
-    document.body.setAttribute('data-bs-theme', darkTheme ? 'dark' : 'light');
-    saveThemeIsDark(darkTheme);
-  }, [darkTheme]);
-
-  function toggleTheme() {
-    setDarkTheme((prevTheme) => !prevTheme);
-  }
-
   return (
     <ErrorBoundary>
-      <div className="d-flex flex-row-reverse page">
-        <ToggleSwitch
-          checked={darkTheme}
-          handleClick={() => {
-            toggleTheme();
-          }}
-        ></ToggleSwitch>
-      </div>
-      <ThemeContext.Provider value={darkTheme}>
+      <ThemeProvider>
+        <ThemeSwitchHeder />
         <RouterProvider router={router} />
-      </ThemeContext.Provider>
+      </ThemeProvider>
     </ErrorBoundary>
   );
 }

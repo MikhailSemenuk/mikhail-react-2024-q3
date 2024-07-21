@@ -1,5 +1,5 @@
 import React from 'react';
-import { ThemeContext } from '../App';
+import { ThemeContext } from './ThemeSwitch/ThemeProvider';
 
 interface SearchGroupProps {
   userSearch: string;
@@ -36,7 +36,7 @@ export default function SearchGroup({ userSearch, setUserSearch }: SearchGroupPr
             onKeyDown={handleInputKeyPress}
           />
           <button onClick={handleClick} className="btn btn-outline-primary" type="button" id="button-search">
-            <span role="status">{`Search ${theme ? '🌙' : '☀️'}`}</span>
+            <span role="status">{`Search ${theme.darkTheme ? '🌙' : '☀️'}`}</span>
           </button>
         </section>
       )}

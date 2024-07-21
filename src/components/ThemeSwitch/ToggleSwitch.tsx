@@ -1,12 +1,9 @@
 import { useId } from 'react';
+import { useTheme } from './useTheme';
 
-interface ToggleSwitchProps {
-  checked: boolean;
-  handleClick: () => void;
-}
-
-export function ToggleSwitch({ checked, handleClick }: ToggleSwitchProps) {
+export function ToggleSwitch() {
   const toggleId = useId();
+  const { darkTheme, toggleTheme } = useTheme();
 
   return (
     <div className="form-check form-switch">
@@ -15,11 +12,11 @@ export function ToggleSwitch({ checked, handleClick }: ToggleSwitchProps) {
         type="checkbox"
         role="switch"
         id={toggleId}
-        checked={checked}
-        onChange={handleClick}
+        checked={darkTheme}
+        onChange={toggleTheme}
       />
       <label className="form-check-label" htmlFor={toggleId}>
-        Dark mode
+        Dark theme
       </label>
     </div>
   );
