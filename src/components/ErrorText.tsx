@@ -1,6 +1,6 @@
 export function ErrorText() {
   return (
-    <div className='m-3 page'>
+    <div className='m-3 page' data-testid='ErrorText'>
       <h1>Dimensional glitch detected: Please reboot your reality</h1>
       <p>
         <strong>Rick:</strong> Morty, listen up! We’ve got a glitch in the matrix, Morty! The app’s gone all
