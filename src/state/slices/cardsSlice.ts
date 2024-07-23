@@ -13,13 +13,15 @@ const cardsSlice = createSlice({
   initialState,
   reducers: {
     selectCard: (state, action: PayloadAction<number>) => {
-      console.log('сработал select card');
       if (!state.selectedCards.includes(action.payload)) {
         state.selectedCards.push(action.payload);
       }
     },
     deselectCard: (state, action: PayloadAction<number>) => {
       state.selectedCards = state.selectedCards.filter((id) => id !== action.payload);
+    },
+    deselectAllCards: (state) => {
+      state.selectedCards = [];
     },
     toggleCard: (state, action: PayloadAction<number>) => {
       if (state.selectedCards.includes(action.payload)) {
@@ -31,5 +33,5 @@ const cardsSlice = createSlice({
   },
 });
 
-export const { selectCard, deselectCard, toggleCard } = cardsSlice.actions;
+export const { selectCard, deselectCard, deselectAllCards, toggleCard } = cardsSlice.actions;
 export default cardsSlice.reducer;

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import fetchCharacter from '../libs/fetchCharacter';
 import { DetailCharacterCard } from './DetailCharacterCard';
 import { Character } from '../types';
-import SpinerLoading from './SpinerLoading';
+import { SpinnerLoading } from './SpinnerLoading';
 
 interface RightPanelProps {
   selectedId: number | undefined;
@@ -33,7 +33,7 @@ export default function RightPanel({ selectedId, isShowRightPanel, handleClose }
 
   return (
     <div className='mt-4 ps-3 border-start border-white' style={{ minWidth: '22rem' }}>
-      <SpinerLoading isLoading={isLoading}></SpinerLoading>
+      <SpinnerLoading isLoading={isLoading}></SpinnerLoading>
       {!isLoading && <DetailCharacterCard character={detailCharacter} onClose={handleClose} />}
     </div>
   );

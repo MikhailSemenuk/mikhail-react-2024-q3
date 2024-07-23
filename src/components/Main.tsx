@@ -8,8 +8,9 @@ import { Character } from '../types';
 import useUserSearch from '../hooks/useUserSearch';
 import RightPanel from './RightPanel';
 import updateURL from '../libs/updateURL';
-import SpinerLoading from './SpinerLoading';
+import { SpinnerLoading } from './SpinnerLoading';
 import { StorePanel } from './StorePanel';
+import { BottomPanel } from './BottomPanel';
 
 export default function Main() {
   const navigate = useNavigate();
@@ -89,7 +90,7 @@ export default function Main() {
           <div className='d-flex flex-column align-items-center'>
             <StorePanel></StorePanel>
             <SearchGroup userSearch={userSearch} setUserSearch={handleSearch}></SearchGroup>
-            <SpinerLoading isLoading={isLoading}></SpinerLoading>
+            <SpinnerLoading isLoading={isLoading}></SpinnerLoading>
             {!isLoading && (
               <>
                 <CharacterCardList characters={characters} onCardClick={openRightPanel} />
@@ -104,6 +105,7 @@ export default function Main() {
           handleClose={closeRightPanel}
         ></RightPanel>
       </div>
+      <BottomPanel></BottomPanel>
     </div>
   );
 }

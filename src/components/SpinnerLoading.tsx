@@ -1,4 +1,4 @@
-export default function SpinerLoading({ isLoading }: { isLoading: boolean }) {
+export function SpinnerLoading({ isLoading }: { isLoading: boolean }) {
   if (!isLoading) {
     return null;
   }
