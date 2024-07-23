@@ -7,16 +7,16 @@ export function BottomPanel() {
   const dispatch = useDispatch();
   const lengthSelectedCards = useSelector((state: RootState) => state.cards.selectedCards.length);
 
-  // TODO: Change background color during theme
   // TODO: Maybe change color Btn during theme
-  const classes = classNames('offcanvas', 'offcanvas-md', 'text-bg-secondary', 'offcanvas-bottom', {
+  // TODO: Check answer is it allowed use npm `classNames`
+  const classes = classNames('offcanvas', 'offcanvas-bottom', 'h-auto', {
     show: lengthSelectedCards > 0,
   });
 
   return (
     <>
       <div className={classes} tabIndex={-1}>
-        <div className='offcanvas-body small justify-content-around align-items-center'>
+        <div className='d-flex justify-content-around align-items-center'>
           <button className='btn btn-warning m-3' onClick={() => dispatch(deselectAllCards())}>
             Unselect all
           </button>
