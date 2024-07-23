@@ -1,4 +1,10 @@
+import { useId } from 'react';
 import { Character } from '../types';
+import { useDispatch, useSelector } from 'react-redux';
+import { toggleCard } from '../state/slices/cardsSlice';
+import { RootState } from '../state/store';
+
+// TODO: Similar code with DetailCharacterCard, update it
 
 interface CharacterCardProps {
   character: Character;
@@ -6,22 +12,33 @@ interface CharacterCardProps {
 }
 
 export default function CharacterCard({ character, onCardClick }: CharacterCardProps) {
+  const checkboxId = useId();
+  const dispatch = useDispatch();
+  const isChecked = useSelector((state: RootState) => state.cards.selectedCards.includes(character.id));
+
   const detailList = [];
   detailList.push(`Status: ${character.status}`);
   detailList.push(`Gender: ${character.gender}`);
   detailList.push(`Species: ${character.species}`);
 
+  const onClickImgBody = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    event.stopPropagation();
+    onCardClick(character.id, event);
+  };
+
+  const onClickFooter = () => {
+    dispatch(toggleCard(character.id));
+  };
+
   return (
-    <div
-      className='card m-2 cursor-pointer'
-      style={{ width: '18rem' }}
-      onClick={(event) => {
-        event.stopPropagation();
-        onCardClick(character.id, event);
-      }}
-    >
-      <img src={character.image} className='card-img-top' alt={character.name} />
-      <div className='card-body'>
+    <div className='card m-2' style={{ width: '18rem' }}>
+      <img
+        src={character.image}
+        className='card-img-top cursor-pointer'
+        alt={character.name}
+        onClick={(event) => onClickImgBody(event)}
+      />
+      <div className='card-body cursor-pointer' onClick={(event) => onClickImgBody(event)}>
         <h5 className='card-title'>{character.name}</h5>
       </div>
       <ul className='list-group list-group-flush'>
@@ -31,6 +48,21 @@ export default function CharacterCard({ character, onCardClick }: CharacterCardP
           </li>
         ))}
       </ul>
+      <div className='card-footer'>
+        <div className='form-check'>
+          <input
+            className='form-check-input'
+            type='checkbox'
+            value=''
+            checked={isChecked}
+            onChange={onClickFooter}
+            id={checkboxId}
+          ></input>
+          <label className='form-check-label' htmlFor={checkboxId}>
+            Add to card
+          </label>
+        </div>
+      </div>
     </div>
   );
 }
