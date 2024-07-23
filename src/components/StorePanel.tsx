@@ -1,25 +1,18 @@
-import { useEffect, useState } from 'react';
-import store from './store';
+import { decrement, increment } from '../state/counter/counterSlice';
+import { RootState } from '../state/store';
+import { useDispatch, useSelector } from 'react-redux';
 
 export function StorePanel() {
-  const [counter, setCounter] = useState(store.getState().counter);
-
-  useEffect(() => {
-    const unsubscribe = store.subscribe(() => {
-      setCounter(store.getState().counter);
-      console.log('update subscribe');
-    });
-
-    return unsubscribe;
-  }, []);
+  const count = useSelector((state: RootState) => state.counter.value);
+  const dispatch = useDispatch();
 
   return (
     <div>
-      counter {counter}
-      <button className='btn btn-primary m-3' onClick={() => store.dispatch({ type: 'increment' })}>
+      counter {count}
+      <button className='btn btn-primary m-3' onClick={() => dispatch(increment())}>
         increment
       </button>
-      <button className='btn btn-warning m-3' onClick={() => store.dispatch({ type: 'decrement' })}>
+      <button className='btn btn-warning m-3' onClick={() => dispatch(decrement())}>
         decrement
       </button>
     </div>

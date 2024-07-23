@@ -6,7 +6,7 @@ import ErrorBoundary from './components/ErrorBoundary';
 import { ThemeProvider } from './components/ThemeSwitch/ThemeProvider';
 import { ThemeSwitchHeder } from './components/ThemeSwitch/ThemeSwitchHeder';
 import { Provider } from 'react-redux';
-import store from './components/store';
+import { store } from './state/store';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
