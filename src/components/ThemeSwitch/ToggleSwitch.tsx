@@ -17,7 +17,7 @@ export function ToggleSwitch() {
         checked={darkTheme}
         onChange={toggleTheme}
       />
-      <label className='form-check-label' htmlFor={toggleId}>
+      <label className='form-check-label me-2' htmlFor={toggleId}>
         Dark theme
       </label>
     </div>
