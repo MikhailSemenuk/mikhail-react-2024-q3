@@ -5,6 +5,8 @@ import Main from './components/Main';
 import ErrorBoundary from './components/ErrorBoundary';
 import { ThemeProvider } from './components/ThemeSwitch/ThemeProvider';
 import { ThemeSwitchHeder } from './components/ThemeSwitch/ThemeSwitchHeder';
+import { Provider } from 'react-redux';
+import store from './components/store';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -20,10 +22,12 @@ const router = createBrowserRouter(
 function App() {
   return (
     <ErrorBoundary>
-      <ThemeProvider>
-        <ThemeSwitchHeder />
-        <RouterProvider router={router} />
-      </ThemeProvider>
+      <Provider store={store}>
+        <ThemeProvider>
+          <ThemeSwitchHeder />
+          <RouterProvider router={router} />
+        </ThemeProvider>
+      </Provider>
     </ErrorBoundary>
   );
 }

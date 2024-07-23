@@ -9,6 +9,7 @@ import useUserSearch from '../hooks/useUserSearch';
 import RightPanel from './RightPanel';
 import updateURL from '../libs/updateURL';
 import SpinerLoading from './SpinerLoading';
+import { StorePanel } from './StorePanel';
 
 export default function Main() {
   const navigate = useNavigate();
@@ -86,6 +87,7 @@ export default function Main() {
         <div className='flex-grow-1' onClick={closeRightPanel}>
           <h1 className='text-center mt-2'>Characters from Rick and Morty</h1>
           <div className='d-flex flex-column align-items-center'>
+            <StorePanel></StorePanel>
             <SearchGroup userSearch={userSearch} setUserSearch={handleSearch}></SearchGroup>
             <SpinerLoading isLoading={isLoading}></SpinerLoading>
             {!isLoading && (
