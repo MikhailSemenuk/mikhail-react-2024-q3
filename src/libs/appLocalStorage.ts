@@ -8,7 +8,7 @@ const saveUserSearchLS = (value: string) => localStorage.setItem(prefixName + lo
 const getThemeIsDark = () => {
   const value = localStorage.getItem(prefixName + localStorageNameTheme);
   if (value) {
-    return Boolean(value);
+    return value === 'true';
   } else {
     return true;
   }

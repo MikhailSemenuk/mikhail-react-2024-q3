@@ -2,6 +2,7 @@ import { decrement, increment } from '../state/slices/counterSlice';
 import { RootState } from '../state/store';
 import { useDispatch, useSelector } from 'react-redux';
 
+// TODO: del later
 export function StorePanel() {
   const count = useSelector((state: RootState) => state.counter.value);
   const dispatch = useDispatch();
