@@ -1,9 +1,13 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { InfoResults } from '../../types';
+import { Character, InfoResults } from '../../types';
 
 export interface GetAllCharactersParams {
   search?: string;
   page?: string;
+}
+
+export interface getCharacterParams {
+  id: string;
 }
 
 export const charactersApi = createApi({
@@ -13,7 +17,10 @@ export const charactersApi = createApi({
     getAllCharacters: builder.query<InfoResults, GetAllCharactersParams>({
       query: ({ search = '', page = '1' }) => `character/?page=${page}&name=${encodeURIComponent(search)}`,
     }),
+    getCharacter: builder.query<Character, getCharacterParams>({
+      query: ({ id }) => `character/${id}`,
+    }),
   }),
 });
 
-export const { useGetAllCharactersQuery } = charactersApi;
+export const { useGetAllCharactersQuery, useGetCharacterQuery } = charactersApi;

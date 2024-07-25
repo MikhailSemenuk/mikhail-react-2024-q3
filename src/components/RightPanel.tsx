@@ -1,8 +1,7 @@
-import { useEffect, useState } from 'react';
-import fetchCharacter from '../libs/fetchCharacter';
 import { DetailCharacterCard } from './DetailCharacterCard';
-import { Character } from '../types';
 import { SpinnerLoading } from './SpinnerLoading';
+import { useGetCharacterQuery } from '../state/slices/charactersApi';
+import { skipToken } from '@reduxjs/toolkit/query/react';
 
 interface RightPanelProps {
   selectedId: number | undefined;
@@ -11,21 +10,8 @@ interface RightPanelProps {
 }
 
 export default function RightPanel({ selectedId, isShowRightPanel, handleClose }: RightPanelProps) {
-  const [detailCharacter, setDetailCharacter] = useState<Character | undefined>(undefined);
-  const [isLoading, setIsLoading] = useState(false);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      if (!selectedId) {
-        return;
-      }
-      setIsLoading(true);
-      const data = await fetchCharacter(String(selectedId));
-      setIsLoading(false);
-      setDetailCharacter(data);
-    };
-    fetchData();
-  }, [selectedId, isShowRightPanel]);
+  const queryArgs = selectedId ? { id: selectedId.toString() } : skipToken;
+  const { data, isLoading } = useGetCharacterQuery(queryArgs);
 
   if (!isShowRightPanel) {
     return null;
@@ -34,7 +20,7 @@ export default function RightPanel({ selectedId, isShowRightPanel, handleClose }
   return (
     <div className='mt-4 ps-3 border-start border-white' style={{ minWidth: '22rem' }}>
       <SpinnerLoading isLoading={isLoading}></SpinnerLoading>
-      {!isLoading && <DetailCharacterCard character={detailCharacter} onClose={handleClose} />}
+      {!isLoading && <DetailCharacterCard character={data} onClose={handleClose} />}
     </div>
   );
 }
