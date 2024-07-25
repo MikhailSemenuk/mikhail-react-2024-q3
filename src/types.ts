@@ -16,7 +16,11 @@ export interface Character {
   //...
 }
 
-export interface CharacterPages {
-  characters: Character[];
-  pages: number;
+export interface InfoResults {
+  info: {
+    count: number;
+    pages: number;
+    //...
+  };
+  results: Character[];
 }

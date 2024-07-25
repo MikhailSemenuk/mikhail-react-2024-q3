@@ -3,14 +3,14 @@ import SearchGroup from './SearchGroup';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import CharacterCardList from './CharacterCardList';
 import Pagination from './Pagination';
-import fetchCharacters from '../libs/fetchCharacters';
-import { Character } from '../types';
 import useUserSearch from '../hooks/useUserSearch';
 import RightPanel from './RightPanel';
 import updateURL from '../libs/updateURL';
 import { SpinnerLoading } from './SpinnerLoading';
 import { StorePanel } from './StorePanel';
 import { BottomPanel } from './BottomPanel';
+import { useGetAllCharactersQuery } from '../state/slices/charactersApi';
+import { Character } from '../types';
 
 export default function Main() {
   const navigate = useNavigate();
@@ -26,25 +26,17 @@ export default function Main() {
   const isPageNumber = !isNaN(Number(page));
 
   const [userSearch, setUserSearch] = useUserSearch();
-  const [pages, setPages] = useState(0);
-  const [characters, setCharacters] = useState<Character[]>([]);
   const [currentPage, setCurrentPage] = useState(Number(page));
-
-  const [isLoading, setIsLoading] = useState(false);
 
   const [selectedId, setSelectedId] = useState<number | undefined>(detailsURL);
   const [isShowRightPanel, setShowRightPanel] = useState(detailsURL !== undefined);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      setIsLoading(true);
-      const data = await fetchCharacters(userSearch, `${currentPage}`);
-      setPages(data.pages);
-      setCharacters(data.characters);
-      setIsLoading(false);
-    };
-    fetchData();
-  }, [userSearch, currentPage]);
+  const { data, error, isLoading } = useGetAllCharactersQuery({ search: userSearch, page: `${currentPage}` });
+  const characters: Character[] = data?.results ?? [];
+  const pages: number = data?.info.pages ?? 0;
+  if (error) {
+    console.error(error); // TODO: Think here later
+  }
 
   useEffect(() => {
     const newPath = `/list/${currentPage}` + location.search;
@@ -76,7 +68,6 @@ export default function Main() {
       setSelectedId(id);
       updateURL(searchParams, navigate, id);
     } else {
-      console.log('уже открыта карточка');
       setSelectedId(id);
       updateURL(searchParams, navigate, id);
     }

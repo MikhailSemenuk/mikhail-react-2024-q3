@@ -1,6 +1,5 @@
 import { Character } from '../types';
 import CharacterCard from './CharacterCard';
-import { useGetAllCharactersQuery } from './../state/slices/charactersApi';
 
 interface CharacterCardListProps {
   characters: Character[];
@@ -8,10 +7,6 @@ interface CharacterCardListProps {
 }
 
 export default function CharacterCardList({ characters, onCardClick }: CharacterCardListProps) {
-  // TODO: test
-  const { data } = useGetAllCharactersQuery();
-  console.log(data);
-
   return (
     <section className='d-flex flex-wrap justify-content-around'>
       {characters.length > 0 ? (
