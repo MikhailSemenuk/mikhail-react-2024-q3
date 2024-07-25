@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { InfoResults } from '../../types';
 
-interface GetAllCharactersParams {
+export interface GetAllCharactersParams {
   search?: string;
   page?: string;
 }

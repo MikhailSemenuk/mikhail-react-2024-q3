@@ -7,7 +7,6 @@ import useUserSearch from '../hooks/useUserSearch';
 import RightPanel from './RightPanel';
 import updateURL from '../libs/updateURL';
 import { SpinnerLoading } from './SpinnerLoading';
-import { StorePanel } from './StorePanel';
 import { BottomPanel } from './BottomPanel';
 import { useGetAllCharactersQuery } from '../state/slices/charactersApi';
 import { Character } from '../types';
@@ -79,7 +78,6 @@ export default function Main() {
         <div className='flex-grow-1' onClick={closeRightPanel}>
           <h1 className='text-center mt-2'>Characters from Rick and Morty</h1>
           <div className='d-flex flex-column align-items-center'>
-            <StorePanel></StorePanel>
             <SearchGroup userSearch={userSearch} setUserSearch={handleSearch}></SearchGroup>
             <SpinnerLoading isLoading={isLoading}></SpinnerLoading>
             {!isLoading && (
