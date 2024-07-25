@@ -9,7 +9,7 @@
     "skipLibCheck": true,
 
     /* Bundler mode */
-    "moduleResolution": "bundler",
+    "moduleResolution": "node",
     "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
@@ -24,7 +24,10 @@
     "noFallthroughCasesInSwitch": true,
 
     /* Tests */
-    "types": ["@testing-library/jest-dom"]
+    "types": ["@testing-library/jest-dom"],
+
+    /* Additional setting */
+    "allowSyntheticDefaultImports": true
   },
   "include": ["src"]
 }
