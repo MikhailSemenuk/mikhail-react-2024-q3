@@ -1,6 +1,10 @@
 import { Character } from '../types';
 
 export function convertToCSV(data: Character[]): string {
+  if (data.length === 0) {
+    return '';
+  }
+
   const csvRows: string[] = [];
   const headers: (keyof Character)[] = Object.keys(data[0]) as (keyof Character)[];
 
