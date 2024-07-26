@@ -8,7 +8,7 @@ import { RootState } from '../state/store';
 
 interface CharacterCardProps {
   character: Character;
-  onCardClick: (value: number, event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
+  onCardClick: (value: number, event: React.MouseEvent<HTMLDivElement | HTMLUListElement, MouseEvent>) => void;
 }
 
 export default function CharacterCard({ character, onCardClick }: CharacterCardProps) {
@@ -21,12 +21,16 @@ export default function CharacterCard({ character, onCardClick }: CharacterCardP
   detailList.push(`Gender: ${character.gender}`);
   detailList.push(`Species: ${character.species}`);
 
-  const onClickImgBody = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+  const onClickImgBody = (event: React.MouseEvent<HTMLDivElement | HTMLUListElement, MouseEvent>) => {
     event.stopPropagation();
     onCardClick(character.id, event);
   };
 
-  const onClickFooter = () => {
+  const onClickFooter = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    event.stopPropagation();
+  };
+
+  const onClickCheckbox = () => {
     dispatch(toggleCard(character.id));
   };
 
@@ -41,21 +45,21 @@ export default function CharacterCard({ character, onCardClick }: CharacterCardP
       <div className='card-body cursor-pointer' onClick={(event) => onClickImgBody(event)}>
         <h5 className='card-title'>{character.name}</h5>
       </div>
-      <ul className='list-group list-group-flush'>
+      <ul className='list-group list-group-flush' onClick={(event) => onClickImgBody(event)}>
         {detailList.map((value, index) => (
           <li key={index} className='list-group-item'>
             {value}
           </li>
         ))}
       </ul>
-      <div className='card-footer'>
+      <div className='card-footer' onClick={(event) => onClickFooter(event)}>
         <div className='form-check'>
           <input
             className='form-check-input'
             type='checkbox'
             value=''
             checked={isChecked}
-            onChange={onClickFooter}
+            onChange={onClickCheckbox}
             id={checkboxId}
           ></input>
           <label className='form-check-label' htmlFor={checkboxId}>
