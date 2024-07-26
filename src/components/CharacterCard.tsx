@@ -3,17 +3,22 @@ import { Character } from '../types';
 import { useDispatch, useSelector } from 'react-redux';
 import { toggleCard } from '../state/slices/cardsSlice';
 import { RootState } from '../state/store';
+import classNames from 'classnames';
+import { useTheme } from '../hooks/useTheme';
 
 // TODO: Similar code with DetailCharacterCard, update it
 
 interface CharacterCardProps {
   character: Character;
-  onCardClick: (value: number, event: React.MouseEvent<HTMLDivElement | HTMLUListElement, MouseEvent>) => void;
+  isDetailCard: boolean;
+  onCardClick?: (value: number, event: React.MouseEvent<HTMLDivElement | HTMLUListElement, MouseEvent>) => void;
+  onClose?: () => void;
 }
 
-export default function CharacterCard({ character, onCardClick }: CharacterCardProps) {
+export default function CharacterCard({ character, onCardClick, onClose, isDetailCard = false }: CharacterCardProps) {
   const checkboxId = useId();
   const dispatch = useDispatch();
+  const { darkTheme } = useTheme();
   const isChecked = useSelector((state: RootState) => state.cards.selectedCards.includes(character.id));
 
   const detailList = [];
@@ -21,9 +26,16 @@ export default function CharacterCard({ character, onCardClick }: CharacterCardP
   detailList.push(`Gender: ${character.gender}`);
   detailList.push(`Species: ${character.species}`);
 
+  if (isDetailCard) {
+    detailList.push(`Location: ${character.location.name}`);
+    detailList.push(`Origin: ${character.origin.name}`);
+  }
+
   const onClickImgBody = (event: React.MouseEvent<HTMLDivElement | HTMLUListElement, MouseEvent>) => {
     event.stopPropagation();
-    onCardClick(character.id, event);
+    if (onCardClick) {
+      onCardClick(character.id, event);
+    }
   };
 
   const onClickFooter = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
@@ -34,8 +46,23 @@ export default function CharacterCard({ character, onCardClick }: CharacterCardP
     dispatch(toggleCard(character.id));
   };
 
+  const classNameCard = classNames(
+    'card',
+    'm-2',
+    { 'width-18rem': !isDetailCard },
+    { 'text-bg-secondary': isDetailCard && darkTheme },
+    { 'text-bg-warning': isDetailCard && !darkTheme },
+  );
+
+  console.log('currentTheme: ' + darkTheme);
+
   return (
-    <div className='card m-2' style={{ width: '18rem' }}>
+    <div className={classNameCard}>
+      {isDetailCard && (
+        <div className='d-flex flex-row-reverse'>
+          <button type='button' className='btn-close' aria-label='Close' onClick={onClose}></button>
+        </div>
+      )}
       <img
         src={character.image}
         className='card-img-top cursor-pointer'

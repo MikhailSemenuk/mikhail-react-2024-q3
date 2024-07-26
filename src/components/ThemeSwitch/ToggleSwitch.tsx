@@ -1,5 +1,5 @@
 import { useId } from 'react';
-import { useTheme } from './useTheme';
+import { useTheme } from '../../hooks/useTheme';
 
 // TODO: After F5 doesn't upload last theme
 

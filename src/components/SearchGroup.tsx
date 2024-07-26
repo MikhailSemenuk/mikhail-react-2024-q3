@@ -1,5 +1,5 @@
 import React from 'react';
-import { ThemeContext } from './ThemeSwitch/ThemeProvider';
+import { ThemeContext } from './ThemeProvider';
 
 interface SearchGroupProps {
   userSearch: string;
