@@ -17,7 +17,9 @@ export default function CharacterCard({ character, onCardClick, onClose, isDetai
   const checkboxId = useId();
   const dispatch = useDispatch();
   const { darkTheme } = useTheme();
-  const isChecked = useSelector((state: RootState) => state.cards.selectedCards.includes(character.id));
+  const isChecked = useSelector((state: RootState) =>
+    state.cards.selectedCards.some((item) => item.id === character.id),
+  );
 
   const detailList = [];
   detailList.push(`Status: ${character.status}`);
@@ -41,7 +43,7 @@ export default function CharacterCard({ character, onCardClick, onClose, isDetai
   };
 
   const onClickCheckbox = () => {
-    dispatch(toggleCard(character.id));
+    dispatch(toggleCard(character));
   };
 
   const classNameCard = classNames(
@@ -51,8 +53,6 @@ export default function CharacterCard({ character, onCardClick, onClose, isDetai
     { 'text-bg-secondary': isDetailCard && darkTheme },
     { 'text-bg-warning': isDetailCard && !darkTheme },
   );
-
-  console.log('currentTheme: ' + darkTheme);
 
   return (
     <div className={classNameCard}>

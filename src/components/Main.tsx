@@ -30,12 +30,9 @@ export default function Main() {
   const [selectedId, setSelectedId] = useState<number | undefined>(detailsURL);
   const [isShowRightPanel, setShowRightPanel] = useState(detailsURL !== undefined);
 
-  const { data, error, isLoading } = useGetAllCharactersQuery({ search: userSearch, page: `${currentPage}` });
+  const { data, isLoading } = useGetAllCharactersQuery({ search: userSearch, page: `${currentPage}` });
   const characters: Character[] = data?.results ?? [];
   const pages: number = data?.info.pages ?? 0;
-  if (error) {
-    console.error(error); // TODO: Think here later
-  }
 
   useEffect(() => {
     const newPath = `/list/${currentPage}` + location.search;

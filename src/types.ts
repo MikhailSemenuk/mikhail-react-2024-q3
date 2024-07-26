@@ -13,7 +13,7 @@ export interface Character {
     name: string;
     url: string;
   };
-  //...
+  episode: string[];
 }
 
 export interface InfoResults {

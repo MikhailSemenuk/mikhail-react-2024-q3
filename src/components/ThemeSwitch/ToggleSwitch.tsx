@@ -1,8 +1,6 @@
 import { useId } from 'react';
 import { useTheme } from '../../hooks/useTheme';
 
-// TODO: After F5 doesn't upload last theme
-
 export function ToggleSwitch() {
   const toggleId = useId();
   const { darkTheme, toggleTheme } = useTheme();
