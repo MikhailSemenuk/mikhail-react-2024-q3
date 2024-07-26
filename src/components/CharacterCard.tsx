@@ -6,8 +6,6 @@ import { RootState } from '../state/store';
 import classNames from 'classnames';
 import { useTheme } from '../hooks/useTheme';
 
-// TODO: Similar code with DetailCharacterCard, update it
-
 interface CharacterCardProps {
   character: Character;
   isDetailCard: boolean;
