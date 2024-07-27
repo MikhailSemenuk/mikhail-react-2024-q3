@@ -9,6 +9,8 @@ import { useTheme } from '../../hooks/useTheme';
 import { singleCharacter } from '../../../tests/testData';
 import { charactersApi } from '../../state/slices/charactersApi';
 
+// TODO: Error: Not implemented: navigation (except hash changes)
+
 // Mock useTheme hook
 vi.mock('../../hooks/useTheme', () => ({
   useTheme: vi.fn(),
@@ -16,7 +18,7 @@ vi.mock('../../hooks/useTheme', () => ({
 
 // Mock convertToCSV function
 vi.mock('../../libs/convertToCSV', () => ({
-  convertToCSV: vi.fn().mockReturnValue('name,age\nJohn,30\nDoe,25'),
+  convertToCSV: vi.fn().mockReturnValue(''),
 }));
 
 type CharactersApiState = ReturnType<typeof charactersApi.reducer>;
@@ -24,18 +26,14 @@ type CharactersApiState = ReturnType<typeof charactersApi.reducer>;
 const mockStore = configureStore<RootState>([]);
 
 describe('BottomPanel', () => {
-  // Hide redundant console.log() console.error()
-  const originalConsoleError = console.error;
-  const originalConsoleLog = console.log;
-
+  // Hide redundant console.log() and console.error()
   beforeEach(() => {
-    console.error = vi.fn();
-    console.log = vi.fn();
+    vi.spyOn(console, 'error').mockImplementation(() => {}); // Disable console.error
+    vi.spyOn(console, 'log').mockImplementation(() => {}); // Disable console.log
   });
 
   afterEach(() => {
-    console.error = originalConsoleError;
-    console.log = originalConsoleLog;
+    vi.restoreAllMocks(); // Restore original console behavior
   });
 
   it('renders correctly with selected cards', () => {
@@ -43,7 +41,7 @@ describe('BottomPanel', () => {
 
     const initialState: RootState = {
       cards: { selectedCards: singleCharacter },
-      charactersApi: {} as CharactersApiState, // Mock the required state slice
+      charactersApi: {} as CharactersApiState,
     };
     const store = mockStore(initialState);
 
@@ -61,7 +59,7 @@ describe('BottomPanel', () => {
 
     const initialState: RootState = {
       cards: { selectedCards: singleCharacter },
-      charactersApi: {} as CharactersApiState, // Mock the required state slice
+      charactersApi: {} as CharactersApiState,
     };
     const store = mockStore(initialState);
 
@@ -84,7 +82,7 @@ describe('BottomPanel', () => {
 
     const initialState: RootState = {
       cards: { selectedCards: singleCharacter },
-      charactersApi: {} as CharactersApiState, // Mock the required state slice
+      charactersApi: {} as CharactersApiState,
     };
     const store = mockStore(initialState);
 
@@ -108,7 +106,7 @@ describe('BottomPanel', () => {
 
     const initialState: RootState = {
       cards: { selectedCards: singleCharacter },
-      charactersApi: {} as CharactersApiState, // Mock the required state slice
+      charactersApi: {} as CharactersApiState,
     };
     const store = mockStore(initialState);
 
