@@ -8,6 +8,8 @@ import { ThemeSwitchHeder } from './components/ThemeSwitch/ThemeSwitchHeder';
 import { Provider } from 'react-redux';
 import { store } from './state/store';
 
+// TODO: All imports in one style
+
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path='/'>
