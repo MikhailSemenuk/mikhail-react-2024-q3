@@ -22,8 +22,11 @@ export default function Pagination({ currentPage, pages, setCurrentPage }: Pagin
   };
 
   return (
-    <nav className='my-5' aria-label='Page navigation'>
-      <ul className={classNames('pagination', 'flex-wrap', { 'pagination-sm': isMinWidth })}>
+    <nav className='my-5' data-testid='Pagination' aria-label='Page navigation'>
+      <ul
+        className={classNames('pagination', 'flex-wrap', { 'pagination-sm': isMinWidth })}
+        data-testid='Pagination-list'
+      >
         <PageLink value='Previous' isDisabled={currentPage === 1} onClick={() => handlePageClick(currentPage - 1)} />
         {generateArray(pages).map((pageNumber) => (
           <PageLink
