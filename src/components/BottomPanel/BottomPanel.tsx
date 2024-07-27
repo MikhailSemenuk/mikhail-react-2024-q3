@@ -1,10 +1,10 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../state/store';
+import { RootState } from '../../state/store';
 import classNames from 'classnames';
-import { deselectAllCards } from '../state/slices/cardsSlice';
-import { useTheme } from '../hooks/useTheme';
-import { Character } from '../types';
-import { convertToCSV } from '../libs/convertToCSV';
+import { deselectAllCards } from '../../state/slices/cardsSlice';
+import { useTheme } from '../../hooks/useTheme';
+import { Character } from '../../types';
+import { convertToCSV } from '../../libs/convertToCSV';
 
 export function BottomPanel() {
   const dispatch = useDispatch();

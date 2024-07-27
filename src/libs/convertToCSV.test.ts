@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { convertToCSV } from './convertToCSV';
-import { sampleCharacters, emptyCharacters, singleCharacter } from './testData';
+import { sampleCharacters, emptyCharacters, singleCharacter } from '../../tests/testData';
 import { Character } from '../types';
 
 describe('convertToCSV', () => {

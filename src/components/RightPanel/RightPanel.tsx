@@ -1,6 +1,6 @@
-import { DetailCharacterCard } from './DetailCharacterCard';
-import { SpinnerLoading } from './SpinnerLoading';
-import { useGetCharacterQuery } from '../state/slices/charactersApi';
+import { DetailCharacterCard } from '../CharacterCards/DetailCharacterCard';
+import { SpinnerLoading } from '../SpinnerLoading/SpinnerLoading';
+import { useGetCharacterQuery } from '../../state/slices/charactersApi';
 import { skipToken } from '@reduxjs/toolkit/query/react';
 
 interface RightPanelProps {

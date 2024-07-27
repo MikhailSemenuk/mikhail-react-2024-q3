@@ -1,5 +1,5 @@
-import { Character } from '../types';
-import CharacterCard from './CharacterCard';
+import { Character } from '../../types';
+import CharacterCard from '../CharacterCards/CharacterCard';
 
 interface CharacterCardListProps {
   characters: Character[];
@@ -11,7 +11,7 @@ export default function CharacterCardList({ characters, onCardClick }: Character
     <section className='d-flex flex-wrap justify-content-around'>
       {characters.length > 0 ? (
         characters.map((character) => (
-          <CharacterCard key={character.id} character={character} onCardClick={onCardClick} />
+          <CharacterCard key={character.id} character={character} onCardClick={onCardClick} isDetailCard={false} />
         ))
       ) : (
         <p>Try search something else (Butter Robot, Abradolf Lincler, Rick, Morty) </p>

@@ -29,5 +29,5 @@
     /* Additional setting */
     "allowSyntheticDefaultImports": true
   },
-  "include": ["src"]
+  "include": ["src", "tests/testData.ts"]
 }

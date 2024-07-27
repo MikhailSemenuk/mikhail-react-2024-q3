@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState, ReactNode } from 'react';
-import { getThemeIsDark, saveThemeIsDark } from '../libs/appLocalStorage';
+import { getThemeIsDark, saveThemeIsDark } from '../../libs/appLocalStorage';
 
 export interface ThemeContextProps {
   darkTheme: boolean;

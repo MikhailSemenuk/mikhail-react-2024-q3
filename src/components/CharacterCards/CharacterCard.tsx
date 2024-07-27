@@ -1,10 +1,10 @@
 import { useId } from 'react';
-import { Character } from '../types';
+import { Character } from '../../types';
 import { useDispatch, useSelector } from 'react-redux';
-import { toggleCard } from '../state/slices/cardsSlice';
-import { RootState } from '../state/store';
+import { toggleCard } from '../../state/slices/cardsSlice';
+import { RootState } from '../../state/store';
 import classNames from 'classnames';
-import { useTheme } from '../hooks/useTheme';
+import { useTheme } from '../../hooks/useTheme';
 
 interface CharacterCardProps {
   character: Character;

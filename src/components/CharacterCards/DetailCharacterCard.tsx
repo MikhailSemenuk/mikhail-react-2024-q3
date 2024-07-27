@@ -1,4 +1,4 @@
-import { Character } from '../types';
+import { Character } from '../../types';
 import CharacterCard from './CharacterCard';
 
 interface DetailCharacterCardProps {

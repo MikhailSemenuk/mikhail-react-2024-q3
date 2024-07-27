@@ -1,5 +1,5 @@
 // testData.ts
-import { Character } from '../types';
+import { Character } from '../src/types';
 
 // Основные данные для тестов
 export const sampleCharacters: Character[] = [
@@ -27,7 +27,6 @@ export const sampleCharacters: Character[] = [
   },
 ];
 
-// Дополнительные данные для тестирования
 export const emptyCharacters: Character[] = [];
 
 export const singleCharacter: Character[] = [

@@ -1,9 +1,9 @@
 import './App.css';
 import { createBrowserRouter, createRoutesFromElements, Navigate, Route, RouterProvider } from 'react-router-dom';
-import Page404 from './components/Page404';
-import Main from './components/Main';
-import ErrorBoundary from './components/ErrorBoundary';
-import { ThemeProvider } from './components/ThemeProvider';
+import Page404 from './components/Page404/Page404';
+import Main from './components/Main/Main';
+import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary';
+import { ThemeProvider } from './components/ThemeProvider/ThemeProvider';
 import { ThemeSwitchHeder } from './components/ThemeSwitch/ThemeSwitchHeder';
 import { Provider } from 'react-redux';
 import { store } from './state/store';

@@ -1,4 +1,4 @@
-import generateArray from '../libs/generateArray';
+import generateArray from '../../libs/generateArray';
 import classNames from 'classnames';
 
 interface PaginationProps {

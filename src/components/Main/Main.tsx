@@ -1,15 +1,15 @@
 import { useEffect, useState } from 'react';
-import SearchGroup from './SearchGroup';
+import SearchGroup from '../SearchGroup/SearchGroup';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
-import CharacterCardList from './CharacterCardList';
-import Pagination from './Pagination';
-import useUserSearch from '../hooks/useUserSearch';
-import RightPanel from './RightPanel';
-import updateURL from '../libs/updateURL';
-import { SpinnerLoading } from './SpinnerLoading';
-import { BottomPanel } from './BottomPanel';
-import { useGetAllCharactersQuery } from '../state/slices/charactersApi';
-import { Character } from '../types';
+import Pagination from '../Pagination/Pagination';
+import useUserSearch from '../../hooks/useUserSearch';
+import RightPanel from '../RightPanel/RightPanel';
+import updateURL from '../../libs/updateURL';
+import { SpinnerLoading } from '../SpinnerLoading/SpinnerLoading';
+import { BottomPanel } from '../BottomPanel/BottomPanel';
+import { useGetAllCharactersQuery } from '../../state/slices/charactersApi';
+import { Character } from '../../types';
+import CharacterCardList from '../CharacterCardList/CharacterCardList';
 
 export default function Main() {
   const navigate = useNavigate();
