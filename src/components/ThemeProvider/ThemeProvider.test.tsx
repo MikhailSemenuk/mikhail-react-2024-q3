@@ -3,7 +3,6 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import { ThemeProvider, ThemeContext } from './ThemeProvider';
 import { getThemeIsDark, saveThemeIsDark } from '../../libs/appLocalStorage';
 
-// Mock appLocalStorage functions
 vi.mock('../../libs/appLocalStorage', () => ({
   getThemeIsDark: vi.fn(),
   saveThemeIsDark: vi.fn(),
@@ -11,11 +10,11 @@ vi.mock('../../libs/appLocalStorage', () => ({
 
 describe('ThemeProvider', () => {
   beforeEach(() => {
-    vi.resetAllMocks(); // Reset mocks before each test
+    vi.resetAllMocks();
   });
 
   it('should use default darkTheme value from local storage', () => {
-    (getThemeIsDark as Mock).mockReturnValue(true); // Mock local storage to return true
+    (getThemeIsDark as Mock).mockReturnValue(true);
 
     render(
       <ThemeProvider>
@@ -83,7 +82,7 @@ describe('ThemeProvider', () => {
       </ThemeProvider>,
     );
 
-    expect(document.body.getAttribute('data-bs-theme')).toBe('dark'); // Check after change
-    expect(saveThemeIsDark).toHaveBeenCalledWith(true); // Verify local storage update
+    expect(document.body.getAttribute('data-bs-theme')).toBe('dark');
+    expect(saveThemeIsDark).toHaveBeenCalledWith(true);
   });
 });

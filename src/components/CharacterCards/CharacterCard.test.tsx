@@ -10,7 +10,6 @@ import { singleCharacter } from '../../../tests/testData';
 import CharacterCard from './CharacterCard';
 import { charactersApi } from '../../state/slices/charactersApi';
 
-// Mock useTheme hook
 vi.mock('../../hooks/useTheme', () => ({
   useTheme: vi.fn(),
 }));
@@ -163,8 +162,8 @@ describe('CharacterCard', () => {
       </Provider>,
     );
 
-    expect(container.querySelector('.text-bg-warning')).toBeNull(); // should not have this class
-    expect(container.querySelector('.text-bg-secondary')).toBeNull(); // should not have this class
+    expect(container.querySelector('.text-bg-warning')).toBeNull();
+    expect(container.querySelector('.text-bg-secondary')).toBeNull();
   });
 
   it('prevents event propagation on card footer click', () => {

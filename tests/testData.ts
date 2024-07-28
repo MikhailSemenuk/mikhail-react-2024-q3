@@ -1,7 +1,5 @@
-// testData.ts
 import { Character } from '../src/types';
 
-// Основные данные для тестов
 export const sampleCharacters: Character[] = [
   {
     id: 1,

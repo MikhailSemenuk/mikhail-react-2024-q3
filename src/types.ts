@@ -20,7 +20,6 @@ export interface InfoResults {
   info: {
     count: number;
     pages: number;
-    //...
   };
   results: Character[];
 }

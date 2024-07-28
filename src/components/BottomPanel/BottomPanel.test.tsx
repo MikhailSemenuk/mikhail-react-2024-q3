@@ -84,8 +84,6 @@ describe('BottomPanel', () => {
     fireEvent.click(downloadButton);
 
     expect(downloadAsCSV).toHaveBeenCalledWith(singleCharacter);
-    // Удалим проверку вызова createObjectURL, так как это не является частью основного теста
-    // expect(mockCreateObjectURL).toHaveBeenCalled();
   });
 
   it('renders buttons with correct classes based on theme', () => {
