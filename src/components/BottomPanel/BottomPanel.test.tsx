@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, Mock, beforeEach, afterEach } from 'vitest';
+import { describe, it, expect, vi, Mock } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
@@ -8,34 +8,19 @@ import { deselectAllCards } from '../../state/slices/cardsSlice';
 import { useTheme } from '../../hooks/useTheme';
 import { singleCharacter } from '../../../tests/testData';
 import { charactersApi } from '../../state/slices/charactersApi';
+import { downloadAsCSV } from '../../libs/downloadAsCSV';
 
-// TODO: Error: Not implemented: navigation (except hash changes)
-
-// Mock useTheme hook
 vi.mock('../../hooks/useTheme', () => ({
   useTheme: vi.fn(),
 }));
 
-// Mock convertToCSV function
-vi.mock('../../libs/convertToCSV', () => ({
-  convertToCSV: vi.fn().mockReturnValue(''),
-}));
+vi.mock('../../libs/downloadAsCSV');
 
 type CharactersApiState = ReturnType<typeof charactersApi.reducer>;
 
 const mockStore = configureStore<RootState>([]);
 
 describe('BottomPanel', () => {
-  // Hide redundant console.log() and console.error()
-  beforeEach(() => {
-    vi.spyOn(console, 'error').mockImplementation(() => {}); // Disable console.error
-    vi.spyOn(console, 'log').mockImplementation(() => {}); // Disable console.log
-  });
-
-  afterEach(() => {
-    vi.restoreAllMocks(); // Restore original console behavior
-  });
-
   it('renders correctly with selected cards', () => {
     (useTheme as Mock).mockReturnValue({ darkTheme: false });
 
@@ -77,7 +62,7 @@ describe('BottomPanel', () => {
     expect(store.dispatch).toHaveBeenCalledWith(deselectAllCards());
   });
 
-  it('calls handleDownload when "Download" button is clicked', () => {
+  it('calls downloadAsCSV when "Download" button is clicked', () => {
     (useTheme as Mock).mockReturnValue({ darkTheme: false });
 
     const initialState: RootState = {
@@ -98,7 +83,9 @@ describe('BottomPanel', () => {
     const downloadButton = screen.getByText(/download/i);
     fireEvent.click(downloadButton);
 
-    expect(mockCreateObjectURL).toHaveBeenCalled();
+    expect(downloadAsCSV).toHaveBeenCalledWith(singleCharacter);
+    // Удалим проверку вызова createObjectURL, так как это не является частью основного теста
+    // expect(mockCreateObjectURL).toHaveBeenCalled();
   });
 
   it('renders buttons with correct classes based on theme', () => {

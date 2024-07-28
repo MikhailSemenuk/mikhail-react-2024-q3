@@ -3,8 +3,7 @@ import { RootState } from '../../state/store';
 import classNames from 'classnames';
 import { deselectAllCards } from '../../state/slices/cardsSlice';
 import { useTheme } from '../../hooks/useTheme';
-import { Character } from '../../types';
-import { convertToCSV } from '../../libs/convertToCSV';
+import { downloadAsCSV } from '../../libs/downloadAsCSV';
 
 export function BottomPanel() {
   const dispatch = useDispatch();
@@ -12,18 +11,6 @@ export function BottomPanel() {
 
   const selectedCards = useSelector((state: RootState) => state.cards.selectedCards);
   const lengthSelectedCards = selectedCards.length;
-
-  const handleDownload = (favoritesData: Character[]) => {
-    const csv = convertToCSV(favoritesData);
-    const blob = new Blob([csv], { type: 'text/csv' });
-    const url = URL.createObjectURL(blob);
-
-    // I am not manipulate with DOM, because I am not attach link in DOM.
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = `characters_${favoritesData.length}.csv`;
-    link.click();
-  };
 
   const classes = classNames('offcanvas', 'offcanvas-bottom', 'h-auto', {
     show: lengthSelectedCards > 0,
@@ -46,7 +33,7 @@ export function BottomPanel() {
 
           <button
             className={classNames('btn', 'm-3', darkTheme ? 'btn-outline-primary' : 'btn-primary')}
-            onClick={() => handleDownload(selectedCards)}
+            onClick={() => downloadAsCSV(selectedCards)}
           >
             Download
           </button>
