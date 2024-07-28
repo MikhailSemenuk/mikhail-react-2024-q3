@@ -1,6 +1,7 @@
 import { Character } from '../types';
 
 export function convertToCSV(data: Character[]): string {
+  const splitSymbol = ';';
   if (data.length === 0) {
     return '';
   }
@@ -9,7 +10,7 @@ export function convertToCSV(data: Character[]): string {
   const headers: (keyof Character)[] = Object.keys(data[0]) as (keyof Character)[];
 
   // header row
-  csvRows.push(headers.join(','));
+  csvRows.push(headers.join(splitSymbol));
 
   // data rows
   data.forEach((item) => {
@@ -26,7 +27,7 @@ export function convertToCSV(data: Character[]): string {
       }
       return String(item[header]);
     });
-    csvRows.push(values.join(';'));
+    csvRows.push(values.join(splitSymbol));
   });
 
   return csvRows.join('\n');
