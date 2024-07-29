@@ -13,10 +13,13 @@ export interface Character {
     name: string;
     url: string;
   };
-  //...
+  episode: string[];
 }
 
-export interface CharacterPages {
-  characters: Character[];
-  pages: number;
+export interface InfoResults {
+  info: {
+    count: number;
+    pages: number;
+  };
+  results: Character[];
 }

@@ -1,4 +1,4 @@
-import react from 'react';
+import React from 'react';
 
 interface SearchGroupProps {
   userSearch: string;
@@ -6,13 +6,13 @@ interface SearchGroupProps {
 }
 
 export default function SearchGroup({ userSearch, setUserSearch }: SearchGroupProps) {
-  const [inputValue, setInputValue] = react.useState(userSearch);
+  const [inputValue, setInputValue] = React.useState(userSearch);
 
   const handleClick = () => {
     setUserSearch(inputValue.trim());
   };
 
-  const handleInputChange = (e: react.ChangeEvent<HTMLInputElement>) => setInputValue(e.target.value);
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => setInputValue(e.target.value);
 
   const handleInputKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
@@ -21,19 +21,19 @@ export default function SearchGroup({ userSearch, setUserSearch }: SearchGroupPr
   };
 
   return (
-    <section className="input-group p-3">
+    <section className='input-group p-3'>
       <input
-        type="text"
-        className="form-control"
-        placeholder="Search"
-        aria-label="Search"
-        aria-describedby="button-search"
+        type='text'
+        className='form-control'
+        placeholder='Search'
+        aria-label='Search'
+        aria-describedby='button-search'
         value={inputValue}
         onChange={handleInputChange}
         onKeyDown={handleInputKeyPress}
       />
-      <button onClick={handleClick} className="btn btn-outline-primary" type="button" id="button-search">
-        <span role="status">Search</span>
+      <button onClick={handleClick} className='btn btn-outline-primary' type='button' id='button-search'>
+        <span role='status'>Search</span>
       </button>
     </section>
   );
