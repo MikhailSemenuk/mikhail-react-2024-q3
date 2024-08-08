@@ -1,10 +1,10 @@
-import { saveThemeIsDark } from "@/libs/appLocalStorage";
+import { getThemeIsDark, saveThemeIsDark } from "@/libs/appLocalStorage";
 import whereIAm from "@/libs/whereIAm";
 import { useEffect, useId, useState } from "react";
 
 export function ToggleSwitch() {
   const toggleId = useId();
-  const [darkTheme, toggleTheme] = useState(true);
+  const [darkTheme, toggleTheme] = useState(getThemeIsDark());
 
   const handleToggle = () => {
     toggleTheme((previous) => !previous);
