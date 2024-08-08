@@ -4,8 +4,9 @@ import { GetServerSideProps } from 'next';
 import parseQueryContext from '@/libs/parseQueryContext';
 import fetchCharacters from './fetchCharacters';
 import Pagination from '@/components/Pagination';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useRouter } from 'next/router';
+import { useUpdateQuery } from '@/hooks/useUpdateQuery';
 
 interface PageProps {
   characters: Character[];
@@ -15,9 +16,8 @@ interface PageProps {
 export default function Page({ characters, totalPages }: PageProps) {
   const router = useRouter();
 
-  const { page, search } = parseQueryContext(router.query);
-  const pageNumber: number = Number(page);
-  const [currentPage, setCurrentPage] = useState<number>(pageNumber);
+  const { page, search: initialSearch } = parseQueryContext(router.query);
+  const { currentPage, setCurrentPage, search, setSearch } = useUpdateQuery(Number(page), initialSearch);
 
   useEffect(() => {
     if (currentPage > 0) {
