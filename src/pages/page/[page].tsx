@@ -1,8 +1,5 @@
-import { GetServerSideProps } from 'next';
-import fetchCharacters from './fetchCharacters';
 import { Character } from '@/types';
 import CharacterCard from '@/components/CharacterCard';
-import parseQueryContext from '@/libs/parseQueryContext';
 
 interface PageProps {
   characters: Character[];
@@ -10,6 +7,7 @@ interface PageProps {
 }
 
 export default function Page({ characters, totalPages }: PageProps) {
+  console.log(totalPages); // TODO: add later
   return (
     <div>
       <section className='d-flex flex-wrap justify-content-around'>
@@ -22,16 +20,3 @@ export default function Page({ characters, totalPages }: PageProps) {
     </div>
   );
 }
-
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { page, search } = parseQueryContext(context.query);
-
-  const data = await fetchCharacters(search, page);
-
-  return {
-    props: {
-      characters: data.results,
-      totalPages: data.info.pages,
-    },
-  };
-};
