@@ -1,17 +1,12 @@
 import classNames from 'classnames';
 import { useCharacterContext } from './CharacterContext';
 import { downloadAsCSV } from '@/libs/downloadAsCSV';
-import { useEffect } from 'react';
 
 export function BottomPanel() {
   const { selectedCards, deselectAllCards } = useCharacterContext();
   const darkTheme = true; // TODO: Replace later
 
   const lengthSelectedCards = selectedCards.length;
-
-  // useEffect(() => {
-  //   const lengthSelectedCards = selectedCards.length;
-  // }, [selectedCards]);
 
   const classes = classNames('offcanvas', 'offcanvas-bottom', 'h-auto', {
     show: lengthSelectedCards > 0,
@@ -23,7 +18,7 @@ export function BottomPanel() {
         <div className='d-flex justify-content-around align-items-center'>
           <button
             className={classNames('btn', 'm-3', darkTheme ? 'btn-outline-warning' : 'btn-warning')}
-            onClick={() => deselectAllCards}
+            onClick={deselectAllCards}
           >
             Unselect all
           </button>

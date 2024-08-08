@@ -4,6 +4,7 @@ import { createContext, useContext, useState, ReactNode, FC } from 'react';
 interface CharacterContextType {
   selectedCards: Character[];
   toggleCard: (card: Character) => void;
+  isCardCheckedId: (id: number) => boolean;
   deselectAllCards: () => void;
   isCardChecked: (card: Character) => boolean;
 }
@@ -18,20 +19,26 @@ export const CharacterProvider: FC<{ children: ReactNode }> = ({ children }) => 
   };
 
   const toggleCard = (card: Character) => {
-    const index = selectedCards.findIndex((item) => item.id === card.id);
-    if (index !== -1) {
-      selectedCards.splice(index, 1);
-    } else {
-      selectedCards.push(card);
-    }
+    setSelectedCards((prevSelectedCards) => {
+      const index = prevSelectedCards.findIndex((item) => item.id === card.id);
+      if (index !== -1) {
+        return prevSelectedCards.filter((item) => item.id !== card.id);
+      } else {
+        return [...prevSelectedCards, card];
+      }
+    });
   };
 
   const isCardChecked = (card: Character) => {
     return selectedCards.findIndex((item) => item.id === card.id) !== -1;
   };
 
+  const isCardCheckedId = (id: number) => {
+    return selectedCards.findIndex((item) => item.id === id) !== -1;
+  };
+
   return (
-    <CharacterContext.Provider value={{ selectedCards, toggleCard, deselectAllCards, isCardChecked }}>
+    <CharacterContext.Provider value={{ selectedCards, toggleCard, isCardCheckedId, deselectAllCards, isCardChecked }}>
       {children}
     </CharacterContext.Provider>
   );

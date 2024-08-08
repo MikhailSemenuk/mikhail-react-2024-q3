@@ -1,4 +1,4 @@
-import { useId, useState } from 'react';
+import { useEffect, useId, useState } from 'react';
 import classNames from 'classnames';
 import { Character } from '@/types';
 import Image from 'next/image';
@@ -12,15 +12,18 @@ interface CharacterCardProps {
 }
 
 export default function CharacterCard({ character, onCardClick, onClose, isDetailCard = false }: CharacterCardProps) {
-  // TODO: Simpefy it
-  const { isCardChecked, toggleCard } = useCharacterContext();
-  const [isChecked, setIsChecked] = useState(isCardChecked(character));
+  // TODO: Redundant render
+  const { isCardCheckedId, toggleCard } = useCharacterContext();
+  const [isChecked, setIsChecked] = useState(isCardCheckedId(character.id));
   const checkboxId = useId();
   const darkTheme = true; // TODO: Change to context
 
+  useEffect(() => {
+    setIsChecked(isCardCheckedId(character.id));
+  }, [character.id, isCardCheckedId]);
+
   const onClickCheckbox = () => {
     toggleCard(character);
-    setIsChecked(isCardChecked(character));
   };
 
   const detailList = [];
