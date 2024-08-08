@@ -1,5 +1,0 @@
-#!/usr/bin/env sh
-#. "${0%/*}/h"
-
-echo '🐶 husky pre-commit'
-npx lint-staged
