@@ -1,10 +1,11 @@
 import classNames from 'classnames';
 import { useCharacterContext } from './CharacterContext';
 import { downloadAsCSV } from '@/libs/downloadAsCSV';
+import { useTheme } from '@/hooks/useTheme';
 
 export function BottomPanel() {
   const { selectedCards, deselectAllCards } = useCharacterContext();
-  const darkTheme = true; // TODO: Replace later
+  const { darkTheme } = useTheme();
 
   const lengthSelectedCards = selectedCards.length;
 

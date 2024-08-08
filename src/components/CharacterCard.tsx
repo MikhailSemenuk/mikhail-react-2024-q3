@@ -3,6 +3,7 @@ import classNames from 'classnames';
 import { Character } from '@/types';
 import Image from 'next/image';
 import { useCharacterContext } from './CharacterContext';
+import { useTheme } from '@/hooks/useTheme';
 
 interface CharacterCardProps {
   character: Character;
@@ -16,7 +17,7 @@ export default function CharacterCard({ character, onCardClick, onClose, isDetai
   const { isCardCheckedId, toggleCard } = useCharacterContext();
   const [isChecked, setIsChecked] = useState(isCardCheckedId(character.id));
   const checkboxId = useId();
-  const darkTheme = true; // TODO: Change to context
+  const { darkTheme } = useTheme();
 
   useEffect(() => {
     setIsChecked(isCardCheckedId(character.id));
