@@ -1,7 +1,8 @@
-import { useId } from 'react';
+import { useId, useState } from 'react';
 import classNames from 'classnames';
 import { Character } from '@/types';
 import Image from 'next/image';
+import { useCharacterContext } from './CharacterContext';
 
 interface CharacterCardProps {
   character: Character;
@@ -12,12 +13,14 @@ interface CharacterCardProps {
 
 export default function CharacterCard({ character, onCardClick, onClose, isDetailCard = false }: CharacterCardProps) {
   // TODO: Simpefy it
+  const { isCardChecked, toggleCard } = useCharacterContext();
+  const [isChecked, setIsChecked] = useState(isCardChecked(character));
   const checkboxId = useId();
-  const darkTheme = true;
-  const isChecked = false;
+  const darkTheme = true; // TODO: Change to context
 
   const onClickCheckbox = () => {
-    console.log('click');
+    toggleCard(character);
+    setIsChecked(isCardChecked(character));
   };
 
   const detailList = [];
@@ -41,10 +44,6 @@ export default function CharacterCard({ character, onCardClick, onClose, isDetai
     event.stopPropagation();
   };
 
-  // const onClickCheckbox = () => {
-  //   dispatch(toggleCard(character));
-  // };
-
   const classNameCard = classNames(
     'card',
     'm-2',
@@ -53,7 +52,6 @@ export default function CharacterCard({ character, onCardClick, onClose, isDetai
     { 'text-bg-warning': isDetailCard && !darkTheme },
   );
 
-  // TODO: Rewrite img
   return (
     <div className={classNameCard}>
       {isDetailCard && (
@@ -68,12 +66,6 @@ export default function CharacterCard({ character, onCardClick, onClose, isDetai
         height={300}
         style={{ width: '100%', height: 'auto' }}
       />
-      {/* <img
-        src={character.image}
-        className='card-img-top cursor-pointer'
-        alt={character.name}
-        onClick={(event) => onClickImgBody(event)}
-      /> */}
       <div className='card-body cursor-pointer' onClick={(event) => onClickImgBody(event)}>
         <h5 className='card-title'>{character.name}</h5>
       </div>
