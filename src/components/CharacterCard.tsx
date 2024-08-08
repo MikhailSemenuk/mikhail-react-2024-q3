@@ -1,6 +1,7 @@
 import { useId } from "react";
 import classNames from "classnames";
 import { Character } from "@/types";
+import Image from "next/image";
 
 interface CharacterCardProps {
   character: Character;
@@ -77,7 +78,13 @@ export default function CharacterCard({
           ></button>
         </div>
       )}
-
+      <Image
+        src={character.image}
+        alt={character.name}
+        width={300}
+        height={300}
+        style={{ width: "100%", height: "auto" }}
+      />
       {/* <img
         src={character.image}
         className='card-img-top cursor-pointer'
