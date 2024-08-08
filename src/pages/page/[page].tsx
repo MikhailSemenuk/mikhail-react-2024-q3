@@ -7,6 +7,7 @@ import Pagination from '@/components/Pagination';
 import { useRouter } from 'next/router';
 import { useUpdateQuery } from '@/hooks/useUpdateQuery';
 import SearchGroup from '@/components/SearchGroup';
+import { BottomPanel } from '@/components/BottomPanel';
 
 interface PageProps {
   characters: Character[];
@@ -48,7 +49,7 @@ export default function Page({ characters, totalPages }: PageProps) {
         </div>
         <div>Right panel</div>
       </div>
-      <div>Bottom panel</div>
+      <BottomPanel></BottomPanel>
     </div>
   );
 }
