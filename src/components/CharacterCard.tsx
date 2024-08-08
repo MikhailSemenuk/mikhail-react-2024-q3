@@ -1,31 +1,23 @@
-import { useId } from "react";
-import classNames from "classnames";
-import { Character } from "@/types";
-import Image from "next/image";
+import { useId } from 'react';
+import classNames from 'classnames';
+import { Character } from '@/types';
+import Image from 'next/image';
 
 interface CharacterCardProps {
   character: Character;
   isDetailCard: boolean;
-  onCardClick?: (
-    value: number,
-    event: React.MouseEvent<HTMLDivElement | HTMLUListElement, MouseEvent>
-  ) => void;
+  onCardClick?: (value: number, event: React.MouseEvent<HTMLDivElement | HTMLUListElement, MouseEvent>) => void;
   onClose?: () => void;
 }
 
-export default function CharacterCard({
-  character,
-  onCardClick,
-  onClose,
-  isDetailCard = false,
-}: CharacterCardProps) {
+export default function CharacterCard({ character, onCardClick, onClose, isDetailCard = false }: CharacterCardProps) {
   // TODO: Simpefy it
   const checkboxId = useId();
   const darkTheme = true;
   const isChecked = false;
 
   const onClickCheckbox = () => {
-    console.log("click");
+    console.log('click');
   };
 
   const detailList = [];
@@ -38,18 +30,14 @@ export default function CharacterCard({
     detailList.push(`Origin: ${character.origin.name}`);
   }
 
-  const onClickImgBody = (
-    event: React.MouseEvent<HTMLDivElement | HTMLUListElement, MouseEvent>
-  ) => {
+  const onClickImgBody = (event: React.MouseEvent<HTMLDivElement | HTMLUListElement, MouseEvent>) => {
     event.stopPropagation();
     if (onCardClick) {
       onCardClick(character.id, event);
     }
   };
 
-  const onClickFooter = (
-    event: React.MouseEvent<HTMLDivElement, MouseEvent>
-  ) => {
+  const onClickFooter = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     event.stopPropagation();
   };
 
@@ -58,24 +46,19 @@ export default function CharacterCard({
   // };
 
   const classNameCard = classNames(
-    "card",
-    "m-2",
-    { "width-18rem": !isDetailCard },
-    { "text-bg-secondary": isDetailCard && darkTheme },
-    { "text-bg-warning": isDetailCard && !darkTheme }
+    'card',
+    'm-2',
+    { 'width-18rem': !isDetailCard },
+    { 'text-bg-secondary': isDetailCard && darkTheme },
+    { 'text-bg-warning': isDetailCard && !darkTheme },
   );
 
   // TODO: Rewrite img
   return (
     <div className={classNameCard}>
       {isDetailCard && (
-        <div className="d-flex flex-row-reverse">
-          <button
-            type="button"
-            className="btn-close"
-            aria-label="Close"
-            onClick={onClose}
-          ></button>
+        <div className='d-flex flex-row-reverse'>
+          <button type='button' className='btn-close' aria-label='Close' onClick={onClose}></button>
         </div>
       )}
       <Image
@@ -83,7 +66,7 @@ export default function CharacterCard({
         alt={character.name}
         width={300}
         height={300}
-        style={{ width: "100%", height: "auto" }}
+        style={{ width: '100%', height: 'auto' }}
       />
       {/* <img
         src={character.image}
@@ -91,33 +74,27 @@ export default function CharacterCard({
         alt={character.name}
         onClick={(event) => onClickImgBody(event)}
       /> */}
-      <div
-        className="card-body cursor-pointer"
-        onClick={(event) => onClickImgBody(event)}
-      >
-        <h5 className="card-title">{character.name}</h5>
+      <div className='card-body cursor-pointer' onClick={(event) => onClickImgBody(event)}>
+        <h5 className='card-title'>{character.name}</h5>
       </div>
-      <ul
-        className="list-group list-group-flush"
-        onClick={(event) => onClickImgBody(event)}
-      >
+      <ul className='list-group list-group-flush' onClick={(event) => onClickImgBody(event)}>
         {detailList.map((value, index) => (
-          <li key={index} className="list-group-item">
+          <li key={index} className='list-group-item'>
             {value}
           </li>
         ))}
       </ul>
-      <div className="card-footer" onClick={(event) => onClickFooter(event)}>
-        <div className="form-check">
+      <div className='card-footer' onClick={(event) => onClickFooter(event)}>
+        <div className='form-check'>
           <input
-            className="form-check-input"
-            type="checkbox"
-            value=""
+            className='form-check-input'
+            type='checkbox'
+            value=''
             checked={isChecked}
             onChange={onClickCheckbox}
             id={checkboxId}
           ></input>
-          <label className="form-check-label" htmlFor={checkboxId}>
+          <label className='form-check-label' htmlFor={checkboxId}>
             Add to card
           </label>
         </div>

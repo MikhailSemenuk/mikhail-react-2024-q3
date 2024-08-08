@@ -1,10 +1,10 @@
-import whereIAm from "@/libs/whereIAm";
-import { ToggleSwitch } from "./ToggleSwitch";
+import whereIAm from '@/libs/whereIAm';
+import { ToggleSwitch } from './ToggleSwitch';
 
 export function ThemeSwitchHeder() {
-  whereIAm("ThemeSwitchHeder");
+  whereIAm('ThemeSwitchHeder');
   return (
-    <div className="d-flex flex-row-reverse page mt-2">
+    <div className='d-flex flex-row-reverse page mt-2'>
       <ToggleSwitch />
     </div>
   );
