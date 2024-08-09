@@ -11,6 +11,7 @@ export const ThemeContext = createContext<ThemeContextProps>({ darkTheme: getThe
 export const ThemeProvider = ({ children }: { children: ReactNode }) => {
   const [darkTheme, setDarkTheme] = useState(getThemeIsDark());
 
+  // TODO: May be exist better way in node.js?
   useEffect(() => {
     // setAttribute allows in this task for document.body
     // https://docs.google.com/spreadsheets/d/1zZB-FbbhvkX9SpE14CC1UScAvRS46C5_nqIJ5cD4Elg/edit?gid=2028922094#gid=2028922094&range=D7
