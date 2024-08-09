@@ -19,16 +19,26 @@ interface PageProps {
 export default function Page({ characters, totalPages }: PageProps) {
   const router = useRouter();
 
-  const { page, search: initialSearch } = parseQueryContext(router.query);
-  const { currentPage, setCurrentPage, search, setSearch } = useUpdateQuery(Number(page), initialSearch);
+  const { page, search: initialSearch, detailId: initialDetailId } = parseQueryContext(router.query);
+  const { currentPage, setCurrentPage, search, setSearch, detailId, setDetailId } = useUpdateQuery(
+    Number(page),
+    initialSearch,
+    initialDetailId,
+  );
 
-  const [selectedCharacter, setSelectedCharacter] = useState<Character | undefined>(undefined);
-  const [isShowRightPanel, setShowRightPanel] = useState(false);
+  const selectedCharacterOnPage = characters.find((item) => item.id === detailId);
+  const [selectedCharacter, setSelectedCharacter] = useState<Character | undefined>(selectedCharacterOnPage);
+  const [isShowRightPanel, setShowRightPanel] = useState(selectedCharacterOnPage !== undefined);
 
   const setUserSearch = (value: string) => {
     setSearch(value);
     setCurrentPage(1); // if change search, start since 1
   };
+
+  if (!selectedCharacterOnPage && detailId) {
+    // if user change url and there aren't characters on this page - reset
+    setDetailId(undefined);
+  }
 
   if (currentPage !== 1 && !characters.length) {
     // if user change url and there aren't characters on this page - reset
@@ -38,25 +48,25 @@ export default function Page({ characters, totalPages }: PageProps) {
   const closeRightPanel = () => {
     setShowRightPanel(false);
     setSelectedCharacter(undefined);
-    // updateURL(searchParams, navigate, undefined);
+    setDetailId(undefined);
   };
 
   const openRightPanel = (chosenCharacter: Character) => {
     setShowRightPanel(true);
     setSelectedCharacter(chosenCharacter);
-    // updateURL(searchParams, navigate, id);
+    setDetailId(chosenCharacter.id);
   };
 
   // TODO: close by click on area
   return (
     <div>
       <div className='d-flex'>
-        <div className='flex-grow-1'>
+        <div className='flex-grow-1' onClick={closeRightPanel}>
           <h1 className='text-center mt-2'>Characters from Rick and Morty</h1>
 
           <SearchGroup userSearch={search} setUserSearch={setUserSearch}></SearchGroup>
 
-          <div className='d-flex flex-column align-items-center' onClick={closeRightPanel}>
+          <div className='d-flex flex-column align-items-center'>
             <section className='d-flex flex-wrap justify-content-around'>
               {characters.length > 0 ? (
                 characters.map((character) => (
