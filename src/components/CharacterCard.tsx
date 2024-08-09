@@ -8,7 +8,7 @@ import { useTheme } from '@/hooks/useTheme';
 interface CharacterCardProps {
   character: Character;
   isDetailCard: boolean;
-  onCardClick?: (value: number, event: React.MouseEvent<HTMLDivElement | HTMLUListElement, MouseEvent>) => void;
+  onCardClick?: (value: Character, event: React.MouseEvent<HTMLElement, MouseEvent>) => void;
   onClose?: () => void;
 }
 
@@ -37,10 +37,10 @@ export default function CharacterCard({ character, onCardClick, onClose, isDetai
     detailList.push(`Origin: ${character.origin.name}`);
   }
 
-  const onClickImgBody = (event: React.MouseEvent<HTMLDivElement | HTMLUListElement, MouseEvent>) => {
+  const handleClick = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
     event.stopPropagation();
     if (onCardClick) {
-      onCardClick(character.id, event);
+      onCardClick(character, event);
     }
   };
 
@@ -56,6 +56,8 @@ export default function CharacterCard({ character, onCardClick, onClose, isDetai
     { 'text-bg-warning': isDetailCard && !darkTheme },
   );
 
+  const classNameList = classNames('list-group-item', { 'cursor-pointer': !isDetailCard });
+
   return (
     <div className={classNameCard}>
       {isDetailCard && (
@@ -65,17 +67,19 @@ export default function CharacterCard({ character, onCardClick, onClose, isDetai
       )}
       <Image
         src={character.image}
+        className={isDetailCard ? '' : 'cursor-pointer'}
         alt={character.name}
+        onClick={handleClick}
         width={300}
         height={300}
         style={{ width: '100%', height: 'auto' }}
       />
-      <div className='card-body cursor-pointer' onClick={(event) => onClickImgBody(event)}>
+      <div className='card-body cursor-pointer' onClick={(event) => handleClick(event)}>
         <h5 className='card-title'>{character.name}</h5>
       </div>
-      <ul className='list-group list-group-flush' onClick={(event) => onClickImgBody(event)}>
+      <ul className='list-group list-group-flush' onClick={(event) => handleClick(event)}>
         {detailList.map((value, index) => (
-          <li key={index} className='list-group-item'>
+          <li key={index} className={classNameList}>
             {value}
           </li>
         ))}
