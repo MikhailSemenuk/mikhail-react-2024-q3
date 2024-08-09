@@ -23,12 +23,17 @@ export default function Page({ characters, totalPages }: PageProps) {
   const { currentPage, setCurrentPage, search, setSearch } = useUpdateQuery(Number(page), initialSearch);
 
   const [selectedCharacter, setSelectedCharacter] = useState<Character | undefined>(undefined);
-  const [isShowRightPanel, setShowRightPanel] = useState(false); // TODO
+  const [isShowRightPanel, setShowRightPanel] = useState(false);
 
   const setUserSearch = (value: string) => {
     setSearch(value);
     setCurrentPage(1); // if change search, start since 1
   };
+
+  if (currentPage !== 1 && !characters.length) {
+    // if user change url and there aren't characters on this page - reset
+    setCurrentPage(1);
+  }
 
   const closeRightPanel = () => {
     setShowRightPanel(false);
