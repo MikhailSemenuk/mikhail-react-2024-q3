@@ -1,10 +1,8 @@
-interface PageSearch {
-  page: number;
-  search: string;
-  detailId: number | undefined;
-}
+import { PageSearchDetailURL } from '@/types';
 
-export default function parseQueryContext(query: { [key: string]: string | string[] | undefined }): PageSearch {
+export default function parseQueryContext(query: {
+  [key: string]: string | string[] | undefined;
+}): PageSearchDetailURL {
   const pageParam = Array.isArray(query.page) ? query.page[0] : query.page;
 
   const detailIdParam = Array.isArray(query.detailId) ? query.detailId[0] : query.detailId;

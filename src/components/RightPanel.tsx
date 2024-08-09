@@ -11,7 +11,7 @@ export default function RightPanel({ character, isShowRightPanel, handleClose }:
   if (!isShowRightPanel || !character) {
     return null;
   }
-  const isLoading = false; // TODO: temp
+  const isLoading = false;
 
   return (
     <div className='mt-4 ps-3 border-start border-white' data-testid='right-panel' style={{ minWidth: '22rem' }}>

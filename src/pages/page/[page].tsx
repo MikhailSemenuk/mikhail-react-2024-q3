@@ -18,12 +18,8 @@ interface PageProps {
 
 export default function Page({ characters, totalPages }: PageProps) {
   const router = useRouter();
-
-  const { page, search: initialSearch, detailId: initialDetailId } = parseQueryContext(router.query);
   const { currentPage, setCurrentPage, search, setSearch, detailId, setDetailId } = useUpdateQuery(
-    Number(page),
-    initialSearch,
-    initialDetailId,
+    parseQueryContext(router.query),
   );
 
   const selectedCharacterOnPage = characters.find((item) => item.id === detailId);
@@ -36,12 +32,11 @@ export default function Page({ characters, totalPages }: PageProps) {
   };
 
   if (!selectedCharacterOnPage && detailId) {
-    // if user change url and there aren't characters on this page - reset
+    // incorrect value in URL - reset
     setDetailId(undefined);
   }
-
   if (currentPage !== 1 && !characters.length) {
-    // if user change url and there aren't characters on this page - reset
+    // incorrect value in URL - reset
     setCurrentPage(1);
   }
 
@@ -57,7 +52,6 @@ export default function Page({ characters, totalPages }: PageProps) {
     setDetailId(chosenCharacter.id);
   };
 
-  // TODO: close by click on area
   return (
     <div>
       <div className='d-flex'>

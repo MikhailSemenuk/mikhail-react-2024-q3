@@ -13,7 +13,6 @@ interface CharacterCardProps {
 }
 
 export default function CharacterCard({ character, onCardClick, onClose, isDetailCard = false }: CharacterCardProps) {
-  // TODO: Redundant render
   const { isCardCheckedId, toggleCard } = useCharacterContext();
   const [isChecked, setIsChecked] = useState(isCardCheckedId(character.id));
   const checkboxId = useId();

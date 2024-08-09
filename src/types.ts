@@ -26,3 +26,9 @@ export interface InfoResults {
   };
   results: Character[];
 }
+
+export interface PageSearchDetailURL {
+  page: number;
+  search: string;
+  detailId: number | undefined;
+}

@@ -1,18 +1,15 @@
+import { PageSearchDetailURL } from '@/types';
 import { useRouter } from 'next/router';
 import { useEffect, useState, useRef } from 'react';
 
-export function useUpdateQuery(
-  initialPage: number,
-  initialSearch: string,
-  initialDetailId: number | undefined = undefined,
-) {
+export function useUpdateQuery(initialParams: PageSearchDetailURL) {
   const router = useRouter();
   const pushRef = useRef(router.push); // fix looped render
   const queryRef = useRef(router.query);
 
-  const [currentPage, setCurrentPage] = useState(initialPage);
-  const [search, setSearch] = useState(initialSearch);
-  const [detailId, setDetailId] = useState<number | undefined>(initialDetailId);
+  const [currentPage, setCurrentPage] = useState(initialParams.page);
+  const [search, setSearch] = useState(initialParams.search);
+  const [detailId, setDetailId] = useState<number | undefined>(initialParams.detailId);
 
   useEffect(() => {
     const updateQueryParams = () => {
