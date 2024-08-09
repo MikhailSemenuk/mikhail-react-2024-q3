@@ -50,3 +50,5 @@ export const sampleCharacters: Character[] = [
 export const emptyCharacters: Character[] = [];
 
 export const singleCharacter: Character = sampleCharacters[0];
+
+export const singleCharacterArray = sampleCharacters.slice(0, 1);
