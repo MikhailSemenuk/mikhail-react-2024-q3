@@ -91,7 +91,6 @@ export default function Page({ characters, totalPages }: PageProps) {
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { page, search } = parseQueryContext(context.query);
 
-  console.log(`getServerSideProps page=${page}, search=${search}`);
   const data = await fetchCharacters(search, page);
 
   return {
