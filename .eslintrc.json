@@ -12,7 +12,8 @@
   "plugins": ["react-refresh", "react-compiler", "@typescript-eslint"],
   "rules": {
     "react-compiler/react-compiler": "error",
-    "quotes": ["error", "single"]
+    "quotes": ["error", "single"],
+    "react/self-closing-comp": "warn"
   },
   "settings": {
     "react": {

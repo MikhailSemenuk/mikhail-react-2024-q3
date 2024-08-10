@@ -1,5 +1,6 @@
-import { InfoResults } from '@/types';
+import { InfoResults, PageSearchDetailURL } from '@/types';
 import CharacterCardSimple from '@/components/CharacterCardSimple';
+import SearchGroup from '@/components/SearchGroup';
 
 interface PageProps {
   params: {
@@ -14,6 +15,11 @@ export default async function Page({ params, searchParams }: PageProps) {
   const search = searchParams.search || '';
 
   const characters = (await fetchCharacters(search, Number(params.pagesID))).results;
+  const urlData: PageSearchDetailURL = {
+    search: search,
+    page: Number(params.pagesID),
+    detailId: undefined,
+  };
 
   return (
     <div>
@@ -21,7 +27,7 @@ export default async function Page({ params, searchParams }: PageProps) {
         <div className='flex-grow-1'>
           <h1 className='text-center mt-2'>Characters from Rick and Morty</h1>
 
-          {/* <SearchGroup userSearch={search} setUserSearch={setUserSearch} /> */}
+          <SearchGroup urlData={urlData} />
 
           <div className='d-flex flex-column align-items-center'>
             <section className='d-flex flex-wrap justify-content-around'>

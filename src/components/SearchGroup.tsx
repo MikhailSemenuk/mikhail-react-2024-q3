@@ -1,15 +1,21 @@
+'use client';
+import { useRouter } from 'next/navigation';
 import React from 'react';
+import { PageSearchDetailURL } from '@/types';
+import { changePagesURL } from '@/libs/changePagesURL';
 
 interface SearchGroupProps {
-  userSearch: string;
-  setUserSearch: (value: string) => void;
+  urlData: PageSearchDetailURL;
 }
 
-export default function SearchGroup({ userSearch, setUserSearch }: SearchGroupProps) {
-  const [inputValue, setInputValue] = React.useState(userSearch);
+export default function SearchGroup({ urlData }: SearchGroupProps) {
+  const [inputValue, setInputValue] = React.useState(urlData.search);
+  const router = useRouter();
 
   const handleClick = () => {
-    setUserSearch(inputValue.trim());
+    const urlDataUpdate = { ...urlData };
+    urlDataUpdate.search = inputValue.trim();
+    changePagesURL(router, urlDataUpdate);
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => setInputValue(e.target.value);
