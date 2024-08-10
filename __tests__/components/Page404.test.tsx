@@ -1,4 +1,4 @@
-import Custom404 from '@/pages/404';
+import Custom404 from '@/_pages/404';
 import { render, screen } from '@testing-library/react';
 import { BrowserRouter as Router } from 'react-router-dom';
 
