@@ -1,6 +1,7 @@
 import { InfoResults, PageSearchDetailURL } from '@/types';
 import CharacterCardSimple from '@/components/CharacterCardSimple';
 import SearchGroup from '@/components/SearchGroup';
+import Pagination from '@/components/Pagination';
 
 interface PageProps {
   params: {
@@ -14,7 +15,9 @@ interface PageProps {
 export default async function Page({ params, searchParams }: PageProps) {
   const search = searchParams.search || '';
 
-  const characters = (await fetchCharacters(search, Number(params.pagesID))).results;
+  const dataCharacters = await fetchCharacters(search, Number(params.pagesID));
+  const characters = dataCharacters.results;
+  // TODO: Think new name for urlData
   const urlData: PageSearchDetailURL = {
     search: search,
     page: Number(params.pagesID),
@@ -40,7 +43,7 @@ export default async function Page({ params, searchParams }: PageProps) {
               )}
             </section>
 
-            {/* <Pagination currentPage={currentPage} pages={totalPages} setCurrentPage={setCurrentPage} /> */}
+            <Pagination urlData={urlData} pages={dataCharacters.info.pages} />
           </div>
         </div>
         {/* {isShowRightPanel && (

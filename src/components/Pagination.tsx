@@ -1,15 +1,20 @@
+'use client';
+import { changePagesURL } from '@/libs/changePagesURL';
 import generateArray from '@/libs/generateArray';
+import { PageSearchDetailURL } from '@/types';
 import classNames from 'classnames';
+import { useRouter } from 'next/navigation';
 
 interface PaginationProps {
-  currentPage: number;
+  urlData: PageSearchDetailURL;
   pages: number;
-  setCurrentPage: (value: number) => void;
 }
 
-export default function Pagination({ currentPage, pages, setCurrentPage }: PaginationProps) {
+export default function Pagination({ urlData, pages }: PaginationProps) {
   const LimitPagesWithNormalWidth = 20;
   const isMinWidth = pages > LimitPagesWithNormalWidth;
+  const currentPage = urlData.page;
+  const router = useRouter();
 
   if (!pages) {
     return null;
@@ -17,7 +22,9 @@ export default function Pagination({ currentPage, pages, setCurrentPage }: Pagin
 
   const handlePageClick = (page: number) => {
     if (page > 0 && page <= pages) {
-      setCurrentPage(page);
+      const urlDataUpdate = { ...urlData };
+      urlDataUpdate.page = page;
+      changePagesURL(router, urlDataUpdate);
     }
   };
 
