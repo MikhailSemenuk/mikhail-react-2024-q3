@@ -6,7 +6,6 @@ import { useCharacterContext } from '@/components/CharacterContext';
 import { BottomPanel } from '@/components/BottomPanel';
 import { useTheme } from '@/hooks/useTheme';
 
-// Mocking the hooks and libraries
 jest.mock('@/hooks/useTheme', () => ({
   useTheme: jest.fn(),
 }));

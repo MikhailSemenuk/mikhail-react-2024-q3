@@ -58,7 +58,7 @@ export default function Page({ characters, totalPages }: PageProps) {
         <div className='flex-grow-1' onClick={closeRightPanel}>
           <h1 className='text-center mt-2'>Characters from Rick and Morty</h1>
 
-          <SearchGroup userSearch={search} setUserSearch={setUserSearch}></SearchGroup>
+          <SearchGroup userSearch={search} setUserSearch={setUserSearch} />
 
           <div className='d-flex flex-column align-items-center'>
             <section className='d-flex flex-wrap justify-content-around'>
@@ -76,14 +76,14 @@ export default function Page({ characters, totalPages }: PageProps) {
               )}
             </section>
 
-            <Pagination currentPage={currentPage} pages={totalPages} setCurrentPage={setCurrentPage}></Pagination>
+            <Pagination currentPage={currentPage} pages={totalPages} setCurrentPage={setCurrentPage} />
           </div>
         </div>
         {isShowRightPanel && (
           <RightPanel character={selectedCharacter} isShowRightPanel={isShowRightPanel} handleClose={closeRightPanel} />
         )}
       </div>
-      <BottomPanel></BottomPanel>
+      <BottomPanel />
     </div>
   );
 }

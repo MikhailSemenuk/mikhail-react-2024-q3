@@ -3,7 +3,6 @@ import { CharacterProvider, useCharacterContext } from '@/components/CharacterCo
 import { Character } from '@/types';
 import { singleCharacter } from '@/tests/testData';
 
-// Mock data
 const mockCharacter: Character = singleCharacter;
 
 const TestComponent = () => {
@@ -32,29 +31,24 @@ describe('CharacterContext', () => {
       </CharacterProvider>,
     );
 
-    // Check initial state
     expect(screen.getByTestId('selected-cards')).toBeEmptyDOMElement();
     expect(screen.getByTestId('is-card-checked-id')).toHaveTextContent('Not Checked');
     expect(screen.getByTestId('is-card-checked')).toHaveTextContent('Not Checked');
 
-    // Toggle card
     act(() => {
       screen.getByText('Toggle Card').click();
     });
 
-    // Wait for state update
     await waitFor(() => {
       expect(screen.getByTestId('selected-cards')).toHaveTextContent(mockCharacter.name);
       expect(screen.getByTestId('is-card-checked-id')).toHaveTextContent('Checked');
       expect(screen.getByTestId('is-card-checked')).toHaveTextContent('Checked');
     });
 
-    // Deselect all cards
     act(() => {
       screen.getByText('Deselect All Cards').click();
     });
 
-    // Wait for state update after deselecting all
     await waitFor(() => {
       expect(screen.getByTestId('selected-cards')).toBeEmptyDOMElement();
       expect(screen.getByTestId('is-card-checked-id')).toHaveTextContent('Not Checked');

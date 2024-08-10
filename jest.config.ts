@@ -10,8 +10,8 @@ const createJestConfig = nextJest({
 const config: Config = {
   coverageProvider: 'v8',
   testEnvironment: 'jsdom',
-  modulePathIgnorePatterns: ['<rootDir>/old_project/', '<rootDir>/src/types.ts'], // TODO: Ignore the old_project directory during migration process
-  collectCoverageFrom: ['src/**/*.{js,ts,jsx,tsx}', '!src/**/*.d.ts', '!src/**/index.{js,ts,jsx,tsx}'],
+  modulePathIgnorePatterns: ['<rootDir>/old_project/', '<rootDir>/src/types.ts'],
+  collectCoverageFrom: ['src/**/*.{js,ts,jsx,tsx}', '!src/**/*.d.ts'],
   // Add more setup options before each test is run
   setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
 
@@ -19,6 +19,7 @@ const config: Config = {
     '^@/components/(.*)$': '<rootDir>/src/components/$1',
     '^@/hooks/(.*)$': '<rootDir>/src/hooks/$1',
     '^@/libs/(.*)$': '<rootDir>/src/libs/$1',
+    '^@/pages/(.*)$': '<rootDir>/src/pages/$1',
   },
 };
 
