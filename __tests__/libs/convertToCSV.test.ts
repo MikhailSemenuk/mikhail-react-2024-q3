@@ -1,5 +1,5 @@
 import { convertToCSV } from '../../src/libs/convertToCSV';
-import { sampleCharacters, emptyCharacters } from '../../src/tests/testData';
+import { sampleCharacters, emptyCharacters } from '../data/testData';
 // import { Character } from '../../src/types';
 
 describe('convertToCSV', () => {

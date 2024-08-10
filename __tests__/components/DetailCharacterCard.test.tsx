@@ -1,5 +1,5 @@
 import { DetailCharacterCard } from '@/components/DetailCharacterCard';
-import { singleCharacter } from '@/tests/testData';
+import { singleCharacter } from '../data/testData';
 import { Character } from '@/types';
 import { render, screen } from '@testing-library/react';
 

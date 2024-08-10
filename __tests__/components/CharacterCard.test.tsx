@@ -2,7 +2,7 @@ import { render, fireEvent } from '@testing-library/react';
 import CharacterCard from '@/components/CharacterCard';
 import { useCharacterContext } from '@/components/CharacterContext';
 import { useTheme } from '@/hooks/useTheme';
-import { singleCharacter } from '@/tests/testData';
+import { singleCharacter } from '../data/testData';
 
 jest.mock('@/components/CharacterContext', () => ({
   useCharacterContext: jest.fn(),

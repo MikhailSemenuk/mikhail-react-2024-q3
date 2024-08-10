@@ -1,7 +1,7 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 
 import { downloadAsCSV } from '@/libs/downloadAsCSV';
-import { singleCharacterArray } from '@/tests/testData';
+import { singleCharacterArray } from '../data/testData';
 import { useCharacterContext } from '@/components/CharacterContext';
 import { BottomPanel } from '@/components/BottomPanel';
 import { useTheme } from '@/hooks/useTheme';

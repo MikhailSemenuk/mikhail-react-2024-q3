@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 import { useRouter } from 'next/router';
 import { useUpdateQuery } from '@/hooks/useUpdateQuery';
 import Page, { getServerSideProps } from '@/pages/page/[page]';
-import { singleCharacterArray } from '@/tests/testData';
+import { singleCharacterArray } from '../data/testData';
 import fetchCharacters from '@/pages/page/fetchCharacters';
 import { GetServerSidePropsContext, NextApiRequest, NextApiResponse } from 'next';
 

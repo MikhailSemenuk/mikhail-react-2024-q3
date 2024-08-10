@@ -1,7 +1,7 @@
 import { render, screen, act, waitFor } from '@testing-library/react';
 import { CharacterProvider, useCharacterContext } from '@/components/CharacterContext';
 import { Character } from '@/types';
-import { singleCharacter } from '@/tests/testData';
+import { singleCharacter } from '../data/testData';
 
 const mockCharacter: Character = singleCharacter;
 
