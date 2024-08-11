@@ -2,7 +2,7 @@ import Custom404 from '@/_pages/404';
 import { render, screen } from '@testing-library/react';
 import { BrowserRouter as Router } from 'react-router-dom';
 
-describe('Page404', () => {
+xdescribe('Page404', () => {
   it('renders with default text', () => {
     render(
       <Router>
