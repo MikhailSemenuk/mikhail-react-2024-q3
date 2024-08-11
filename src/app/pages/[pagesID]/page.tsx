@@ -4,6 +4,7 @@ import Pagination from '@/components/Pagination';
 import CharacterCard from '@/components/CharacterCard';
 import { BottomPanel } from '@/components/BottomPanel';
 import RightPanel from '@/components/RightPanel';
+import ListWrapperCloseRightPanel from './ListWrapperCloseRightPanel';
 
 interface PageProps {
   params: {
@@ -30,7 +31,6 @@ export default async function Page({ params, searchParams }: PageProps) {
   }
   const isShowRightPanel = validId !== undefined && selectedCharacterOnPage !== undefined;
 
-  // TODO: Think new name for urlData
   const urlData: PageSearchDetailURL = {
     search: search,
     page: Number(params.pagesID),
@@ -45,7 +45,7 @@ export default async function Page({ params, searchParams }: PageProps) {
 
           <SearchGroup urlData={urlData} />
 
-          <div className='d-flex flex-column align-items-center'>
+          <ListWrapperCloseRightPanel urlData={urlData}>
             <section className='d-flex flex-wrap justify-content-around'>
               {characters.length > 0 ? (
                 characters.map((character) => (
@@ -57,7 +57,7 @@ export default async function Page({ params, searchParams }: PageProps) {
             </section>
 
             <Pagination urlData={urlData} pages={dataCharacters.info.pages} />
-          </div>
+          </ListWrapperCloseRightPanel>
         </div>
         <RightPanel character={selectedCharacterOnPage} isShowRightPanel={isShowRightPanel} urlData={urlData} />
       </div>

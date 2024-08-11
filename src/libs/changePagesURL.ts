@@ -20,6 +20,5 @@ export function changePagesURL(router: AppRouterInstance, urlData: PageSearchDet
     queryParams.delete('detailId');
   }
 
-  console.log(`/pages/${page}?${queryParams.toString()}`); // TODO: del
   router.push(`/pages/${page}?${queryParams.toString()}`);
 }
