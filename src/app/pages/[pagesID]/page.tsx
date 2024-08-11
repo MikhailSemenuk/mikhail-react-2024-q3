@@ -1,10 +1,12 @@
-import { Character, InfoResults, PageSearchDetailURL } from '@/types';
+import { PageSearchDetailURL } from '@/types';
 import SearchGroup from '@/components/SearchGroup';
 import Pagination from '@/components/Pagination';
 import CharacterCard from '@/components/CharacterCard';
 import { BottomPanel } from '@/components/BottomPanel';
 import RightPanel from '@/components/RightPanel';
 import ListWrapperCloseRightPanel from './ListWrapperCloseRightPanel';
+import fetchCharacter from '@/api/fetchCharacter';
+import fetchCharacters from '@/api/fetchCharacters';
 
 interface PageProps {
   params: {
@@ -64,42 +66,4 @@ export default async function Page({ params, searchParams }: PageProps) {
       <BottomPanel />
     </div>
   );
-}
-
-async function fetchCharacters(search: string = '', page: number = 1): Promise<InfoResults> {
-  const response = await fetch(
-    `https://rickandmortyapi.com/api/character/?page=${page}&name=${encodeURIComponent(search)}`,
-  );
-  if (!response.ok && response.status === 404) {
-    return {
-      info: {
-        count: 0,
-        pages: 0,
-      },
-      results: [],
-    };
-  } else if (!response.ok) {
-    throw new Error(`Network response was not ok (status ${response.status})`);
-  }
-  const data = await response.json();
-
-  return {
-    info: {
-      count: data.info.count,
-      pages: data.info.pages,
-    },
-    results: data.results,
-  };
-}
-
-async function fetchCharacter(id: number): Promise<Character | undefined> {
-  const response = await fetch(`https://rickandmortyapi.com/api/character/${id}`);
-  if (!response.ok && response.status === 404) {
-    return undefined;
-  } else if (!response.ok) {
-    throw new Error(`Network response was not ok (status ${response.status})`);
-  }
-  const data = await response.json();
-
-  return data;
 }
