@@ -1,4 +1,4 @@
-import fetchCharacters from '@/_pages/page/fetchCharacters';
+import fetchCharacters from '@/api/fetchCharacters';
 import { InfoResults } from '@/types';
 
 describe('fetchCharacters', () => {
