@@ -1,3 +1,4 @@
+'use client';
 import { getThemeIsDark, saveThemeIsDark } from '@/libs/appLocalStorage';
 import { createContext, useEffect, useState, ReactNode } from 'react';
 

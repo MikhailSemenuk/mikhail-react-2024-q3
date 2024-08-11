@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './globals.css';
 import { CharacterProvider } from '@/components/CharacterContext';
+import { ThemeProvider } from '@/components/ThemeProvider';
+import { ThemeSwitchHeder } from '@/components/ThemeSwitchHeder';
 
 export const metadata: Metadata = {
   title: 'Rickypedia',
@@ -16,7 +18,12 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body>
-        <CharacterProvider>{children} </CharacterProvider>
+        <CharacterProvider>
+          <ThemeProvider>
+            <ThemeSwitchHeder />
+            {children}
+          </ThemeProvider>
+        </CharacterProvider>
       </body>
     </html>
   );
