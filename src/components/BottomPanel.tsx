@@ -1,4 +1,5 @@
 'use client';
+import { useEffect, useState } from 'react';
 import classNames from 'classnames';
 import { useCharacterContext } from './CharacterContext';
 import { downloadAsCSV } from '@/libs/downloadAsCSV';
@@ -7,12 +8,21 @@ import { useTheme } from '@/hooks/useTheme';
 export function BottomPanel() {
   const { selectedCards, deselectAllCards } = useCharacterContext();
   const { darkTheme } = useTheme();
+  const [isHydrated, setIsHydrated] = useState(false);
+
+  useEffect(() => {
+    setIsHydrated(true);
+  }, []);
 
   const lengthSelectedCards = selectedCards.length;
 
   const classes = classNames('offcanvas', 'offcanvas-bottom', 'h-auto', {
     show: lengthSelectedCards > 0,
   });
+
+  if (!isHydrated) {
+    return null;
+  }
 
   return (
     <>
