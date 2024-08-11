@@ -3,6 +3,7 @@ export interface Character {
   name: string;
   status: 'Alive' | 'Dead' | 'unknown';
   species: string;
+  type: string;
   gender: 'Female' | 'Male' | 'Genderless' | 'unknown';
   image: string;
   origin: {
@@ -14,6 +15,8 @@ export interface Character {
     url: string;
   };
   episode: string[];
+  url: string;
+  created: Date;
 }
 
 export interface InfoResults {
@@ -22,4 +25,10 @@ export interface InfoResults {
     pages: number;
   };
   results: Character[];
+}
+
+export interface PageSearchDetailURL {
+  page: number;
+  search: string;
+  detailId: number | undefined;
 }

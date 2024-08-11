@@ -1,0 +1,13 @@
+.page {
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.width-18rem {
+  width: 18rem;
+}
