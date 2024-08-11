@@ -21,9 +21,11 @@ export default function Pagination({ urlData, pages }: PaginationProps) {
   }
 
   const handlePageClick = (page: number) => {
+    console.log('сработал handlePageClick');
     if (page > 0 && page <= pages) {
       const urlDataUpdate = { ...urlData };
       urlDataUpdate.page = page;
+      console.log(urlDataUpdate);
       changePagesURL(router, urlDataUpdate);
     }
   };

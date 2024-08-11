@@ -1,8 +1,8 @@
 'use client';
 import { changePagesURL } from '@/libs/changePagesURL';
-import { DetailCharacterCard } from './DetailCharacterCard';
 import { Character, PageSearchDetailURL } from '@/types';
 import { useRouter } from 'next/navigation';
+import CharacterCard from './CharacterCard';
 
 interface RightPanelProps {
   character: Character | undefined;
@@ -24,7 +24,7 @@ export default function RightPanel({ character, isShowRightPanel, urlData }: Rig
 
   return (
     <div className='mt-4 ps-3 border-start border-white' data-testid='right-panel' style={{ minWidth: '22rem' }}>
-      <DetailCharacterCard character={character} onClose={handleClose} />
+      <CharacterCard character={character} onClose={handleClose} isDetailCard={true} urlData={urlData} />
     </div>
   );
 }
