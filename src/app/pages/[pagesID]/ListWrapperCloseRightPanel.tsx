@@ -13,9 +13,11 @@ export default function ListWrapperCloseRightPanel({ children, urlData }: Layout
   const router = useRouter();
 
   const handleCloseRightPanel = () => {
-    const urlDataUpdate = { ...urlData };
-    urlDataUpdate.detailId = undefined;
-    changePagesURL(router, urlDataUpdate);
+    if (urlData.detailId) {
+      const urlDataUpdate = { ...urlData };
+      urlDataUpdate.detailId = undefined;
+      changePagesURL(router, urlDataUpdate);
+    }
   };
 
   return (
