@@ -10,7 +10,7 @@ const createJestConfig = nextJest({
 const config: Config = {
   coverageProvider: 'v8',
   testEnvironment: 'jsdom',
-  modulePathIgnorePatterns: ['<rootDir>/src/types.ts', '<rootDir>/__tests__/data/', '<rootDir>/__tests__/disabled/'],
+  modulePathIgnorePatterns: ['<rootDir>/src/types.ts', '<rootDir>/__tests__/data/'],
   collectCoverageFrom: ['src/**/*.{js,ts,jsx,tsx}', '!src/**/*.d.ts'],
   // Add more setup options before each test is run
   setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
