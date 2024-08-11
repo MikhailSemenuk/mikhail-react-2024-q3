@@ -1,23 +1,26 @@
 'use client';
 import { useEffect, useId, useState } from 'react';
 import classNames from 'classnames';
-import { Character } from '@/types';
+import { Character, PageSearchDetailURL } from '@/types';
 import Image from 'next/image';
 import { useCharacterContext } from './CharacterContext';
 import { useTheme } from '@/hooks/useTheme';
+import { useRouter } from 'next/navigation';
+import { changePagesURL } from '@/libs/changePagesURL';
 
 interface CharacterCardProps {
   character: Character;
   isDetailCard: boolean;
-  onCardClick?: (value: Character, event: React.MouseEvent<HTMLElement, MouseEvent>) => void;
+  urlData: PageSearchDetailURL;
   onClose?: () => void;
 }
 
-export default function CharacterCard({ character, onCardClick, onClose, isDetailCard = false }: CharacterCardProps) {
+export default function CharacterCard({ character, onClose, isDetailCard = false, urlData }: CharacterCardProps) {
   const { isCardCheckedId, toggleCard } = useCharacterContext();
   const [isChecked, setIsChecked] = useState(isCardCheckedId(character.id));
   const checkboxId = useId();
   const { darkTheme } = useTheme();
+  const router = useRouter();
 
   useEffect(() => {
     setIsChecked(isCardCheckedId(character.id));
@@ -38,10 +41,10 @@ export default function CharacterCard({ character, onCardClick, onClose, isDetai
   }
 
   const handleClick = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
-    event.stopPropagation();
-    if (onCardClick) {
-      onCardClick(character, event);
-    }
+    event.stopPropagation(); // TODO: Maybe delete
+    const urlDataUpdate = { ...urlData };
+    urlDataUpdate.detailId = character.id;
+    changePagesURL(router, urlDataUpdate);
   };
 
   const onClickFooter = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
