@@ -15,6 +15,7 @@ export default function SearchGroup({ urlData }: SearchGroupProps) {
   const handleClick = () => {
     const urlDataUpdate = { ...urlData };
     urlDataUpdate.search = inputValue.trim();
+    urlDataUpdate.page = 1; // new search since page 1
     changePagesURL(router, urlDataUpdate);
   };
 
