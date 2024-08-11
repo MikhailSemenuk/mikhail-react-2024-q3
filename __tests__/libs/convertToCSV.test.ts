@@ -1,6 +1,5 @@
 import { convertToCSV } from '../../src/libs/convertToCSV';
 import { sampleCharacters, emptyCharacters } from '../data/testData';
-// import { Character } from '../../src/types';
 
 describe('convertToCSV', () => {
   const charactersOneArray = sampleCharacters.slice(0, 1);
