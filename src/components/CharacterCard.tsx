@@ -1,3 +1,4 @@
+'use client';
 import { useEffect, useId, useState } from 'react';
 import classNames from 'classnames';
 import { Character } from '@/types';
@@ -61,7 +62,7 @@ export default function CharacterCard({ character, onCardClick, onClose, isDetai
     <div className={classNameCard}>
       {isDetailCard && (
         <div className='d-flex flex-row-reverse'>
-          <button type='button' className='btn-close' aria-label='Close' onClick={onClose}></button>
+          <button type='button' className='btn-close' aria-label='Close' onClick={onClose} />
         </div>
       )}
       <Image
@@ -92,7 +93,7 @@ export default function CharacterCard({ character, onCardClick, onClose, isDetai
             checked={isChecked}
             onChange={onClickCheckbox}
             id={checkboxId}
-          ></input>
+          />
           <label className='form-check-label' htmlFor={checkboxId}>
             Add to card
           </label>

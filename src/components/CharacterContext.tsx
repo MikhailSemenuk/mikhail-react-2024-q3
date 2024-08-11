@@ -1,3 +1,4 @@
+'use client';
 import { Character } from '@/types';
 import { createContext, useContext, useState, ReactNode, FC } from 'react';
 

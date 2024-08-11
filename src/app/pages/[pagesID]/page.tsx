@@ -1,7 +1,8 @@
 import { InfoResults, PageSearchDetailURL } from '@/types';
-import CharacterCardSimple from '@/components/CharacterCardSimple';
 import SearchGroup from '@/components/SearchGroup';
 import Pagination from '@/components/Pagination';
+import CharacterCard from '@/components/CharacterCard';
+import { BottomPanel } from '@/components/BottomPanel';
 
 interface PageProps {
   params: {
@@ -26,7 +27,7 @@ export default async function Page({ params, searchParams }: PageProps) {
 
   return (
     <div>
-      <div className='d-flex'>
+      <div className='d-flex page'>
         <div className='flex-grow-1'>
           <h1 className='text-center mt-2'>Characters from Rick and Morty</h1>
 
@@ -36,7 +37,7 @@ export default async function Page({ params, searchParams }: PageProps) {
             <section className='d-flex flex-wrap justify-content-around'>
               {characters.length > 0 ? (
                 characters.map((character) => (
-                  <CharacterCardSimple key={character.id} character={character} isDetailCard={false} />
+                  <CharacterCard key={character.id} character={character} isDetailCard={false} />
                 ))
               ) : (
                 <p>Try searching for something else (Butter Robot, Abradolf Lincler, Rick, Morty)</p>
@@ -50,7 +51,7 @@ export default async function Page({ params, searchParams }: PageProps) {
           <RightPanel character={selectedCharacter} isShowRightPanel={isShowRightPanel} handleClose={closeRightPanel} />
         )} */}
       </div>
-      {/* <BottomPanel /> */}
+      <BottomPanel />
     </div>
   );
 }

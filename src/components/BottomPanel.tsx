@@ -1,3 +1,4 @@
+'use client';
 import classNames from 'classnames';
 import { useCharacterContext } from './CharacterContext';
 import { downloadAsCSV } from '@/libs/downloadAsCSV';
