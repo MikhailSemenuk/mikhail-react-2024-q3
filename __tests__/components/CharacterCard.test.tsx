@@ -2,6 +2,8 @@ import { render, fireEvent } from '@testing-library/react';
 import CharacterCard from '@/components/CharacterCard';
 import { useCharacterContext } from '@/components/CharacterContext';
 import { useTheme } from '@/hooks/useTheme';
+import { useRouter } from 'next/navigation';
+import { changePagesURL } from '@/libs/changePagesURL';
 import { singleCharacter } from '../data/testData';
 
 jest.mock('@/components/CharacterContext', () => ({
@@ -12,13 +14,21 @@ jest.mock('@/hooks/useTheme', () => ({
   useTheme: jest.fn(),
 }));
 
+jest.mock('next/navigation', () => ({
+  useRouter: jest.fn(),
+}));
+
+jest.mock('@/libs/changePagesURL', () => ({
+  changePagesURL: jest.fn(),
+}));
+
 describe('CharacterCard', () => {
   const character = singleCharacter;
-
   const mockToggleCard = jest.fn();
   const mockIsCardCheckedId = jest.fn();
-  const mockOnCardClick = jest.fn();
   const mockOnClose = jest.fn();
+  const mockChangePagesURL = changePagesURL as jest.MockedFunction<typeof changePagesURL>;
+  const mockUseRouter = useRouter as jest.MockedFunction<typeof useRouter>;
 
   beforeEach(() => {
     (useCharacterContext as jest.Mock).mockReturnValue({
@@ -31,6 +41,13 @@ describe('CharacterCard', () => {
     });
 
     mockIsCardCheckedId.mockReturnValue(false);
+
+    mockUseRouter.mockReturnValue({
+      push: jest.fn(),
+      replace: jest.fn(),
+      back: jest.fn(),
+      prefetch: jest.fn(),
+    } as unknown as ReturnType<typeof useRouter>);
   });
 
   afterEach(() => {
@@ -38,7 +55,13 @@ describe('CharacterCard', () => {
   });
 
   it('renders character details correctly', () => {
-    const { getByText, getByAltText } = render(<CharacterCard character={character} isDetailCard={false} />);
+    const { getByText, getByAltText } = render(
+      <CharacterCard
+        character={character}
+        isDetailCard={false}
+        urlData={{ search: '', page: 1, detailId: undefined }}
+      />,
+    );
 
     expect(getByText('Rick Sanchez')).toBeInTheDocument();
     expect(getByText('Status: Alive')).toBeInTheDocument();
@@ -47,17 +70,14 @@ describe('CharacterCard', () => {
     expect(getByAltText('Rick Sanchez')).toBeInTheDocument();
   });
 
-  it('calls onCardClick when image is clicked', () => {
-    const { getByAltText } = render(
-      <CharacterCard character={character} isDetailCard={false} onCardClick={mockOnCardClick} />,
-    );
-
-    fireEvent.click(getByAltText('Rick Sanchez'));
-    expect(mockOnCardClick).toHaveBeenCalledWith(character, expect.any(Object));
-  });
-
   it('toggles checkbox when clicked', () => {
-    const { getByRole } = render(<CharacterCard character={character} isDetailCard={false} />);
+    const { getByRole } = render(
+      <CharacterCard
+        character={character}
+        isDetailCard={false}
+        urlData={{ search: '', page: 1, detailId: undefined }}
+      />,
+    );
 
     fireEvent.click(getByRole('checkbox'));
     expect(mockToggleCard).toHaveBeenCalledWith(character);
@@ -65,7 +85,12 @@ describe('CharacterCard', () => {
 
   it('renders close button and triggers onClose when clicked in detail mode', () => {
     const { getByLabelText } = render(
-      <CharacterCard character={character} isDetailCard={true} onClose={mockOnClose} />,
+      <CharacterCard
+        character={character}
+        isDetailCard={true}
+        urlData={{ search: '', page: 1, detailId: undefined }}
+        onClose={mockOnClose}
+      />,
     );
 
     fireEvent.click(getByLabelText('Close'));
@@ -77,8 +102,31 @@ describe('CharacterCard', () => {
       darkTheme: true,
     });
 
-    const { container } = render(<CharacterCard character={character} isDetailCard={true} />);
+    const { container } = render(
+      <CharacterCard
+        character={character}
+        isDetailCard={true}
+        urlData={{ search: '', page: 1, detailId: undefined }}
+      />,
+    );
 
     expect(container.firstChild).toHaveClass('text-bg-secondary');
+  });
+
+  it('calls changePagesURL with updated URL data when image is clicked', () => {
+    const { getByAltText } = render(
+      <CharacterCard
+        character={character}
+        isDetailCard={false}
+        urlData={{ search: '', page: 1, detailId: undefined }}
+      />,
+    );
+
+    fireEvent.click(getByAltText('Rick Sanchez'));
+    expect(mockChangePagesURL).toHaveBeenCalledWith(expect.any(Object), {
+      search: '',
+      page: 1,
+      detailId: character.id,
+    });
   });
 });
