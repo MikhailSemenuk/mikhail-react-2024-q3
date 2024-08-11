@@ -41,7 +41,7 @@ export default function CharacterCard({ character, onClose, isDetailCard = false
   }
 
   const handleClick = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
-    event.stopPropagation(); // TODO: Maybe delete
+    event.stopPropagation();
     const urlDataUpdate = { ...urlData };
     urlDataUpdate.detailId = character.id;
     changePagesURL(router, urlDataUpdate);

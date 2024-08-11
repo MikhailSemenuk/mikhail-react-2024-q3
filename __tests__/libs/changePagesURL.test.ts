@@ -2,7 +2,6 @@ import { changePagesURL } from '@/libs/changePagesURL';
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 import { PageSearchDetailURL } from '@/types';
 
-// Mock the AppRouterInstance
 const mockRouter = {
   push: jest.fn(),
 } as unknown as AppRouterInstance;
@@ -10,7 +9,6 @@ const mockRouter = {
 describe('changePagesURL', () => {
   beforeEach(() => {
     jest.clearAllMocks();
-    // Reset any global state or mocks if necessary
   });
 
   it('should update the URL with search and detailId and page', () => {
