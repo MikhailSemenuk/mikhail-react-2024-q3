@@ -4,6 +4,9 @@ import Page404 from './components/Page404';
 import ReactHookForm from './components/ReactHookForm';
 import UncontrolledForm from './components/UncontrolledForm';
 import Main from './components/Main';
+import { Provider } from 'react-redux';
+import store from './store';
+import ErrorBoundary from './components/ErrorBoundary';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -19,9 +22,11 @@ const router = createBrowserRouter(
 
 function App() {
   return (
-    <>
-      <RouterProvider router={router} />
-    </>
+    <Provider store={store}>
+      <ErrorBoundary>
+        <RouterProvider router={router} fallbackElement={<h2>Something went wrong with routing</h2>} />
+      </ErrorBoundary>
+    </Provider>
   );
 }
 
