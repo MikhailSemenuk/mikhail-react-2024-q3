@@ -13,8 +13,8 @@ function getNameForm<K extends keyof FormItem>(key: K): K {
 
 type stringFormItem = Record<keyof FormItem, string>;
 
-// TODO: initial errorTextValid
 // TODO: how make reset
+// TODO: make form green after submit
 
 export default function UncontrolledForm() {
   const dispatch = useDispatch();
@@ -24,12 +24,14 @@ export default function UncontrolledForm() {
   const passwordId = useId();
   const acceptTermsConditionsId = useId();
 
-  const [errorTextValid, setErrorTextValid] = useState<stringFormItem>({
+  const emptyTextInvalid = {
     name: '',
     email: '',
     password: '',
-    acceptTermsConditions: '',
-  });
+    acceptTerms: '',
+  };
+
+  const [textInvalid, setTextInvalid] = useState<stringFormItem>(emptyTextInvalid);
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -40,28 +42,16 @@ export default function UncontrolledForm() {
       name: formData.get(getNameForm('name')) as string,
       email: formData.get(getNameForm('email')) as string,
       password: formData.get(getNameForm('password')) as string,
-      acceptTermsConditions: formData.get(getNameForm('acceptTermsConditions')) === 'on',
+      acceptTerms: formData.get(getNameForm('acceptTerms')) === 'on',
     };
 
     try {
-      console.log('отдаем на проверку форму', prepareForm);
-
       await userSchema.validate(prepareForm, { abortEarly: false });
-      setErrorTextValid({
-        name: '',
-        email: '',
-        password: '',
-        acceptTermsConditions: '',
-      });
+      setTextInvalid(emptyTextInvalid);
       dispatch(addForm(prepareForm));
       console.log('все ок');
     } catch (err) {
-      const newError: stringFormItem = {
-        name: '',
-        email: '',
-        password: '',
-        acceptTermsConditions: '',
-      };
+      const newError: stringFormItem = { ...emptyTextInvalid };
 
       if (err instanceof ValidationError) {
         err.inner.forEach((error) => {
@@ -79,29 +69,29 @@ export default function UncontrolledForm() {
       }
 
       console.log(newError);
-      setErrorTextValid(newError);
+      setTextInvalid(newError);
     }
   };
 
   const nameClass = classNames({
     'form-control': true,
-    'is-invalid': errorTextValid.name,
+    'is-invalid': textInvalid.name,
   });
 
   const emailClass = classNames({
     'form-control': true,
-    'is-invalid': errorTextValid.email,
+    'is-invalid': textInvalid.email,
   });
 
   const passwordClass = classNames({
     'form-control': true,
-    'is-invalid': errorTextValid.password,
+    'is-invalid': textInvalid.password,
   });
 
   const acceptTermsConditionsClass = classNames({
     'me-1': true,
     'form-check-input': true,
-    'is-invalid': errorTextValid.acceptTermsConditions,
+    'is-invalid': textInvalid.acceptTerms,
   });
 
   return (
@@ -115,7 +105,7 @@ export default function UncontrolledForm() {
 
           <div className='input-group has-validation'>
             <input type='text' className={nameClass} id={nameId} name={getNameForm('name')} />
-            <div className='invalid-feedback'>{errorTextValid.name}</div>
+            <div className='invalid-feedback'>{textInvalid.name}</div>
           </div>
         </div>
 
@@ -132,7 +122,7 @@ export default function UncontrolledForm() {
               name={getNameForm('email')}
               aria-describedby='email-help'
             />
-            <div className='invalid-feedback'>{errorTextValid.email}</div>
+            <div className='invalid-feedback'>{textInvalid.email}</div>
           </div>
 
           <div id='email-help' className='form-text'>
@@ -146,21 +136,21 @@ export default function UncontrolledForm() {
           </label>
           <div className='input-group has-validation'>
             <input type='password' className={passwordClass} id={passwordId} name={getNameForm('password')} />
-            <div className='invalid-feedback'>{errorTextValid.password}</div>
+            <div className='invalid-feedback'>{textInvalid.password}</div>
           </div>
         </div>
 
         <div className='mb-3'>
           <input
             type='checkbox'
-            name={getNameForm('acceptTermsConditions')}
+            name={getNameForm('acceptTerms')}
             className={acceptTermsConditionsClass}
             id={acceptTermsConditionsId}
           />
           <label className='form-check-label' htmlFor={acceptTermsConditionsId}>
-            Check me out
+            accept Terms and Conditions agreement
           </label>
-          <div className='invalid-feedback'>{errorTextValid.acceptTermsConditions}</div>
+          <div className='invalid-feedback'>{textInvalid.acceptTerms}</div>
         </div>
 
         <button type='submit' className='btn btn-primary'>

@@ -5,5 +5,5 @@ export const userSchema: ObjectSchema<FormItem> = object({
   name: string().required().min(4),
   email: string().email().required(),
   password: string().min(4).max(10).required(),
-  acceptTermsConditions: boolean().isTrue().required(),
+  acceptTerms: boolean().isTrue().required(),
 });
