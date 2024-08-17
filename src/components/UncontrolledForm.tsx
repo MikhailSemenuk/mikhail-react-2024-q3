@@ -1,4 +1,4 @@
-import { useRef, useId } from 'react';
+import { FormEvent } from 'react';
 import { SavedForm } from '../types';
 import { useDispatch } from 'react-redux';
 import { addForm } from '../formsSlice';
@@ -6,25 +6,16 @@ import { Link } from 'react-router-dom';
 
 export default function UncontrolledForm() {
   const dispatch = useDispatch();
-  const emailRef = useRef<HTMLInputElement>(null);
-  const passwordRef = useRef<HTMLInputElement>(null);
-  const checkboxRef = useRef<HTMLInputElement>(null);
 
-  const emailId = useId();
-  const passwordId = useId();
-  const checkboxId = useId();
-
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const email = emailRef.current?.value ?? '';
-    const password = passwordRef.current?.value ?? '';
-    const acceptTermsConditions = checkboxRef.current?.checked ?? false;
+    const formData = new FormData(event.currentTarget);
 
     const newForm: SavedForm = {
-      email,
-      password,
-      acceptTermsConditions,
+      email: formData.get('email') as string,
+      password: formData.get('password') as string,
+      acceptTermsConditions: formData.get('acceptTermsConditions') === 'on',
     };
 
     dispatch(addForm(newForm));
@@ -35,29 +26,23 @@ export default function UncontrolledForm() {
       <h1>UncontrolledForm page</h1>
       <form onSubmit={handleSubmit}>
         <div className='mb-3'>
-          <label htmlFor={emailId} className='form-label'>
+          <label htmlFor='email' className='form-label'>
             Email address
           </label>
-          <input
-            type='email'
-            className='form-control'
-            id={emailId}
-            aria-describedby={`${emailId}-help`}
-            ref={emailRef}
-          />
-          <div id={`${emailId}-help`} className='form-text'>
+          <input type='email' className='form-control' id='email' name='email' aria-describedby='email-help' />
+          <div id='email-help' className='form-text'>
             We will never share your email with anyone else.
           </div>
         </div>
         <div className='mb-3'>
-          <label htmlFor={passwordId} className='form-label'>
+          <label htmlFor='password' className='form-label'>
             Password
           </label>
-          <input type='password' className='form-control' id={passwordId} ref={passwordRef} />
+          <input type='password' className='form-control' id='password' name='password' />
         </div>
         <div className='mb-3 form-check'>
-          <input type='checkbox' className='form-check-input' id={checkboxId} ref={checkboxRef} />
-          <label className='form-check-label' htmlFor={checkboxId}>
+          <input type='checkbox' className='form-check-input' id='acceptTermsConditions' name='acceptTermsConditions' />
+          <label className='form-check-label' htmlFor='acceptTermsConditions'>
             Check me out
           </label>
         </div>
