@@ -1,10 +1,10 @@
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { SavedForm } from '../types';
+import { FormItem } from '../types';
 
 export default function Main() {
   // TODO: Maybe rewrite it
-  const formArray = useSelector((state: { savedForm: { forms: SavedForm[] } }) => state.savedForm.forms);
+  const formArray = useSelector((state: { savedForm: { forms: FormItem[] } }) => state.savedForm.forms);
 
   return (
     <div className='page'>
