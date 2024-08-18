@@ -1,5 +1,3 @@
-// TODO: make form green after submit
-// TODO: add grid in form
 // TODO: display the password strength
 
 import { FormEvent, useState } from 'react';
@@ -61,9 +59,19 @@ export default function UncontrolledForm() {
 
         <InputWrapper name='email' label='Email address' type='email' invalidFeedback={invalidFeedback} />
 
-        <InputWrapper name='password' label='Password' type='password' invalidFeedback={invalidFeedback} />
-
-        <InputWrapper name='repeatPassword' label='Password repeat' type='password' invalidFeedback={invalidFeedback} />
+        <div className='row'>
+          <div className='col'>
+            <InputWrapper name='password' label='Password' type='password' invalidFeedback={invalidFeedback} />
+          </div>
+          <div className='col'>
+            <InputWrapper
+              name='repeatPassword'
+              label='Password repeat'
+              type='password'
+              invalidFeedback={invalidFeedback}
+            />
+          </div>
+        </div>
 
         <InputWrapper name='age' label='Age' type='number' invalidFeedback={invalidFeedback} />
 
