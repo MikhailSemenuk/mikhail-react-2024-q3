@@ -1,10 +1,10 @@
-// TODO: how make reset
 // TODO: make form green after submit
 // TODO: add grid in form
+// TODO: display the password strength
 
 import { FormEvent, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { ValidationError } from 'yup';
 import InputWrapper from './InputWrapper';
 import { RootState } from '../../store/store';
@@ -15,6 +15,7 @@ import { formSchema } from '../../validation/formSchema';
 
 export default function UncontrolledForm() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const countries = useSelector((state: RootState) => state.countries.countries);
   const [invalidFeedback, setInvalidFeedback] = useState<stringFormItem>(emptyInvalidFeedback);
   const [file, setFile] = useState<File | undefined>(undefined);
@@ -46,6 +47,7 @@ export default function UncontrolledForm() {
       setInvalidFeedback(emptyInvalidFeedback);
       dispatch(addForm(prepareForm));
       console.log('все ок');
+      navigate('/');
     } catch (err) {
       setInvalidFeedback(parseNewInvalidFeedback(err));
     }

@@ -1,9 +1,10 @@
+// TODO: Maybe rewrite it
+//TODO: Beatiful forms
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { FormItem } from '../types';
 
 export default function Main() {
-  // TODO: Maybe rewrite it
   const formArray = useSelector((state: { savedForm: { forms: FormItem[] } }) => state.savedForm.forms);
 
   return (
