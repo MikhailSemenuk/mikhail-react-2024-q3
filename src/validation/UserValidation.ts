@@ -45,5 +45,7 @@ export const userSchema: ObjectSchema<FormItem> = object({
 
   fileBase64: string(),
 
+  country: string().required('Country is required'),
+
   acceptTerms: boolean().isTrue('You must accept the terms and conditions').required('Acceptance of terms is required'),
 });

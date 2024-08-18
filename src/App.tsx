@@ -5,7 +5,7 @@ import ReactHookForm from './components/ReactHookForm';
 import UncontrolledForm from './components/UncontrolledForm';
 import Main from './components/Main';
 import { Provider } from 'react-redux';
-import store from './store';
+import store from './store/store';
 import ErrorBoundary from './components/ErrorBoundary';
 
 const router = createBrowserRouter(

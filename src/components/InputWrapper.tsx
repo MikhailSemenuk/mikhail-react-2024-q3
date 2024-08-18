@@ -8,7 +8,8 @@ interface InputWrapperProps<K extends keyof FormItem> {
   type: 'text' | 'email' | 'password' | 'checkbox' | 'number' | 'select' | 'file';
   invalidFeedback: stringFormItem;
   options?: { value: string; label: string }[];
-  onFileChange?: (file: File | undefined) => void; // Добавлен обработчик файлов
+  datalistOptions?: string[];
+  onFileChange?: (file: File | undefined) => void;
 }
 
 const InputWrapper = <K extends keyof FormItem>({
@@ -17,10 +18,11 @@ const InputWrapper = <K extends keyof FormItem>({
   type,
   invalidFeedback,
   options,
-  onFileChange, // Получаем обработчик файлов
+  datalistOptions,
+  onFileChange,
 }: InputWrapperProps<K>) => {
   const id = useId();
-  const [showPassword, setShowPassword] = useState(false); // Изменено по умолчанию
+  const [showPassword, setShowPassword] = useState(false);
 
   const togglePasswordVisibility = () => {
     setShowPassword((prevState) => !prevState);
@@ -63,6 +65,17 @@ const InputWrapper = <K extends keyof FormItem>({
     );
   } else if (type === 'file') {
     inputElement = <input type='file' className={classNameInput} id={id} name={name} onChange={handleFileChange} />;
+  } else if (type === 'text' && datalistOptions) {
+    inputElement = (
+      <>
+        <input type='text' className={classNameInput} id={id} name={name} list={`${id}-datalist`} />
+        <datalist id={`${id}-datalist`}>
+          {datalistOptions.map((option) => (
+            <option key={option} value={option} />
+          ))}
+        </datalist>
+      </>
+    );
   } else {
     inputElement = <input type={type} className={classNameInput} id={id} name={name} />;
   }

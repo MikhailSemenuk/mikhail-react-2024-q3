@@ -1,23 +1,24 @@
 // TODO: how make reset
 // TODO: make form green after submit
-// TODO: Limit age min="0"
 // TODO: add grid in form
 // TODO: disable show password by default
-// TODO: Block and unlock submit btn
+// TODO: Block and unlock submit btn ?
+// TODO: Checkbox beautiful
 
 import { FormEvent, useState } from 'react';
 import { emptyInvalidFeedback, FormItem, Gender, stringFormItem } from '../types';
-import { useDispatch } from 'react-redux';
-import { addForm } from '../formsSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { addForm } from '../store/formsSlice';
 import { Link } from 'react-router-dom';
 import { userSchema } from '../validation/UserValidation';
 import { ValidationError } from 'yup';
 import InputWrapper from './InputWrapper';
 import fileToBase64 from './fileToBase64';
+import { RootState } from '../store/store';
 
 export default function UncontrolledForm() {
   const dispatch = useDispatch();
-
+  const countries = useSelector((state: RootState) => state.countries.countries);
   const [invalidFeedback, setInvalidFeedback] = useState<stringFormItem>(emptyInvalidFeedback);
   const [file, setFile] = useState<File | undefined>(undefined);
 
@@ -40,6 +41,7 @@ export default function UncontrolledForm() {
       file: file,
       fileBase64: file === undefined ? '' : await fileToBase64(file),
       acceptTerms: formData.get(getNameForm('acceptTerms')) === 'on',
+      country: formData.get(getNameForm('country')) as string,
     };
 
     try {
@@ -82,6 +84,14 @@ export default function UncontrolledForm() {
             { value: 'female', label: 'Female' },
             { value: 'other', label: 'Other' },
           ]}
+          invalidFeedback={invalidFeedback}
+        />
+
+        <InputWrapper
+          name='country'
+          label='Country'
+          type='text'
+          datalistOptions={countries}
           invalidFeedback={invalidFeedback}
         />
 

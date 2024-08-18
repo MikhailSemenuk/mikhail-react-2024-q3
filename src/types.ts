@@ -10,6 +10,7 @@ export interface FormItem {
   acceptTerms: boolean;
   file: File | undefined;
   fileBase64: string | undefined;
+  country: string;
 }
 
 export type stringFormItem = Record<keyof FormItem, string>;
@@ -24,4 +25,5 @@ export const emptyInvalidFeedback: stringFormItem = {
   acceptTerms: '',
   file: '',
   fileBase64: '',
+  country: '',
 };

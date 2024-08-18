@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { FormItem } from './types';
+import { FormItem } from '../types';
 
 export interface FormsState {
   forms: FormItem[];
