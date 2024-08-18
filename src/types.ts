@@ -14,17 +14,3 @@ export interface FormItem {
 }
 
 export type stringFormItem = Record<keyof FormItem, string>;
-
-// TODO: separate this
-export const emptyInvalidFeedback: stringFormItem = {
-  name: '',
-  email: '',
-  password: '',
-  age: '',
-  gender: '',
-  repeatPassword: '',
-  acceptTerms: '',
-  files: '',
-  fileBase64: '',
-  country: '',
-};

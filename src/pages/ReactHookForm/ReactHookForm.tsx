@@ -1,5 +1,4 @@
 import { useForm, useWatch } from 'react-hook-form';
-import { DevTool } from '@hookform/devtools';
 import { Link, useNavigate } from 'react-router-dom';
 import { FormItem } from '../../types';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -120,8 +119,6 @@ export default function ReactHookForm() {
         <button type='submit' className='btn btn-primary' disabled={!isValid || !isDirty}>
           Submit
         </button>
-
-        <DevTool control={control} />
       </form>
       <footer className='my-3'>
         <Link to='/'>Back</Link>

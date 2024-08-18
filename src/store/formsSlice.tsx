@@ -20,7 +20,6 @@ export const formsSlice = createSlice({
   },
 });
 
-// Action creators are generated for each case reducer function
 export const { addForm } = formsSlice.actions;
 
 export default formsSlice.reducer;

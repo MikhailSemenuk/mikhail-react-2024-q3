@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { ValidationError } from 'yup';
 import { RootState } from '../../store/store';
-import { emptyInvalidFeedback, FormItem, Gender, stringFormItem } from '../../types';
+import { FormItem, Gender, stringFormItem } from '../../types';
 import fileToBase64 from '../../libs/fileToBase64';
 import { addForm } from '../../store/formsSlice';
 import { formSchema } from '../../validation/formSchema';
@@ -13,7 +13,7 @@ export default function UncontrolledForm() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const countries = useSelector((state: RootState) => state.countries.countries);
-  const [invalidFeedback, setInvalidFeedback] = useState<stringFormItem>(emptyInvalidFeedback);
+  const [invalidFeedback, setInvalidFeedback] = useState<stringFormItem>(getEmptyInvalidFeedback());
   const [files, setFiles] = useState<FileList | undefined>(undefined);
 
   const handleFileChange = (file: FileList | undefined) => {
@@ -40,7 +40,7 @@ export default function UncontrolledForm() {
 
     try {
       await formSchema.validate(prepareForm, { abortEarly: false });
-      setInvalidFeedback(emptyInvalidFeedback);
+      setInvalidFeedback(getEmptyInvalidFeedback());
       dispatch(addForm(prepareForm));
       navigate('/');
     } catch (err) {
@@ -118,7 +118,7 @@ export default function UncontrolledForm() {
 }
 
 function parseNewInvalidFeedback(err: unknown) {
-  const newError: stringFormItem = { ...emptyInvalidFeedback };
+  const newError: stringFormItem = getEmptyInvalidFeedback();
 
   if (err instanceof ValidationError) {
     err.inner.forEach((error) => {
@@ -132,4 +132,20 @@ function parseNewInvalidFeedback(err: unknown) {
 
 function getNameForm<K extends keyof FormItem>(key: K): K {
   return key;
+}
+
+function getEmptyInvalidFeedback() {
+  const emptyInvalidFeedback: stringFormItem = {
+    name: '',
+    email: '',
+    password: '',
+    age: '',
+    gender: '',
+    repeatPassword: '',
+    acceptTerms: '',
+    files: '',
+    fileBase64: '',
+    country: '',
+  };
+  return emptyInvalidFeedback;
 }
