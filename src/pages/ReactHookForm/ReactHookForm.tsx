@@ -1,5 +1,3 @@
-// TODO: submit in redux and redirect
-
 import { useForm, useWatch } from 'react-hook-form';
 import { DevTool } from '@hookform/devtools';
 import { Link, useNavigate } from 'react-router-dom';

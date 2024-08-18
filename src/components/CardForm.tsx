@@ -9,11 +9,13 @@ interface CharacterCardProps {
 export default function CharacterCard({ formItem, isLastForm }: CharacterCardProps) {
   const detailList: string[] = [];
 
-  Object.entries(formItem).forEach(([key, value]) => {
-    if (key !== 'files' && key !== 'fileBase64' && key !== 'repeatPassword') {
-      detailList.push(`${key}: ${value}`);
-    }
-  });
+  Object.entries(formItem)
+    .sort(([keyA], [keyB]) => keyB.localeCompare(keyA))
+    .forEach(([key, value]) => {
+      if (key !== 'files' && key !== 'fileBase64' && key !== 'repeatPassword') {
+        detailList.push(`${key}: ${value}`);
+      }
+    });
 
   const classNameCard = classNames('card', 'my-4', 'mx-1', 'w-75', { border: isLastForm, 'border-white': isLastForm });
 
