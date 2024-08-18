@@ -1,6 +1,7 @@
 import classNames from 'classnames';
 import { useId, useState, ChangeEvent } from 'react';
 import { FormItem, stringFormItem } from '../../types';
+import ProgressPasswordStrength from '../../components/ProgressPasswordStrength';
 
 interface InputWrapperProps<K extends keyof FormItem> {
   name: K;
@@ -23,9 +24,21 @@ const InputWrapper = <K extends keyof FormItem>({
 }: InputWrapperProps<K>) => {
   const id = useId();
   const [showPassword, setShowPassword] = useState(false);
+  const [password, setPassword] = useState('');
 
   const togglePasswordVisibility = () => {
     setShowPassword((prevState) => !prevState);
+  };
+
+  const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0] || undefined;
+    if (onFileChange) {
+      onFileChange(file);
+    }
+  };
+
+  const handlePasswordChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setPassword(event.target.value);
   };
 
   const classNameInput = classNames({
@@ -34,13 +47,6 @@ const InputWrapper = <K extends keyof FormItem>({
     'form-control': type !== 'checkbox',
     'is-invalid': invalidFeedback[name].length > 0,
   });
-
-  const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0] || undefined;
-    if (onFileChange) {
-      onFileChange(file);
-    }
-  };
 
   let inputElement: JSX.Element;
 
@@ -58,7 +64,13 @@ const InputWrapper = <K extends keyof FormItem>({
   } else if (type === 'password') {
     inputElement = (
       <>
-        <input type={showPassword ? 'text' : 'password'} className={classNameInput} id={id} name={name} />
+        <input
+          type={showPassword ? 'text' : 'password'}
+          className={classNameInput}
+          id={id}
+          name={name}
+          onChange={handlePasswordChange}
+        />
         <button type='button' onClick={togglePasswordVisibility} className='btn btn-outline-secondary ms-2'>
           {showPassword ? 'Hide' : 'Show'}
         </button>
@@ -98,6 +110,7 @@ const InputWrapper = <K extends keyof FormItem>({
           {label}
         </label>
       )}
+      {(name === 'password' || name === 'repeatPassword') && <ProgressPasswordStrength password={password} />}
       <div className='input-group has-validation'>
         {inputElement}
         <div className='invalid-feedback'>{invalidFeedback[name]}</div>

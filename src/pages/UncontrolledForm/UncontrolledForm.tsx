@@ -1,5 +1,3 @@
-// TODO: display the password strength
-
 import { FormEvent, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
@@ -44,7 +42,6 @@ export default function UncontrolledForm() {
       await formSchema.validate(prepareForm, { abortEarly: false });
       setInvalidFeedback(emptyInvalidFeedback);
       dispatch(addForm(prepareForm));
-      console.log('все ок');
       navigate('/');
     } catch (err) {
       setInvalidFeedback(parseNewInvalidFeedback(err));
@@ -59,7 +56,7 @@ export default function UncontrolledForm() {
 
         <InputWrapper name='email' label='Email address' type='email' invalidFeedback={invalidFeedback} />
 
-        <div className='row'>
+        <div className='row my-2'>
           <div className='col'>
             <InputWrapper name='password' label='Password' type='password' invalidFeedback={invalidFeedback} />
           </div>
@@ -80,7 +77,7 @@ export default function UncontrolledForm() {
           label='File'
           type='file'
           invalidFeedback={invalidFeedback}
-          onFileChange={handleFileChange} // Pass the file change handler
+          onFileChange={handleFileChange}
         />
         <InputWrapper
           name='gender'
@@ -130,9 +127,6 @@ function parseNewInvalidFeedback(err: unknown) {
       }
     });
   }
-
-  // TODO: del later
-  console.log(newError);
   return newError;
 }
 
