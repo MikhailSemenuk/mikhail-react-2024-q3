@@ -4,3 +4,12 @@ export interface FormItem {
   password: string;
   acceptTerms: boolean;
 }
+
+export type stringFormItem = Record<keyof FormItem, string>;
+
+export const emptyInvalidFeedback: stringFormItem = {
+  name: '',
+  email: '',
+  password: '',
+  acceptTerms: '',
+};
