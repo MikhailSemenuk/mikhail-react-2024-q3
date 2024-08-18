@@ -1,6 +1,7 @@
 // TODO: how make reset
 // TODO: make form green after submit
 // TODO: Show password button
+// TODO: Limit age min="0"
 
 import { FormEvent, useState } from 'react';
 import { emptyInvalidFeedback, FormItem, stringFormItem } from '../types';
@@ -25,6 +26,7 @@ export default function UncontrolledForm() {
       name: formData.get(getNameForm('name')) as string,
       email: formData.get(getNameForm('email')) as string,
       password: formData.get(getNameForm('password')) as string,
+      age: Number(formData.get(getNameForm('age'))),
       repeatPassword: formData.get(getNameForm('repeatPassword')) as string,
       acceptTerms: formData.get(getNameForm('acceptTerms')) === 'on',
     };
@@ -51,6 +53,8 @@ export default function UncontrolledForm() {
 
         <InputWrapper name='repeatPassword' label='Password repeat' type='password' invalidFeedback={invalidFeedback} />
 
+        <InputWrapper name='age' label='Age' type='number' invalidFeedback={invalidFeedback} />
+
         <InputWrapper
           name='acceptTerms'
           label='Accept Terms and Conditions'
@@ -75,7 +79,7 @@ function parseNewInvalidFeedback(err: unknown) {
   if (err instanceof ValidationError) {
     err.inner.forEach((error) => {
       if (error.path && error.path in newError) {
-        newError[error.path as keyof FormItem] += `${error.message} `;
+        newError[error.path as keyof FormItem] += `${error.message}. `;
       }
     });
   }

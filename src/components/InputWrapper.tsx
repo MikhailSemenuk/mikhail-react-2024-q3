@@ -5,7 +5,7 @@ import { FormItem, stringFormItem } from '../types';
 interface InputWrapperProps<K extends keyof FormItem> {
   name: K;
   label: string;
-  type: 'text' | 'email' | 'password' | 'checkbox';
+  type: 'text' | 'email' | 'password' | 'checkbox' | 'number';
   invalidFeedback: stringFormItem;
 }
 

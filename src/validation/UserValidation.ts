@@ -1,4 +1,4 @@
-import { object, string, ObjectSchema, boolean, ref } from 'yup';
+import { object, string, ObjectSchema, boolean, ref, number } from 'yup';
 import { FormItem } from '../types';
 
 export const userSchema: ObjectSchema<FormItem> = object({
@@ -19,6 +19,8 @@ export const userSchema: ObjectSchema<FormItem> = object({
     .required('Password is required')
     .oneOf([ref('password')], 'Passwords must match')
     .required('Repeat Password is required'),
+
+  age: number().required('Age is required').positive('Age must be a positive number').integer('Age must be an integer'),
 
   acceptTerms: boolean().isTrue('You must accept the terms and conditions').required('Acceptance of terms is required'),
 });

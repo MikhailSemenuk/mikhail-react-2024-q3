@@ -3,6 +3,7 @@ export interface FormItem {
   email: string;
   password: string;
   repeatPassword: string;
+  age: number;
   acceptTerms: boolean;
 }
 
@@ -12,6 +13,7 @@ export const emptyInvalidFeedback: stringFormItem = {
   name: '',
   email: '',
   password: '',
+  age: '',
   repeatPassword: '',
   acceptTerms: '',
 };
