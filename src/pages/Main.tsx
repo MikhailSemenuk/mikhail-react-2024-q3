@@ -3,12 +3,13 @@
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { FormItem } from '../types';
+import CardForm from '../components/CardForm';
 
 export default function Main() {
   const formArray = useSelector((state: { savedForm: { forms: FormItem[] } }) => state.savedForm.forms);
 
   return (
-    <div className='page'>
+    <div className='page p-1'>
       <h1>Main page</h1>
       <nav>
         <ul>
@@ -22,17 +23,14 @@ export default function Main() {
       </nav>
 
       <h2>Saved Forms</h2>
-      <ul>
-        {formArray.length > 0 ? (
-          formArray.map((form, index) => (
-            <li key={index}>
-              Email: {form.email}, Password: {form.password}, Accepted Terms: {form.acceptTerms ? 'Yes' : 'No'}
-            </li>
-          ))
-        ) : (
-          <li>No forms saved yet.</li>
-        )}
-      </ul>
+      {formArray.length > 0 ? (
+        formArray
+          .slice()
+          .reverse()
+          .map((form, index) => <CardForm key={`formKey${index}`} formItem={form} isLastForm={index === 0} />)
+      ) : (
+        <p>No forms saved yet.</p>
+      )}
     </div>
   );
 }
