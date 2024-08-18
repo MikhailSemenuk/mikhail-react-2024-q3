@@ -1,8 +1,6 @@
 // TODO: submit in redux and redirect
-// TODO: password validation broken
-// TODO: maybe props name and error.?... - refactor
 
-import { useForm } from 'react-hook-form';
+import { useForm, useWatch } from 'react-hook-form';
 import { DevTool } from '@hookform/devtools';
 import { Link } from 'react-router-dom';
 import { FormItem } from '../../types';
@@ -18,6 +16,10 @@ export default function ReactHookForm() {
   });
   const { register, handleSubmit, formState, getValues, control } = form;
   const { errors, isValid, isDirty } = formState;
+  const password = useWatch({ control, name: 'password' });
+  const repeatPassword = useWatch({ control, name: 'repeatPassword' });
+
+  console.log(`useWatch: ${password}`);
 
   const onSubmit = async (data: FormItem) => {
     const files = getValues('files');
@@ -65,6 +67,7 @@ export default function ReactHookForm() {
               type='password'
               errors={errors.password?.message}
               register={register}
+              passwordForIndicator={password}
             />
           </div>
           <div className='col'>
@@ -74,6 +77,7 @@ export default function ReactHookForm() {
               type='password'
               errors={errors.repeatPassword?.message}
               register={register}
+              passwordForIndicator={repeatPassword}
             />
           </div>
         </div>

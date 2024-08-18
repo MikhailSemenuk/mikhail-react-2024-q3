@@ -33,7 +33,6 @@ export const formSchema: ObjectSchema<FormItem> = object({
     ),
 
   repeatPassword: string()
-    .required('Password is required')
     .oneOf([ref('password')], 'Passwords must match')
     .required('Repeat Password is required'),
 

@@ -1,6 +1,6 @@
 // TODO: rename it
 
-import { ChangeEvent, useState, useId } from 'react';
+import { useState, useId } from 'react';
 import classNames from 'classnames';
 import { UseFormRegister } from 'react-hook-form';
 import { FormItem } from '../../types';
@@ -11,6 +11,7 @@ interface InputWrapperProps<K extends keyof FormItem> {
   label: string;
   type: 'text' | 'email' | 'password' | 'checkbox' | 'number' | 'select' | 'file';
   register: UseFormRegister<FormItem>;
+  passwordForIndicator?: string;
   errors?: string;
   options?: { value: string; label: string }[];
   datalistOptions?: string[];
@@ -22,19 +23,15 @@ const InputWrapper = <K extends keyof FormItem>({
   type,
   register,
   errors,
+  passwordForIndicator,
   options,
   datalistOptions,
 }: InputWrapperProps<K>) => {
   const id = useId();
   const [showPassword, setShowPassword] = useState(false);
-  const [password, setPassword] = useState('');
 
   const togglePasswordVisibility = () => {
     setShowPassword((prevState) => !prevState);
-  };
-
-  const handlePasswordChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setPassword(event.target.value);
   };
 
   const classNameInput = classNames({
@@ -60,13 +57,7 @@ const InputWrapper = <K extends keyof FormItem>({
   } else if (type === 'password') {
     inputElement = (
       <>
-        <input
-          type={showPassword ? 'text' : 'password'}
-          className={classNameInput}
-          id={id}
-          {...register(name)}
-          onChange={handlePasswordChange}
-        />
+        <input type={showPassword ? 'text' : 'password'} className={classNameInput} id={id} {...register(name)} />
         <button type='button' onClick={togglePasswordVisibility} className='btn btn-outline-secondary ms-2'>
           {showPassword ? 'Hide' : 'Show'}
         </button>
@@ -106,7 +97,7 @@ const InputWrapper = <K extends keyof FormItem>({
           {label}
         </label>
       )}
-      {(name === 'password' || name === 'repeatPassword') && <ProgressPasswordStrength password={password} />}
+      {type === 'password' && <ProgressPasswordStrength password={passwordForIndicator ?? ''} />}
       <div className='input-group has-validation'>
         {inputElement}
         <div className='invalid-feedback'>{errors}</div>
