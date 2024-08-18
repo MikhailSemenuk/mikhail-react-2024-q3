@@ -30,6 +30,7 @@ const InputWrapper = <K extends keyof FormItem>({
 
   const classNameInput = classNames({
     'form-check-input': type === 'checkbox',
+    'me-2': type === 'checkbox',
     'form-control': type !== 'checkbox',
     'is-invalid': invalidFeedback[name].length > 0,
   });
@@ -76,15 +77,27 @@ const InputWrapper = <K extends keyof FormItem>({
         </datalist>
       </>
     );
+  } else if (type === 'checkbox') {
+    inputElement = (
+      <div className='checkbox-wrapper'>
+        <input type='checkbox' className={classNameInput} id={id} name={name} />
+        <label htmlFor={id} className='form-check-label'>
+          {label}
+        </label>
+        <div className='invalid-feedback'>{invalidFeedback[name]}</div>
+      </div>
+    );
   } else {
     inputElement = <input type={type} className={classNameInput} id={id} name={name} />;
   }
 
   return (
     <div className='mb-3'>
-      <label htmlFor={id} className='form-label'>
-        {label}
-      </label>
+      {type !== 'checkbox' && (
+        <label htmlFor={id} className='form-label'>
+          {label}
+        </label>
+      )}
       <div className='input-group has-validation'>
         {inputElement}
         <div className='invalid-feedback'>{invalidFeedback[name]}</div>

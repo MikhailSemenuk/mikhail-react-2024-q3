@@ -1,9 +1,6 @@
 // TODO: how make reset
 // TODO: make form green after submit
 // TODO: add grid in form
-// TODO: disable show password by default
-// TODO: Block and unlock submit btn ?
-// TODO: Checkbox beautiful
 
 import { FormEvent, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
