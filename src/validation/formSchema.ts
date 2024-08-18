@@ -21,7 +21,7 @@ const fileValidation = mixed<File>()
 export const formSchema: ObjectSchema<FormItem> = object({
   name: string()
     .required('Name is required')
-    .matches(/^[A-Z][a-zA-Z]*$/, 'Name must start with an uppercase letter'),
+    .matches(/^[A-Z][a-zA-Z ]*$/, 'Name must start with an uppercase letter'),
 
   email: string().email('Email must be a valid email').required('Email is required'),
 
