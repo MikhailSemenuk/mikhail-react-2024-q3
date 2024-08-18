@@ -1,0 +1,127 @@
+import { ChangeEvent, useState, useId } from 'react';
+import classNames from 'classnames';
+import { UseFormRegister } from 'react-hook-form';
+import { FormItem } from '../../types';
+import ProgressPasswordStrength from '../../components/ProgressPasswordStrength';
+
+interface InputWrapperProps<K extends keyof FormItem> {
+  name: K;
+  label: string;
+  type: 'text' | 'email' | 'password' | 'checkbox' | 'number' | 'select' | 'file';
+  register: UseFormRegister<FormItem>;
+  errors?: string;
+  options?: { value: string; label: string }[];
+  datalistOptions?: string[];
+  onFileChange?: (file: File | undefined) => void;
+}
+
+const InputWrapper = <K extends keyof FormItem>({
+  name,
+  label,
+  type,
+  register,
+  errors,
+  options,
+  datalistOptions,
+  onFileChange,
+}: InputWrapperProps<K>) => {
+  const id = useId();
+  const [showPassword, setShowPassword] = useState(false);
+  const [password, setPassword] = useState('');
+
+  const togglePasswordVisibility = () => {
+    setShowPassword((prevState) => !prevState);
+  };
+
+  const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0] || undefined;
+    if (onFileChange) {
+      onFileChange(file);
+    }
+  };
+
+  const handlePasswordChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setPassword(event.target.value);
+  };
+
+  const classNameInput = classNames({
+    'form-check-input': type === 'checkbox',
+    'me-2': type === 'checkbox',
+    'form-control': type !== 'checkbox',
+    'is-invalid': errors,
+  });
+
+  let inputElement: JSX.Element;
+
+  if (type === 'select' && options) {
+    inputElement = (
+      <select className={classNameInput} id={id} {...register(name)}>
+        <option value=''>Select an option</option>
+        {options.map((option) => (
+          <option key={option.value} value={option.value}>
+            {option.label}
+          </option>
+        ))}
+      </select>
+    );
+  } else if (type === 'password') {
+    inputElement = (
+      <>
+        <input
+          type={showPassword ? 'text' : 'password'}
+          className={classNameInput}
+          id={id}
+          {...register(name)}
+          onChange={handlePasswordChange}
+        />
+        <button type='button' onClick={togglePasswordVisibility} className='btn btn-outline-secondary ms-2'>
+          {showPassword ? 'Hide' : 'Show'}
+        </button>
+      </>
+    );
+  } else if (type === 'file') {
+    inputElement = (
+      <input type='file' className={classNameInput} id={id} {...register(name)} onChange={handleFileChange} />
+    );
+  } else if (type === 'text' && datalistOptions) {
+    inputElement = (
+      <>
+        <input type='text' className={classNameInput} id={id} list={`${id}-datalist`} {...register(name)} />
+        <datalist id={`${id}-datalist`}>
+          {datalistOptions.map((option) => (
+            <option key={option} value={option} />
+          ))}
+        </datalist>
+      </>
+    );
+  } else if (type === 'checkbox') {
+    inputElement = (
+      <div className='checkbox-wrapper'>
+        <input type='checkbox' className={classNameInput} id={id} {...register(name)} />
+        <label htmlFor={id} className='form-check-label'>
+          {label}
+        </label>
+        <div className='invalid-feedback'>{errors}</div>
+      </div>
+    );
+  } else {
+    inputElement = <input type={type} className={classNameInput} id={id} {...register(name)} />;
+  }
+
+  return (
+    <div className='mb-3'>
+      {type !== 'checkbox' && (
+        <label htmlFor={id} className='form-label'>
+          {label}
+        </label>
+      )}
+      {(name === 'password' || name === 'repeatPassword') && <ProgressPasswordStrength password={password} />}
+      <div className='input-group has-validation'>
+        {inputElement}
+        <div className='invalid-feedback'>{errors}</div>
+      </div>
+    </div>
+  );
+};
+
+export default InputWrapper;

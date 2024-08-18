@@ -13,6 +13,7 @@ export interface FormItem {
   country: string;
 }
 
+// TODO: del in the end
 export interface FormItemShort {
   name: string;
 }
