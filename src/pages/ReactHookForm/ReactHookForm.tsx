@@ -8,14 +8,16 @@ import { formSchemaShort } from '../../validation/formSchema';
 export default function ReactHookForm() {
   const form = useForm<FormItemShort>({
     resolver: yupResolver(formSchemaShort),
+    mode: 'onChange',
   });
   const { register, control, handleSubmit, formState } = form;
-  const { errors } = formState;
+  const { errors, isValid, isDirty } = formState;
 
   const onSubmit = (data: FormItemShort) => {
     console.log('form submit', data);
   };
 
+  console.log(errors.name);
   return (
     <div className='page mt-2'>
       <h1>Form (uncontrolled components)</h1>
@@ -26,7 +28,7 @@ export default function ReactHookForm() {
         </div>
         <p>{errors.name?.message}</p>
 
-        <button type='submit' className='btn btn-primary'>
+        <button type='submit' className='btn btn-primary' disabled={!isValid || !isDirty}>
           Submit
         </button>
         <DevTool control={control} />
