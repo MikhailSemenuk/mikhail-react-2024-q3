@@ -2,22 +2,28 @@
 
 import { useForm, useWatch } from 'react-hook-form';
 import { DevTool } from '@hookform/devtools';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FormItem } from '../../types';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { formSchema } from '../../validation/formSchema';
 import fileToBase64 from '../../libs/fileToBase64';
 import ControlledInput from './ControlledInput';
+import { addForm } from '../../store/formsSlice';
+import { RootState } from '../../store/store';
+import { useDispatch, useSelector } from 'react-redux';
 
 export default function ReactHookForm() {
   const form = useForm<FormItem>({
     resolver: yupResolver(formSchema),
     mode: 'onChange',
   });
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { register, handleSubmit, formState, getValues, control } = form;
   const { errors, isValid, isDirty } = formState;
   const password = useWatch({ control, name: 'password' });
   const repeatPassword = useWatch({ control, name: 'repeatPassword' });
+  const countries = useSelector((state: RootState) => state.countries.countries);
 
   const onSubmit = async (data: FormItem) => {
     const files = getValues('files');
@@ -30,14 +36,13 @@ export default function ReactHookForm() {
       console.error('problem with convection in base64');
     }
 
-    const preparedData: FormItem = {
-      ...data,
-      fileBase64,
-    };
+    const prepareForm: FormItem = { ...data };
+    prepareForm['fileBase64'] = fileBase64;
 
     try {
-      await formSchema.validate(preparedData, { abortEarly: false });
-      console.log('Form submit', preparedData);
+      await formSchema.validate(prepareForm, { abortEarly: false });
+      dispatch(addForm(prepareForm));
+      navigate('/');
     } catch (validationErrors) {
       console.error('Validation errors:', validationErrors);
     }
@@ -101,6 +106,7 @@ export default function ReactHookForm() {
           name='country'
           label='Country'
           type='text'
+          datalistOptions={countries}
           errors={errors.country?.message}
           register={register}
         />
