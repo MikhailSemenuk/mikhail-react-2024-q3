@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { useId } from 'react';
+import { useId, useState } from 'react';
 import { FormItem, stringFormItem } from '../types';
 
 interface InputWrapperProps<K extends keyof FormItem> {
@@ -9,13 +9,13 @@ interface InputWrapperProps<K extends keyof FormItem> {
   invalidFeedback: stringFormItem;
 }
 
-const InputWrapper = <K extends keyof FormItem>({
-  name,
-  label,
-  type = 'text',
-  invalidFeedback,
-}: InputWrapperProps<K>) => {
+const InputWrapper = <K extends keyof FormItem>({ name, label, type, invalidFeedback }: InputWrapperProps<K>) => {
   const id = useId();
+  const [showPassword, setShowPassword] = useState(true); // TODO: during debug
+
+  const togglePasswordVisibility = () => {
+    setShowPassword((prevState) => !prevState);
+  };
 
   const classNameInput = classNames({
     'form-check-input': type === 'checkbox',
@@ -29,7 +29,17 @@ const InputWrapper = <K extends keyof FormItem>({
         {label}
       </label>
       <div className='input-group has-validation'>
-        <input type={type} className={classNameInput} id={id} name={name} />
+        <input
+          type={type === 'password' && showPassword ? 'text' : type}
+          className={classNameInput}
+          id={id}
+          name={name}
+        />
+        {type === 'password' && (
+          <button type='button' onClick={togglePasswordVisibility} className='btn btn-outline-secondary ms-2'>
+            {showPassword ? 'Hide' : 'Show'}
+          </button>
+        )}
         <div className='invalid-feedback'>{invalidFeedback[name]}</div>
       </div>
     </div>

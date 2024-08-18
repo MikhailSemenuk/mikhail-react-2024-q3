@@ -2,6 +2,7 @@ export interface FormItem {
   name: string;
   email: string;
   password: string;
+  repeatPassword: string;
   acceptTerms: boolean;
 }
 
@@ -11,5 +12,6 @@ export const emptyInvalidFeedback: stringFormItem = {
   name: '',
   email: '',
   password: '',
+  repeatPassword: '',
   acceptTerms: '',
 };

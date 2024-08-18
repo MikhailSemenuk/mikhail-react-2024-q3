@@ -22,10 +22,11 @@ export default function UncontrolledForm() {
     const formData = new FormData(event.currentTarget);
 
     const prepareForm: FormItem = {
-      name: formData.get('name') as string,
-      email: formData.get('email') as string,
-      password: formData.get('password') as string,
-      acceptTerms: formData.get('acceptTerms') === 'on',
+      name: formData.get(getNameForm('name')) as string,
+      email: formData.get(getNameForm('email')) as string,
+      password: formData.get(getNameForm('password')) as string,
+      repeatPassword: formData.get(getNameForm('repeatPassword')) as string,
+      acceptTerms: formData.get(getNameForm('acceptTerms')) === 'on',
     };
 
     try {
@@ -39,7 +40,7 @@ export default function UncontrolledForm() {
   };
 
   return (
-    <div className='page'>
+    <div className='page m-2'>
       <h1>Form (uncontrolled components)</h1>
       <form onSubmit={handleSubmit}>
         <InputWrapper name='name' label='Name' type='text' invalidFeedback={invalidFeedback} />
@@ -47,6 +48,8 @@ export default function UncontrolledForm() {
         <InputWrapper name='email' label='Email address' type='email' invalidFeedback={invalidFeedback} />
 
         <InputWrapper name='password' label='Password' type='password' invalidFeedback={invalidFeedback} />
+
+        <InputWrapper name='repeatPassword' label='Password repeat' type='password' invalidFeedback={invalidFeedback} />
 
         <InputWrapper
           name='acceptTerms'
@@ -80,4 +83,8 @@ function parseNewInvalidFeedback(err: unknown) {
   // TODO: del later
   console.log(newError);
   return newError;
+}
+
+function getNameForm<K extends keyof FormItem>(key: K): K {
+  return key;
 }
