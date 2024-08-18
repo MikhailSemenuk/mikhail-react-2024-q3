@@ -17,13 +17,11 @@ export default function CharacterCard({ formItem, isLastForm }: CharacterCardPro
 
   const classNameCard = classNames('card', 'my-3', 'mx-1', { border: isLastForm, 'border-white': isLastForm });
 
+  const imageSrc = formItem.fileBase64 ? `data:image/png;base64,${formItem.fileBase64}` : '';
+
   return (
     <div className={classNameCard}>
-      {/* <img
-        src={character.image}
-        className='card-img-top cursor-pointer'
-        alt={character.name}
-      /> */}
+      {imageSrc && <img src={imageSrc} className='card-img-top cursor-pointer' alt={formItem.name} />}
       <div className='card-body cursor-pointer'>
         <h5 className='card-title'>{formItem.name}</h5>
       </div>

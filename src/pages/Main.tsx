@@ -1,5 +1,3 @@
-// TODO: Maybe rewrite it
-//TODO: Beatiful forms
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { FormItem } from '../types';
@@ -14,7 +12,7 @@ export default function Main() {
       <nav>
         <ul>
           <li>
-            <Link to='/UncontrolledForm'>Go to uncontrolled components form</Link>
+            <Link to='/UncontrolledForm'>Go to Form (uncontrolled components)</Link>
           </li>
           <li>
             <Link to='/ReactHookForm'>Go to react hook form</Link>
