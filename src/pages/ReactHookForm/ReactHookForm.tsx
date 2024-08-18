@@ -5,17 +5,31 @@ import { FormItem } from '../../types';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { formSchema } from '../../validation/formSchema';
 import InputWrapper from './InputWrapper';
+import fileToBase64 from '../../libs/fileToBase64';
 
 export default function ReactHookForm() {
   const form = useForm<FormItem>({
     resolver: yupResolver(formSchema),
     mode: 'onChange',
   });
-  const { register, control, handleSubmit, formState } = form;
+  const { register, control, handleSubmit, formState, getValues } = form;
   const { errors, isValid, isDirty } = formState;
 
-  const onSubmit = (data: FormItem) => {
-    console.log('form submit', data);
+  const onSubmit = async (data: FormItem) => {
+    const file = getValues('file');
+    const fileBase64 = file === undefined ? '' : await fileToBase64(file);
+
+    const preparedData: FormItem = {
+      ...data,
+      fileBase64,
+    };
+
+    try {
+      await formSchema.validate(preparedData, { abortEarly: false });
+      console.log('Form submit', preparedData);
+    } catch (validationErrors) {
+      console.error('Validation errors:', validationErrors);
+    }
   };
 
   return (
@@ -46,6 +60,7 @@ export default function ReactHookForm() {
           options={[
             { value: 'male', label: 'Male' },
             { value: 'female', label: 'Female' },
+            { value: 'other', label: 'Other' },
           ]}
           errors={errors.gender?.message}
           register={register}
