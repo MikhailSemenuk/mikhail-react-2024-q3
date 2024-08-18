@@ -10,7 +10,7 @@ export default function CharacterCard({ formItem, isLastForm }: CharacterCardPro
   const detailList: string[] = [];
 
   Object.entries(formItem).forEach(([key, value]) => {
-    if (key !== 'file' && key !== 'fileBase64' && key !== 'repeatPassword') {
+    if (key !== 'files' && key !== 'fileBase64' && key !== 'repeatPassword') {
       detailList.push(`${key}: ${value}`);
     }
   });

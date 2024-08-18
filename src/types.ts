@@ -8,7 +8,7 @@ export interface FormItem {
   age: number;
   gender: Gender;
   acceptTerms: boolean;
-  file?: File | undefined;
+  files?: FileList | undefined;
   fileBase64?: string | undefined;
   country: string;
 }
@@ -24,7 +24,7 @@ export const emptyInvalidFeedback: stringFormItem = {
   gender: '',
   repeatPassword: '',
   acceptTerms: '',
-  file: '',
+  files: '',
   fileBase64: '',
   country: '',
 };

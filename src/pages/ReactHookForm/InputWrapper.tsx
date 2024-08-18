@@ -1,3 +1,5 @@
+// TODO: rename it
+
 import { ChangeEvent, useState, useId } from 'react';
 import classNames from 'classnames';
 import { UseFormRegister } from 'react-hook-form';
@@ -12,7 +14,6 @@ interface InputWrapperProps<K extends keyof FormItem> {
   errors?: string;
   options?: { value: string; label: string }[];
   datalistOptions?: string[];
-  onFileChange?: (file: File | undefined) => void;
 }
 
 const InputWrapper = <K extends keyof FormItem>({
@@ -23,7 +24,6 @@ const InputWrapper = <K extends keyof FormItem>({
   errors,
   options,
   datalistOptions,
-  onFileChange,
 }: InputWrapperProps<K>) => {
   const id = useId();
   const [showPassword, setShowPassword] = useState(false);
@@ -31,13 +31,6 @@ const InputWrapper = <K extends keyof FormItem>({
 
   const togglePasswordVisibility = () => {
     setShowPassword((prevState) => !prevState);
-  };
-
-  const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0] || undefined;
-    if (onFileChange) {
-      onFileChange(file);
-    }
   };
 
   const handlePasswordChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -80,9 +73,7 @@ const InputWrapper = <K extends keyof FormItem>({
       </>
     );
   } else if (type === 'file') {
-    inputElement = (
-      <input type='file' className={classNameInput} id={id} {...register(name)} onChange={handleFileChange} />
-    );
+    inputElement = <input type='file' className={classNameInput} id={id} {...register(name)} />;
   } else if (type === 'text' && datalistOptions) {
     inputElement = (
       <>

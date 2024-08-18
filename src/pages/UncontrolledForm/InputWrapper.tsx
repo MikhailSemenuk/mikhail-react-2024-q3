@@ -10,7 +10,7 @@ interface InputWrapperProps<K extends keyof FormItem> {
   invalidFeedback: stringFormItem;
   options?: { value: string; label: string }[];
   datalistOptions?: string[];
-  onFileChange?: (file: File | undefined) => void;
+  onFileChange?: (file: FileList | undefined) => void;
 }
 
 const InputWrapper = <K extends keyof FormItem>({
@@ -31,9 +31,9 @@ const InputWrapper = <K extends keyof FormItem>({
   };
 
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0] || undefined;
+    const files = event.target.files || undefined;
     if (onFileChange) {
-      onFileChange(file);
+      onFileChange(files);
     }
   };
 

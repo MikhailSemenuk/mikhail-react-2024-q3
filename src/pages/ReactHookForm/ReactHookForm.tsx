@@ -1,10 +1,9 @@
-// TODO: file validation broken
 // TODO: submit in redux and redirect
 // TODO: password validation broken
 // TODO: maybe props name and error.?... - refactor
 
 import { useForm } from 'react-hook-form';
-// import { DevTool } from '@hookform/devtools';
+import { DevTool } from '@hookform/devtools';
 import { Link } from 'react-router-dom';
 import { FormItem } from '../../types';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -17,12 +16,19 @@ export default function ReactHookForm() {
     resolver: yupResolver(formSchema),
     mode: 'onChange',
   });
-  const { register, handleSubmit, formState, getValues } = form;
+  const { register, handleSubmit, formState, getValues, control } = form;
   const { errors, isValid, isDirty } = formState;
 
   const onSubmit = async (data: FormItem) => {
-    const file = getValues('file');
-    const fileBase64 = file === undefined ? '' : await fileToBase64(file);
+    const files = getValues('files');
+
+    let fileBase64 = '';
+    if (files instanceof FileList) {
+      const newFile = files[0] || undefined;
+      fileBase64 = await fileToBase64(newFile);
+    } else {
+      console.error('problem with convection in base64');
+    }
 
     const preparedData: FormItem = {
       ...data,
@@ -74,7 +80,7 @@ export default function ReactHookForm() {
 
         <InputWrapper name='age' label='Age' type='number' errors={errors.age?.message} register={register} />
 
-        <InputWrapper name='file' label='File' type='file' errors={errors.file?.message} register={register} />
+        <InputWrapper name='files' label='File' type='file' errors={errors.files?.message} register={register} />
 
         <InputWrapper
           name='gender'
@@ -103,7 +109,7 @@ export default function ReactHookForm() {
           Submit
         </button>
 
-        {/* <DevTool control={control} /> */}
+        <DevTool control={control} />
       </form>
       <footer className='my-3'>
         <Link to='/'>Back</Link>

@@ -1,19 +1,19 @@
 import { object, string, ObjectSchema, boolean, ref, number, mixed } from 'yup';
 import { FormItem } from '../types';
 
-const fileValidation = mixed<File>()
+const filesValidation = mixed<FileList>()
   .test('fileProvided', 'File is required', (value) => {
-    return value !== undefined;
+    return value && value.length > 0;
   })
   .test('fileSize', 'File size must be less than 2 MB', function (value) {
-    if (value && value.size) {
-      return value.size <= 2 * 1024 * 1024; // 2 MB
+    if (value && value.length > 0) {
+      return value[0].size <= 2 * 1024 * 1024; // 2 MB
     }
     return true;
   })
   .test('fileType', 'Only PNG and JPEG formats are allowed', function (value) {
-    if (value && value.type) {
-      return ['image/png', 'image/jpeg'].includes(value.type);
+    if (value && value.length > 0) {
+      return ['image/png', 'image/jpeg'].includes(value[0].type);
     }
     return true;
   });
@@ -41,7 +41,7 @@ export const formSchema: ObjectSchema<FormItem> = object({
 
   age: number().required('Age is required').min(0, 'Age cannot be a negative value.').integer('Age must be an integer'),
 
-  file: fileValidation,
+  files: filesValidation,
 
   fileBase64: string(),
 

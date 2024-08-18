@@ -14,7 +14,7 @@ export const formsSlice = createSlice({
   initialState,
   reducers: {
     addForm: (state, action: PayloadAction<FormItem>) => {
-      action.payload.file = undefined; // clear file, all data save in fileBase64
+      action.payload.files = undefined; // clear file, all data save in fileBase64
       state.forms.push(action.payload);
     },
   },

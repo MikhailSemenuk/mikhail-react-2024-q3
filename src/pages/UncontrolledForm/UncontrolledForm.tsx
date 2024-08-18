@@ -14,10 +14,10 @@ export default function UncontrolledForm() {
   const navigate = useNavigate();
   const countries = useSelector((state: RootState) => state.countries.countries);
   const [invalidFeedback, setInvalidFeedback] = useState<stringFormItem>(emptyInvalidFeedback);
-  const [file, setFile] = useState<File | undefined>(undefined);
+  const [files, setFiles] = useState<FileList | undefined>(undefined);
 
-  const handleFileChange = (file: File | undefined) => {
-    setFile(file);
+  const handleFileChange = (file: FileList | undefined) => {
+    setFiles(file);
   };
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
@@ -32,8 +32,8 @@ export default function UncontrolledForm() {
       age: Number(formData.get(getNameForm('age'))),
       gender: formData.get(getNameForm('gender')) as Gender,
       repeatPassword: formData.get(getNameForm('repeatPassword')) as string,
-      file: file,
-      fileBase64: file === undefined ? '' : await fileToBase64(file),
+      files: files,
+      fileBase64: files === undefined ? '' : await fileToBase64(files[0]),
       acceptTerms: formData.get(getNameForm('acceptTerms')) === 'on',
       country: formData.get(getNameForm('country')) as string,
     };
@@ -73,7 +73,7 @@ export default function UncontrolledForm() {
         <InputWrapper name='age' label='Age' type='number' invalidFeedback={invalidFeedback} />
 
         <InputWrapper
-          name='file'
+          name='files'
           label='File'
           type='file'
           invalidFeedback={invalidFeedback}
