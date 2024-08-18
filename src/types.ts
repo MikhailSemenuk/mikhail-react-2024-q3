@@ -1,9 +1,12 @@
+export type Gender = 'male' | 'female' | 'other';
+
 export interface FormItem {
   name: string;
   email: string;
   password: string;
   repeatPassword: string;
   age: number;
+  gender: Gender;
   acceptTerms: boolean;
 }
 
@@ -14,6 +17,7 @@ export const emptyInvalidFeedback: stringFormItem = {
   email: '',
   password: '',
   age: '',
+  gender: '',
   repeatPassword: '',
   acceptTerms: '',
 };

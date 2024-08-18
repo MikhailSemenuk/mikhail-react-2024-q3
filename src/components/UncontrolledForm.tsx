@@ -4,7 +4,7 @@
 // TODO: Limit age min="0"
 
 import { FormEvent, useState } from 'react';
-import { emptyInvalidFeedback, FormItem, stringFormItem } from '../types';
+import { emptyInvalidFeedback, FormItem, Gender, stringFormItem } from '../types';
 import { useDispatch } from 'react-redux';
 import { addForm } from '../formsSlice';
 import { Link } from 'react-router-dom';
@@ -27,6 +27,7 @@ export default function UncontrolledForm() {
       email: formData.get(getNameForm('email')) as string,
       password: formData.get(getNameForm('password')) as string,
       age: Number(formData.get(getNameForm('age'))),
+      gender: formData.get(getNameForm('gender')) as Gender,
       repeatPassword: formData.get(getNameForm('repeatPassword')) as string,
       acceptTerms: formData.get(getNameForm('acceptTerms')) === 'on',
     };
@@ -54,6 +55,18 @@ export default function UncontrolledForm() {
         <InputWrapper name='repeatPassword' label='Password repeat' type='password' invalidFeedback={invalidFeedback} />
 
         <InputWrapper name='age' label='Age' type='number' invalidFeedback={invalidFeedback} />
+
+        <InputWrapper
+          name='gender'
+          label='Gender'
+          type='select'
+          options={[
+            { value: 'male', label: 'Male' },
+            { value: 'female', label: 'Female' },
+            { value: 'other', label: 'Other' },
+          ]}
+          invalidFeedback={invalidFeedback}
+        />
 
         <InputWrapper
           name='acceptTerms'

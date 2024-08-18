@@ -5,13 +5,20 @@ import { FormItem, stringFormItem } from '../types';
 interface InputWrapperProps<K extends keyof FormItem> {
   name: K;
   label: string;
-  type: 'text' | 'email' | 'password' | 'checkbox' | 'number';
+  type: 'text' | 'email' | 'password' | 'checkbox' | 'number' | 'select';
   invalidFeedback: stringFormItem;
+  options?: { value: string; label: string }[];
 }
 
-const InputWrapper = <K extends keyof FormItem>({ name, label, type, invalidFeedback }: InputWrapperProps<K>) => {
+const InputWrapper = <K extends keyof FormItem>({
+  name,
+  label,
+  type,
+  invalidFeedback,
+  options,
+}: InputWrapperProps<K>) => {
   const id = useId();
-  const [showPassword, setShowPassword] = useState(true); // TODO: during debug
+  const [showPassword, setShowPassword] = useState(true);
 
   const togglePasswordVisibility = () => {
     setShowPassword((prevState) => !prevState);
@@ -29,12 +36,23 @@ const InputWrapper = <K extends keyof FormItem>({ name, label, type, invalidFeed
         {label}
       </label>
       <div className='input-group has-validation'>
-        <input
-          type={type === 'password' && showPassword ? 'text' : type}
-          className={classNameInput}
-          id={id}
-          name={name}
-        />
+        {type === 'select' && options ? (
+          <select className={classNameInput} id={id} name={name}>
+            <option value=''>Select an option</option>
+            {options.map((option) => (
+              <option key={option.value} value={option.value}>
+                {option.label}
+              </option>
+            ))}
+          </select>
+        ) : (
+          <input
+            type={type === 'password' && showPassword ? 'text' : type}
+            className={classNameInput}
+            id={id}
+            name={name}
+          />
+        )}
         {type === 'password' && (
           <button type='button' onClick={togglePasswordVisibility} className='btn btn-outline-secondary ms-2'>
             {showPassword ? 'Hide' : 'Show'}
