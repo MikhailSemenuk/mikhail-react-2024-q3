@@ -13,6 +13,10 @@ export interface FormItem {
   country: string;
 }
 
+export interface FormItemShort {
+  name: string;
+}
+
 export type stringFormItem = Record<keyof FormItem, string>;
 
 // TODO: separate this

@@ -1,14 +1,18 @@
 import { useForm } from 'react-hook-form';
 import { DevTool } from '@hookform/devtools';
 import { Link } from 'react-router-dom';
-import { FormItem } from '../../types';
+import { FormItemShort } from '../../types';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { formSchemaShort } from '../../validation/formSchema';
 
 export default function ReactHookForm() {
-  const form = useForm<FormItem>();
+  const form = useForm<FormItemShort>({
+    resolver: yupResolver(formSchemaShort),
+  });
   const { register, control, handleSubmit, formState } = form;
   const { errors } = formState;
 
-  const onSubmit = (data: FormItem) => {
+  const onSubmit = (data: FormItemShort) => {
     console.log('form submit', data);
   };
 
@@ -18,7 +22,7 @@ export default function ReactHookForm() {
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className='my-2'>
           <label htmlFor='name'>Username</label>
-          <input type='text' id='name' {...register('name', { required: 'Name is required' })} />
+          <input type='text' id='name' {...register('name')} />
         </div>
         <p>{errors.name?.message}</p>
 
