@@ -15,7 +15,7 @@ export default function Main() {
             <Link to='/UncontrolledForm'>Go to Form (uncontrolled components)</Link>
           </li>
           <li>
-            <Link to='/ReactHookForm'>Go to react hook form</Link>
+            <Link to='/ReactHookForm'>Go to Form (react-hook-form)</Link>
           </li>
         </ul>
       </nav>

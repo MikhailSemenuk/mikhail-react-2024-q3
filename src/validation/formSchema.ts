@@ -49,9 +49,3 @@ export const formSchema: ObjectSchema<FormItem> = object({
 
   acceptTerms: boolean().isTrue('You must accept the terms and conditions').required('Acceptance of terms is required'),
 });
-
-export const formSchemaShort = object({
-  name: string()
-    .required('Name is required')
-    .matches(/^[A-Z][a-zA-Z ]*$/, 'Name must start with an uppercase letter'),
-});

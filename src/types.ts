@@ -8,14 +8,9 @@ export interface FormItem {
   age: number;
   gender: Gender;
   acceptTerms: boolean;
-  file: File | undefined;
-  fileBase64: string | undefined;
+  file?: File | undefined;
+  fileBase64?: string | undefined;
   country: string;
-}
-
-// TODO: del in the end
-export interface FormItemShort {
-  name: string;
 }
 
 export type stringFormItem = Record<keyof FormItem, string>;
