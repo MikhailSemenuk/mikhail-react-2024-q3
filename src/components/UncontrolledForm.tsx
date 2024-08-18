@@ -3,6 +3,7 @@
 // TODO: Limit age min="0"
 // TODO: add grid in form
 // TODO: disable show password by default
+// TODO: Block and unlock submit btn
 
 import { FormEvent, useState } from 'react';
 import { emptyInvalidFeedback, FormItem, Gender, stringFormItem } from '../types';
@@ -12,11 +13,17 @@ import { Link } from 'react-router-dom';
 import { userSchema } from '../validation/UserValidation';
 import { ValidationError } from 'yup';
 import InputWrapper from './InputWrapper';
+import fileToBase64 from './fileToBase64';
 
 export default function UncontrolledForm() {
   const dispatch = useDispatch();
 
   const [invalidFeedback, setInvalidFeedback] = useState<stringFormItem>(emptyInvalidFeedback);
+  const [file, setFile] = useState<File | undefined>(undefined);
+
+  const handleFileChange = (file: File | undefined) => {
+    setFile(file);
+  };
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -30,6 +37,8 @@ export default function UncontrolledForm() {
       age: Number(formData.get(getNameForm('age'))),
       gender: formData.get(getNameForm('gender')) as Gender,
       repeatPassword: formData.get(getNameForm('repeatPassword')) as string,
+      file: file,
+      fileBase64: file === undefined ? '' : await fileToBase64(file),
       acceptTerms: formData.get(getNameForm('acceptTerms')) === 'on',
     };
 
@@ -57,6 +66,13 @@ export default function UncontrolledForm() {
 
         <InputWrapper name='age' label='Age' type='number' invalidFeedback={invalidFeedback} />
 
+        <InputWrapper
+          name='file'
+          label='File'
+          type='file'
+          invalidFeedback={invalidFeedback}
+          onFileChange={handleFileChange} // Pass the file change handler
+        />
         <InputWrapper
           name='gender'
           label='Gender'

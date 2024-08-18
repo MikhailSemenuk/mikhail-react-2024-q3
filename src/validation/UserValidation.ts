@@ -1,5 +1,22 @@
-import { object, string, ObjectSchema, boolean, ref, number } from 'yup';
+import { object, string, ObjectSchema, boolean, ref, number, mixed } from 'yup';
 import { FormItem } from '../types';
+
+const fileValidation = mixed<File>()
+  .test('fileProvided', 'File is required', (value) => {
+    return value !== null;
+  })
+  .test('fileSize', 'File size must be less than 2 MB', function (value) {
+    if (value && value.size) {
+      return value.size <= 2 * 1024 * 1024; // 2 MB
+    }
+    return true;
+  })
+  .test('fileType', 'Only PNG and JPEG formats are allowed', function (value) {
+    if (value && value.type) {
+      return ['image/png', 'image/jpeg'].includes(value.type);
+    }
+    return true;
+  });
 
 export const userSchema: ObjectSchema<FormItem> = object({
   name: string()
@@ -23,6 +40,10 @@ export const userSchema: ObjectSchema<FormItem> = object({
   gender: string().oneOf(['male', 'female', 'other'], 'Please choose a gender').required('Please choose your gender'),
 
   age: number().required('Age is required').positive('Age must be a positive number').integer('Age must be an integer'),
+
+  file: fileValidation,
+
+  fileBase64: string(),
 
   acceptTerms: boolean().isTrue('You must accept the terms and conditions').required('Acceptance of terms is required'),
 });

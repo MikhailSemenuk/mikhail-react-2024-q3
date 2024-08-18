@@ -1,13 +1,14 @@
 import classNames from 'classnames';
-import { useId, useState } from 'react';
+import { useId, useState, ChangeEvent } from 'react';
 import { FormItem, stringFormItem } from '../types';
 
 interface InputWrapperProps<K extends keyof FormItem> {
   name: K;
   label: string;
-  type: 'text' | 'email' | 'password' | 'checkbox' | 'number' | 'select';
+  type: 'text' | 'email' | 'password' | 'checkbox' | 'number' | 'select' | 'file';
   invalidFeedback: stringFormItem;
   options?: { value: string; label: string }[];
+  onFileChange?: (file: File | undefined) => void; // Добавлен обработчик файлов
 }
 
 const InputWrapper = <K extends keyof FormItem>({
@@ -16,9 +17,10 @@ const InputWrapper = <K extends keyof FormItem>({
   type,
   invalidFeedback,
   options,
+  onFileChange, // Получаем обработчик файлов
 }: InputWrapperProps<K>) => {
   const id = useId();
-  const [showPassword, setShowPassword] = useState(true);
+  const [showPassword, setShowPassword] = useState(false); // Изменено по умолчанию
 
   const togglePasswordVisibility = () => {
     setShowPassword((prevState) => !prevState);
@@ -29,6 +31,13 @@ const InputWrapper = <K extends keyof FormItem>({
     'form-control': type !== 'checkbox',
     'is-invalid': invalidFeedback[name].length > 0,
   });
+
+  const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0] || undefined;
+    if (onFileChange) {
+      onFileChange(file);
+    }
+  };
 
   let inputElement: JSX.Element;
 
@@ -52,6 +61,8 @@ const InputWrapper = <K extends keyof FormItem>({
         </button>
       </>
     );
+  } else if (type === 'file') {
+    inputElement = <input type='file' className={classNameInput} id={id} name={name} onChange={handleFileChange} />;
   } else {
     inputElement = <input type={type} className={classNameInput} id={id} name={name} />;
   }
