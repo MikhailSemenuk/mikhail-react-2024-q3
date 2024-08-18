@@ -39,10 +39,7 @@ export const formSchema: ObjectSchema<FormItem> = object({
 
   gender: string().oneOf(['male', 'female', 'other'], 'Please choose a gender').required('Please choose your gender'),
 
-  age: number()
-    .required('Age is required')
-    .min(0, 'Age must be zero or a positive number')
-    .integer('Age must be an integer'),
+  age: number().required('Age is required').min(0, 'Age cannot be a negative value.').integer('Age must be an integer'),
 
   file: fileValidation,
 

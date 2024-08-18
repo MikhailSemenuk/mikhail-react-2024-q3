@@ -49,7 +49,7 @@ export default function UncontrolledForm() {
   };
 
   return (
-    <div className='page m-2'>
+    <div className='page mt-2'>
       <h1>Form (uncontrolled components)</h1>
       <form onSubmit={handleSubmit}>
         <InputWrapper name='name' label='Name' type='text' invalidFeedback={invalidFeedback} />
