@@ -1,11 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { countries as countriesList } from 'countries-list';
 
 export interface CountriesState {
   countries: string[];
 }
 
 const initialState: CountriesState = {
-  countries: ['Belarus', 'Poland'], // TODO: etc
+  countries: Object.values(countriesList).map((country) => country.name),
 };
 
 export const countriesSlice = createSlice({

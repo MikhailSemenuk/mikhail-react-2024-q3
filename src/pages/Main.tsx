@@ -25,8 +25,7 @@ export default function Main() {
         {formArray.length > 0 ? (
           formArray.map((form, index) => (
             <li key={index}>
-              Email: {form.email}, Password: {form.password}, Accepted Terms:{' '}
-              {form.acceptTermsConditions ? 'Yes' : 'No'}
+              Email: {form.email}, Password: {form.password}, Accepted Terms: {form.acceptTerms ? 'Yes' : 'No'}
             </li>
           ))
         ) : (
