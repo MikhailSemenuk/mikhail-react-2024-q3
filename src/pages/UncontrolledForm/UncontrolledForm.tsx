@@ -6,8 +6,8 @@ import { RootState } from '../../store/store';
 import { FormItem, Gender, stringFormItem } from '../../types';
 import fileToBase64 from '../../libs/fileToBase64';
 import { addForm } from '../../store/formsSlice';
-import { formSchema } from '../../validation/formSchema';
 import UncontrolledInput from './UncontrolledInput';
+import { createFormSchema } from '../../validation/createFormSchema';
 
 export default function UncontrolledForm() {
   const dispatch = useDispatch();
@@ -15,6 +15,7 @@ export default function UncontrolledForm() {
   const countries = useSelector((state: RootState) => state.countries.countries);
   const [invalidFeedback, setInvalidFeedback] = useState<stringFormItem>(getEmptyInvalidFeedback());
   const [files, setFiles] = useState<FileList | undefined>(undefined);
+  const formSchema = createFormSchema(countries);
 
   const handleFileChange = (file: FileList | undefined) => {
     setFiles(file);
@@ -49,7 +50,7 @@ export default function UncontrolledForm() {
   };
 
   return (
-    <div className='page mt-2'>
+    <div className='page mt-2 p-2'>
       <h1>Form (uncontrolled components)</h1>
       <form onSubmit={handleSubmit}>
         <UncontrolledInput name='name' label='Name' type='text' invalidFeedback={invalidFeedback} />

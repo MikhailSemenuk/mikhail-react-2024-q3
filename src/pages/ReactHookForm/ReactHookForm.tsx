@@ -2,14 +2,16 @@ import { useForm, useWatch } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import { FormItem } from '../../types';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { formSchema } from '../../validation/formSchema';
 import fileToBase64 from '../../libs/fileToBase64';
 import ControlledInput from './ControlledInput';
 import { addForm } from '../../store/formsSlice';
 import { RootState } from '../../store/store';
 import { useDispatch, useSelector } from 'react-redux';
+import { createFormSchema } from '../../validation/createFormSchema';
 
 export default function ReactHookForm() {
+  const countries = useSelector((state: RootState) => state.countries.countries);
+  const formSchema = createFormSchema(countries);
   const form = useForm<FormItem>({
     resolver: yupResolver(formSchema),
     mode: 'onChange',
@@ -20,7 +22,6 @@ export default function ReactHookForm() {
   const { errors, isValid, isDirty } = formState;
   const password = useWatch({ control, name: 'password' });
   const repeatPassword = useWatch({ control, name: 'repeatPassword' });
-  const countries = useSelector((state: RootState) => state.countries.countries);
 
   const onSubmit = async (data: FormItem) => {
     const files = getValues('files');
@@ -46,7 +47,7 @@ export default function ReactHookForm() {
   };
 
   return (
-    <div className='page mt-2'>
+    <div className='page mt-2 p-2'>
       <h1>Form (react-hook-form)</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
         <ControlledInput name='name' label='Name' type='text' errors={errors.name?.message} register={register} />
