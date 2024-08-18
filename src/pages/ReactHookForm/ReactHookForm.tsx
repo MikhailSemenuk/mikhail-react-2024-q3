@@ -6,8 +6,8 @@ import { Link } from 'react-router-dom';
 import { FormItem } from '../../types';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { formSchema } from '../../validation/formSchema';
-import InputWrapper from './InputWrapper';
 import fileToBase64 from '../../libs/fileToBase64';
+import ControlledInput from './ControlledInput';
 
 export default function ReactHookForm() {
   const form = useForm<FormItem>({
@@ -18,8 +18,6 @@ export default function ReactHookForm() {
   const { errors, isValid, isDirty } = formState;
   const password = useWatch({ control, name: 'password' });
   const repeatPassword = useWatch({ control, name: 'repeatPassword' });
-
-  console.log(`useWatch: ${password}`);
 
   const onSubmit = async (data: FormItem) => {
     const files = getValues('files');
@@ -49,9 +47,9 @@ export default function ReactHookForm() {
     <div className='page mt-2'>
       <h1>Form (react-hook-form)</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <InputWrapper name='name' label='Name' type='text' errors={errors.name?.message} register={register} />
+        <ControlledInput name='name' label='Name' type='text' errors={errors.name?.message} register={register} />
 
-        <InputWrapper
+        <ControlledInput
           name='email'
           label='Email address'
           type='email'
@@ -61,7 +59,7 @@ export default function ReactHookForm() {
 
         <div className='row my-2'>
           <div className='col'>
-            <InputWrapper
+            <ControlledInput
               name='password'
               label='Password'
               type='password'
@@ -71,7 +69,7 @@ export default function ReactHookForm() {
             />
           </div>
           <div className='col'>
-            <InputWrapper
+            <ControlledInput
               name='repeatPassword'
               label='Password repeat'
               type='password'
@@ -82,11 +80,11 @@ export default function ReactHookForm() {
           </div>
         </div>
 
-        <InputWrapper name='age' label='Age' type='number' errors={errors.age?.message} register={register} />
+        <ControlledInput name='age' label='Age' type='number' errors={errors.age?.message} register={register} />
 
-        <InputWrapper name='files' label='File' type='file' errors={errors.files?.message} register={register} />
+        <ControlledInput name='files' label='File' type='file' errors={errors.files?.message} register={register} />
 
-        <InputWrapper
+        <ControlledInput
           name='gender'
           label='Gender'
           type='select'
@@ -99,9 +97,15 @@ export default function ReactHookForm() {
           register={register}
         />
 
-        <InputWrapper name='country' label='Country' type='text' errors={errors.country?.message} register={register} />
+        <ControlledInput
+          name='country'
+          label='Country'
+          type='text'
+          errors={errors.country?.message}
+          register={register}
+        />
 
-        <InputWrapper
+        <ControlledInput
           name='acceptTerms'
           label='Accept Terms and Conditions'
           type='checkbox'

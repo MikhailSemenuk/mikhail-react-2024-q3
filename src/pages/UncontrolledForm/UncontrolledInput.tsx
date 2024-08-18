@@ -1,51 +1,58 @@
-// TODO: rename it
-
-import { useState, useId } from 'react';
 import classNames from 'classnames';
-import { UseFormRegister } from 'react-hook-form';
-import { FormItem } from '../../types';
+import { useId, useState, ChangeEvent } from 'react';
+import { FormItem, stringFormItem } from '../../types';
 import ProgressPasswordStrength from '../../components/ProgressPasswordStrength';
 
 interface InputWrapperProps<K extends keyof FormItem> {
   name: K;
   label: string;
   type: 'text' | 'email' | 'password' | 'checkbox' | 'number' | 'select' | 'file';
-  register: UseFormRegister<FormItem>;
-  passwordForIndicator?: string;
-  errors?: string;
+  invalidFeedback: stringFormItem;
   options?: { value: string; label: string }[];
   datalistOptions?: string[];
+  onFileChange?: (file: FileList | undefined) => void;
 }
 
-const InputWrapper = <K extends keyof FormItem>({
+const UncontrolledInput = <K extends keyof FormItem>({
   name,
   label,
   type,
-  register,
-  errors,
-  passwordForIndicator,
+  invalidFeedback,
   options,
   datalistOptions,
+  onFileChange,
 }: InputWrapperProps<K>) => {
   const id = useId();
   const [showPassword, setShowPassword] = useState(false);
+  const [password, setPassword] = useState('');
 
   const togglePasswordVisibility = () => {
     setShowPassword((prevState) => !prevState);
+  };
+
+  const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const files = event.target.files || undefined;
+    if (onFileChange) {
+      onFileChange(files);
+    }
+  };
+
+  const handlePasswordChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setPassword(event.target.value);
   };
 
   const classNameInput = classNames({
     'form-check-input': type === 'checkbox',
     'me-2': type === 'checkbox',
     'form-control': type !== 'checkbox',
-    'is-invalid': errors,
+    'is-invalid': invalidFeedback[name].length > 0,
   });
 
   let inputElement: JSX.Element;
 
   if (type === 'select' && options) {
     inputElement = (
-      <select className={classNameInput} id={id} {...register(name)}>
+      <select className={classNameInput} id={id} name={name}>
         <option value=''>Select an option</option>
         {options.map((option) => (
           <option key={option.value} value={option.value}>
@@ -57,18 +64,24 @@ const InputWrapper = <K extends keyof FormItem>({
   } else if (type === 'password') {
     inputElement = (
       <>
-        <input type={showPassword ? 'text' : 'password'} className={classNameInput} id={id} {...register(name)} />
+        <input
+          type={showPassword ? 'text' : 'password'}
+          className={classNameInput}
+          id={id}
+          name={name}
+          onChange={handlePasswordChange}
+        />
         <button type='button' onClick={togglePasswordVisibility} className='btn btn-outline-secondary ms-2'>
           {showPassword ? 'Hide' : 'Show'}
         </button>
       </>
     );
   } else if (type === 'file') {
-    inputElement = <input type='file' className={classNameInput} id={id} {...register(name)} />;
+    inputElement = <input type='file' className={classNameInput} id={id} name={name} onChange={handleFileChange} />;
   } else if (type === 'text' && datalistOptions) {
     inputElement = (
       <>
-        <input type='text' className={classNameInput} id={id} list={`${id}-datalist`} {...register(name)} />
+        <input type='text' className={classNameInput} id={id} name={name} list={`${id}-datalist`} />
         <datalist id={`${id}-datalist`}>
           {datalistOptions.map((option) => (
             <option key={option} value={option} />
@@ -79,15 +92,15 @@ const InputWrapper = <K extends keyof FormItem>({
   } else if (type === 'checkbox') {
     inputElement = (
       <div className='checkbox-wrapper'>
-        <input type='checkbox' className={classNameInput} id={id} {...register(name)} />
+        <input type='checkbox' className={classNameInput} id={id} name={name} />
         <label htmlFor={id} className='form-check-label'>
           {label}
         </label>
-        <div className='invalid-feedback'>{errors}</div>
+        <div className='invalid-feedback'>{invalidFeedback[name]}</div>
       </div>
     );
   } else {
-    inputElement = <input type={type} className={classNameInput} id={id} {...register(name)} />;
+    inputElement = <input type={type} className={classNameInput} id={id} name={name} />;
   }
 
   return (
@@ -97,13 +110,13 @@ const InputWrapper = <K extends keyof FormItem>({
           {label}
         </label>
       )}
-      {type === 'password' && <ProgressPasswordStrength password={passwordForIndicator ?? ''} />}
+      {(name === 'password' || name === 'repeatPassword') && <ProgressPasswordStrength password={password} />}
       <div className='input-group has-validation'>
         {inputElement}
-        <div className='invalid-feedback'>{errors}</div>
+        <div className='invalid-feedback'>{invalidFeedback[name]}</div>
       </div>
     </div>
   );
 };
 
-export default InputWrapper;
+export default UncontrolledInput;

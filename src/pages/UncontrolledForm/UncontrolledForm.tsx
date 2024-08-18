@@ -2,12 +2,12 @@ import { FormEvent, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { ValidationError } from 'yup';
-import InputWrapper from './InputWrapper';
 import { RootState } from '../../store/store';
 import { emptyInvalidFeedback, FormItem, Gender, stringFormItem } from '../../types';
 import fileToBase64 from '../../libs/fileToBase64';
 import { addForm } from '../../store/formsSlice';
 import { formSchema } from '../../validation/formSchema';
+import UncontrolledInput from './UncontrolledInput';
 
 export default function UncontrolledForm() {
   const dispatch = useDispatch();
@@ -52,16 +52,16 @@ export default function UncontrolledForm() {
     <div className='page mt-2'>
       <h1>Form (uncontrolled components)</h1>
       <form onSubmit={handleSubmit}>
-        <InputWrapper name='name' label='Name' type='text' invalidFeedback={invalidFeedback} />
+        <UncontrolledInput name='name' label='Name' type='text' invalidFeedback={invalidFeedback} />
 
-        <InputWrapper name='email' label='Email address' type='email' invalidFeedback={invalidFeedback} />
+        <UncontrolledInput name='email' label='Email address' type='email' invalidFeedback={invalidFeedback} />
 
         <div className='row my-2'>
           <div className='col'>
-            <InputWrapper name='password' label='Password' type='password' invalidFeedback={invalidFeedback} />
+            <UncontrolledInput name='password' label='Password' type='password' invalidFeedback={invalidFeedback} />
           </div>
           <div className='col'>
-            <InputWrapper
+            <UncontrolledInput
               name='repeatPassword'
               label='Password repeat'
               type='password'
@@ -70,16 +70,16 @@ export default function UncontrolledForm() {
           </div>
         </div>
 
-        <InputWrapper name='age' label='Age' type='number' invalidFeedback={invalidFeedback} />
+        <UncontrolledInput name='age' label='Age' type='number' invalidFeedback={invalidFeedback} />
 
-        <InputWrapper
+        <UncontrolledInput
           name='files'
           label='File'
           type='file'
           invalidFeedback={invalidFeedback}
           onFileChange={handleFileChange}
         />
-        <InputWrapper
+        <UncontrolledInput
           name='gender'
           label='Gender'
           type='select'
@@ -91,7 +91,7 @@ export default function UncontrolledForm() {
           invalidFeedback={invalidFeedback}
         />
 
-        <InputWrapper
+        <UncontrolledInput
           name='country'
           label='Country'
           type='text'
@@ -99,7 +99,7 @@ export default function UncontrolledForm() {
           invalidFeedback={invalidFeedback}
         />
 
-        <InputWrapper
+        <UncontrolledInput
           name='acceptTerms'
           label='Accept Terms and Conditions'
           type='checkbox'
