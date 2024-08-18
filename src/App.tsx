@@ -4,9 +4,9 @@ import { Provider } from 'react-redux';
 import store from './store/store';
 import ErrorBoundary from './components/ErrorBoundary';
 import Main from './pages/Main';
-import ReactHookForm from './pages/ReactHookForm/ReactHookForm';
 import Page404 from './pages/Page404';
 import UncontrolledForm from './pages/UncontrolledForm/UncontrolledForm';
+import ReactHookForm from './pages/ReactHookForm/ReactHookForm';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
