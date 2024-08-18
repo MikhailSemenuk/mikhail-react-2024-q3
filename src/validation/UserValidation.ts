@@ -20,9 +20,7 @@ export const userSchema: ObjectSchema<FormItem> = object({
     .oneOf([ref('password')], 'Passwords must match')
     .required('Repeat Password is required'),
 
-  gender: string()
-    .oneOf(['male', 'female', 'other'], 'Please choose a valid gender')
-    .required('Please choose your gender'),
+  gender: string().oneOf(['male', 'female', 'other'], 'Please choose a gender').required('Please choose your gender'),
 
   age: number().required('Age is required').positive('Age must be a positive number').integer('Age must be an integer'),
 

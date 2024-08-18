@@ -30,34 +30,39 @@ const InputWrapper = <K extends keyof FormItem>({
     'is-invalid': invalidFeedback[name].length > 0,
   });
 
+  let inputElement: JSX.Element;
+
+  if (type === 'select' && options) {
+    inputElement = (
+      <select className={classNameInput} id={id} name={name}>
+        <option value=''>Select an option</option>
+        {options.map((option) => (
+          <option key={option.value} value={option.value}>
+            {option.label}
+          </option>
+        ))}
+      </select>
+    );
+  } else if (type === 'password') {
+    inputElement = (
+      <>
+        <input type={showPassword ? 'text' : 'password'} className={classNameInput} id={id} name={name} />
+        <button type='button' onClick={togglePasswordVisibility} className='btn btn-outline-secondary ms-2'>
+          {showPassword ? 'Hide' : 'Show'}
+        </button>
+      </>
+    );
+  } else {
+    inputElement = <input type={type} className={classNameInput} id={id} name={name} />;
+  }
+
   return (
     <div className='mb-3'>
       <label htmlFor={id} className='form-label'>
         {label}
       </label>
       <div className='input-group has-validation'>
-        {type === 'select' && options ? (
-          <select className={classNameInput} id={id} name={name}>
-            <option value=''>Select an option</option>
-            {options.map((option) => (
-              <option key={option.value} value={option.value}>
-                {option.label}
-              </option>
-            ))}
-          </select>
-        ) : (
-          <input
-            type={type === 'password' && showPassword ? 'text' : type}
-            className={classNameInput}
-            id={id}
-            name={name}
-          />
-        )}
-        {type === 'password' && (
-          <button type='button' onClick={togglePasswordVisibility} className='btn btn-outline-secondary ms-2'>
-            {showPassword ? 'Hide' : 'Show'}
-          </button>
-        )}
+        {inputElement}
         <div className='invalid-feedback'>{invalidFeedback[name]}</div>
       </div>
     </div>

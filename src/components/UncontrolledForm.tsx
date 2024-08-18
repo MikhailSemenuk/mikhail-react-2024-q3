@@ -1,7 +1,8 @@
 // TODO: how make reset
 // TODO: make form green after submit
-// TODO: Show password button
 // TODO: Limit age min="0"
+// TODO: add grid in form
+// TODO: disable show password by default
 
 import { FormEvent, useState } from 'react';
 import { emptyInvalidFeedback, FormItem, Gender, stringFormItem } from '../types';
