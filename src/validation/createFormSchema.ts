@@ -18,6 +18,10 @@ export const createFormSchema = (validCountries: string[]): ObjectSchema<FormIte
 
     repeatPassword: string()
       .required('Password repeat is required')
+      .matches(
+        /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_]).*$/,
+        'Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character (e.g., @, #, $, %, &, *)',
+      )
       .oneOf([ref('password')], 'Passwords must match'),
 
     gender: string().oneOf(['male', 'female', 'other'], 'Please choose a gender').required('Please choose your gender'),
