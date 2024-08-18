@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import { useId, useState, ChangeEvent } from 'react';
-import { FormItem, stringFormItem } from '../types';
+import { FormItem, stringFormItem } from '../../types';
 
 interface InputWrapperProps<K extends keyof FormItem> {
   name: K;

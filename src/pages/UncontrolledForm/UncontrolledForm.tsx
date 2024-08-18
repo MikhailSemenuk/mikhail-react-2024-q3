@@ -6,15 +6,15 @@
 // TODO: Checkbox beautiful
 
 import { FormEvent, useState } from 'react';
-import { emptyInvalidFeedback, FormItem, Gender, stringFormItem } from '../types';
 import { useDispatch, useSelector } from 'react-redux';
-import { addForm } from '../store/formsSlice';
 import { Link } from 'react-router-dom';
-import { userSchema } from '../validation/UserValidation';
 import { ValidationError } from 'yup';
 import InputWrapper from './InputWrapper';
-import fileToBase64 from './fileToBase64';
-import { RootState } from '../store/store';
+import { RootState } from '../../store/store';
+import { emptyInvalidFeedback, FormItem, Gender, stringFormItem } from '../../types';
+import fileToBase64 from '../../libs/fileToBase64';
+import { addForm } from '../../store/formsSlice';
+import { formSchema } from '../../validation/formSchema';
 
 export default function UncontrolledForm() {
   const dispatch = useDispatch();
@@ -45,7 +45,7 @@ export default function UncontrolledForm() {
     };
 
     try {
-      await userSchema.validate(prepareForm, { abortEarly: false });
+      await formSchema.validate(prepareForm, { abortEarly: false });
       setInvalidFeedback(emptyInvalidFeedback);
       dispatch(addForm(prepareForm));
       console.log('все ок');

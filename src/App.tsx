@@ -1,12 +1,12 @@
 import { createBrowserRouter, createRoutesFromElements, Navigate, Route, RouterProvider } from 'react-router-dom';
 import './App.css';
-import Page404 from './components/Page404';
-import ReactHookForm from './components/ReactHookForm';
-import UncontrolledForm from './components/UncontrolledForm';
-import Main from './components/Main';
 import { Provider } from 'react-redux';
 import store from './store/store';
 import ErrorBoundary from './components/ErrorBoundary';
+import Main from './pages/Main';
+import ReactHookForm from './pages/ReactHookForm/ReactHookForm';
+import Page404 from './pages/Page404';
+import UncontrolledForm from './pages/UncontrolledForm/UncontrolledForm';
 
 const router = createBrowserRouter(
   createRoutesFromElements(

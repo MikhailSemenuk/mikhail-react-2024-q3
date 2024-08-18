@@ -3,7 +3,7 @@ import { FormItem } from '../types';
 
 const fileValidation = mixed<File>()
   .test('fileProvided', 'File is required', (value) => {
-    return value !== null;
+    return value !== undefined;
   })
   .test('fileSize', 'File size must be less than 2 MB', function (value) {
     if (value && value.size) {
@@ -18,7 +18,7 @@ const fileValidation = mixed<File>()
     return true;
   });
 
-export const userSchema: ObjectSchema<FormItem> = object({
+export const formSchema: ObjectSchema<FormItem> = object({
   name: string()
     .required('Name is required')
     .matches(/^[A-Z][a-zA-Z]*$/, 'Name must start with an uppercase letter'),
